@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { OverflowMenu, OverflowMenuItem } from "carbon-components-react";
 import Slider from "./components/Slider";
+import ItemVideo from "./components/ItemVideo";
 import TitlePage from "../../components/TitlePage";
 import "./index.scss";
 
@@ -68,7 +69,7 @@ class Home extends Component {
         <div className="bx--row">
           {arr.map((item) => (
             <div className="bx--col-md-2 bx--col-sm-4">
-              <div className="video__item">Block 1</div>
+              <ItemVideo />
             </div>
           ))}
         </div>

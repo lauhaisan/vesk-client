@@ -12,9 +12,39 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    &:hover,
-    &:active {
-      opacity: 0.5;
+    &--avt {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      margin-bottom: 5px;
+    }
+    &--name {
+      text-align: center;
+      width: 70%;
+      font-size: 13px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      color: #333;
+      margin-top: 5px;
+    }
+    &--views {
+      text-align: center;
+      width: 70%;
+      font-size: 11px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      color: #ff516b;
+      line-height: 1.2;
+      &:hover {
+        color: #333;
+      }
+    }
+    &:hover {
+      .itemSlider__content--avt {
+        transform: scale(1.05);
+      }
     }
   }
 }

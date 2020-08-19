@@ -8,7 +8,13 @@ class CustomSlide extends Component {
     return (
       <div {...props}>
         <div className="itemSlider__content">
-          <h3>{index}</h3>
+          <img
+            className="itemSlider__content--avt"
+            src={require("../../../../images/testAvatar.jpg")}
+            alt="img-avatar"
+          />
+          <p className="itemSlider__content--name">user name {index}</p>
+          <p className="itemSlider__content--views">74,853 views</p>
         </div>
       </div>
     );
