@@ -21,7 +21,7 @@ function SampleNextArrow(props) {
     <div
       className={className}
       style={{
-        ...style
+        ...style,
       }}
       onClick={onClick}
     />
@@ -34,7 +34,7 @@ function SamplePrevArrow(props) {
     <div
       className={className}
       style={{
-        ...style
+        ...style,
       }}
       onClick={onClick}
     />
@@ -52,13 +52,13 @@ export default class MultipleItems extends Component {
       autoplaySpeed: 2000,
       dots: false,
       nextArrow: <SampleNextArrow />,
-      prevArrow: <SamplePrevArrow />
+      prevArrow: <SamplePrevArrow />,
     };
     const listItem = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
     return (
       <div className="containerSlider">
         <Slider {...settings}>
-          {listItem.map(item => (
+          {listItem.map((item) => (
             <CustomSlide className="itemSlider" index={item} />
           ))}
         </Slider>

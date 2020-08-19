@@ -45,8 +45,8 @@ class Home extends Component {
           className="listChanel"
           style={{
             width: "100%",
-            height: "8rem",
-            backgroundColor: "#fff"
+            height: "8.5rem",
+            backgroundColor: "#fff",
           }}
         >
           <Slider />
@@ -66,7 +66,7 @@ class Home extends Component {
           </div>
         </div>
         <div className="bx--row">
-          {arr.map(item => (
+          {arr.map((item) => (
             <div className="bx--col-md-2 bx--col-sm-4">
               <div className="video__item">Block 1</div>
             </div>
@@ -82,19 +82,19 @@ const mapStateToProps = ({
     loading,
     listProduct = [],
     messageError = "",
-    dummyListVideo
-  } = {}
+    dummyListVideo,
+  } = {},
 }) => ({
   loading,
   listProduct,
   messageError,
-  dummyListVideo
+  dummyListVideo,
 });
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
   getAllProduct: () => dispatch({ type: "GET_ALL_PRODUCT" }),
   clearData: () => dispatch({ type: "CLEAR_DATA" }),
-  setData: data => dispatch({ type: "SET_STATE_REDUCER", data })
+  setData: (data) => dispatch({ type: "SET_STATE_REDUCER", data }),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home);

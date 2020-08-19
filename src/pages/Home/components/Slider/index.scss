@@ -1,18 +1,26 @@
 .itemSlider {
   background-color: transparent;
-  padding: 0px 2.5px !important;
   height: 8.5rem;
 
   &__content {
     box-shadow: 0 0 6px #ececec;
     border-radius: 2px;
+    margin: 0px 2.5px;
     height: 100%;
     background-color: #fff;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    &:hover,
+    &:active {
+      opacity: 0.5;
+    }
   }
+}
+.slick-slide,
+.slick-slide * {
+  outline: none !important;
 }
 
 .slick-next {
