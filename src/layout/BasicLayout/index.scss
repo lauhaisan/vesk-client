@@ -1,0 +1,34 @@
+$menuColor: #7d5a5a;
+
+.container_basic_layout {
+  padding-top: 3rem;
+  .body {
+    display: flex;
+    flex-direction: row;
+    height: auto;
+    background-color: #fafafa;
+    .content {
+      min-height: 95vh;
+      width: 100%;
+      padding: 2rem;
+      margin-left: 7rem;
+      background-color: #fafafa;
+    }
+    .ads {
+      position: fixed;
+      top: 3rem;
+      right: 0;
+      width: 250px;
+      height: auto;
+      &__img {
+        width: 100%;
+        height: auto;
+      }
+    }
+  }
+  @media only screen and (max-width: 768px) {
+    .ads {
+      display: none;
+    }
+  }
+}

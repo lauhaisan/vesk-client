@@ -1,0 +1,17 @@
+.container_page_home {
+  min-height: 100vh;
+  height: auto;
+  box-sizing: border-box;
+  padding: 1rem;
+  .bx--row {
+    .bx--col {
+      .test__item {
+        width: 150px;
+        height: 100px;
+        box-sizing: border-box;
+        padding: 40;
+        background-color: cyan;
+      }
+    }
+  }
+}
