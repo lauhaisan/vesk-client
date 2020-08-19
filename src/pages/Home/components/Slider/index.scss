@@ -1,15 +1,12 @@
 .itemSlider {
-  background-color: #fff;
+  border-radius: 2px;
+  background-color: white;
   padding: 0px 2.5px !important;
-  height: 8rem;
+  height: 8.5rem;
   box-shadow: 0 0 6px #ececec;
-  // &:focus,
-  // &:active {
-  //   border: none;
+  // .content {
+  //   background-color: red;
   // }
-  .content {
-    background-color: red;
-  }
 }
 
 .slick-next {
