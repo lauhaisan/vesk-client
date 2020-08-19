@@ -11,22 +11,16 @@ import ComingSoon from "../pages/ComingSoon";
 const SocialMeida = lazy(() => import("../pages/SocialMedia"));
 const Advertising = lazy(() => import("../pages/Advertising"));
 const Contact = lazy(() => import("../pages/Contact"));
-// const Home = lazy(() => import("../pages/Home"));
+const Home = lazy(() => import("../pages/Home"));
 const Users = lazy(() => import("../pages/User"));
 const Profile = lazy(() => import("../pages/Profile"));
 
 const routes = [
-  // {
-  //   path: "/",
-  //   exact: true,
-  //   layout: BasicLayout,
-  //   component: Home
-  // },
   {
     path: "/",
     exact: true,
     layout: BasicLayout,
-    component: ComingSoon
+    component: Home
   },
   {
     path: "/users",

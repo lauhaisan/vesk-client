@@ -1,17 +1,81 @@
 .container_page_home {
   min-height: 100vh;
   height: auto;
-  box-sizing: border-box;
-  padding: 1rem;
-  .bx--row {
-    .bx--col {
-      .test__item {
-        width: 150px;
-        height: 100px;
-        box-sizing: border-box;
-        padding: 40;
-        background-color: cyan;
+  .titleBlock {
+    display: flex;
+    justify-content: space-between;
+    margin: 0px 0px 10px;
+    &__text {
+      font-size: 1rem;
+      color: #333;
+      line-height: 1.2;
+      font-weight: 500;
+    }
+    &__btn {
+      .bx--overflow-menu {
+        background: #fff none repeat scroll 0 0;
+        border-radius: 50px;
+        box-shadow: 0 0 6px #ececec;
+        height: 20px;
+        width: 20px;
+        line-height: 19px;
+        text-align: center;
+        &:focus {
+          outline: none;
+        }
+        &-options__btn {
+          background-color: #ff516b;
+        }
+
+        &__icon {
+          display: none;
+        }
       }
     }
+
+    .icon {
+      color: #ff516b;
+      &:hover {
+        color: #333;
+      }
+    }
+  }
+
+  .listChanel {
+    width: 100%;
+    height: 12rem;
+    background-color: burlywood;
+  }
+
+  .divider {
+    margin: 3rem 0px 1rem 0px;
+    height: 1px;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.1);
+  }
+  .bx--row {
+    .bx--col-md-2 {
+      margin-bottom: 2rem;
+    }
+  }
+  .video__item {
+    width: 100%;
+    height: 16rem;
+    min-width: 200px;
+    box-sizing: border-box;
+    background-color: burlywood;
+  }
+}
+
+.bx--overflow-menu-options {
+  margin-top: 1rem;
+  background-color: #fff;
+}
+
+.bx--overflow-menu-options__btn {
+  color: rgba(0, 0, 0, 0.5) !important;
+  font-size: 12px;
+  &:focus {
+    outline: none;
   }
 }

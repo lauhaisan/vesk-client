@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { OverflowMenu, OverflowMenuItem } from "carbon-components-react";
+import Slider from "./components/Slider";
 import TitlePage from "../../components/TitlePage";
 import "./index.scss";
 
@@ -8,13 +10,6 @@ class Home extends Component {
   //   const { getAllProduct } = this.props;
   //   getAllProduct();
   // }
-
-  _setData = () => {
-    const { setData } = this.props;
-    setData({
-      messageError: "Hmmm..."
-    });
-  };
 
   componentWillUnmount() {
     const { clearData } = this.props;
@@ -29,22 +24,53 @@ class Home extends Component {
     //   // getAllProduct
     //   history
     // } = this.props;
+    const arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 4];
     return (
       <div className="container_page_home">
         <TitlePage title="Home" />
+        <div className="titleBlock">
+          <p className="titleBlock__text">Chanels Categories</p>
+          <div className="titleBlock__btn">
+            <OverflowMenu
+              renderIcon={() => <i className="fas fa-ellipsis-h icon"></i>}
+              floatingMenu
+              flipped
+            >
+              <OverflowMenuItem itemText={<div>Top Rated</div>} />
+              <OverflowMenuItem itemText={<div>Viewed</div>} />
+            </OverflowMenu>
+          </div>
+        </div>
+        <div
+          className="listChanel"
+          style={{
+            width: "100%",
+            height: "8rem",
+            backgroundColor: "#fff"
+          }}
+        >
+          <Slider />
+        </div>
+        <div className="divider" />
+        <div className="titleBlock">
+          <p className="titleBlock__text">Featured Videos</p>
+          <div className="titleBlock__btn">
+            <OverflowMenu
+              renderIcon={() => <i className="fas fa-ellipsis-h icon"></i>}
+              floatingMenu
+              flipped
+            >
+              <OverflowMenuItem itemText={<div>Top Rated</div>} />
+              <OverflowMenuItem itemText={<div>Viewed</div>} />
+            </OverflowMenu>
+          </div>
+        </div>
         <div className="bx--row">
-          <div className="bx--col">
-            <div className="test__item">Block 1</div>
-          </div>
-          <div className="bx--col">
-            <div className="test__item">Block 1</div>
-          </div>
-          <div className="bx--col">
-            <div className="test__item">Block 1</div>
-          </div>
-          <div className="bx--col">
-            <div className="test__item">Block 1</div>
-          </div>
+          {arr.map(item => (
+            <div className="bx--col-md-2 bx--col-sm-4">
+              <div className="video__item">Block 1</div>
+            </div>
+          ))}
         </div>
       </div>
     );
