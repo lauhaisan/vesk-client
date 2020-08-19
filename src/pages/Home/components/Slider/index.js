@@ -7,7 +7,7 @@ class CustomSlide extends Component {
     const { index, ...props } = this.props;
     return (
       <div {...props}>
-        <div className="content">
+        <div className="itemSlider__content">
           <h3>{index}</h3>
         </div>
       </div>
@@ -22,9 +22,6 @@ function SampleNextArrow(props) {
       className={className}
       style={{
         ...style
-        // display: "block",
-        // background: "#dbdbdb",
-        // marginRight: "2rem"
       }}
       onClick={onClick}
     />
@@ -38,8 +35,6 @@ function SamplePrevArrow(props) {
       className={className}
       style={{
         ...style
-        // display: "block",
-        // background: "#dbdbdb"
       }}
       onClick={onClick}
     />
