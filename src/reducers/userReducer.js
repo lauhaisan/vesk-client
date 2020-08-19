@@ -9,7 +9,7 @@ const INITIAL_STATE = {
   expiredToken: false,
   loadingGetInfo: false,
   myInfo: {},
-  widthMenu: "firstRender"
+  openMenu: true
 };
 
 const userReducer = (state = INITIAL_STATE, action) => {

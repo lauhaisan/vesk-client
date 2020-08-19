@@ -15,6 +15,14 @@ $menuColor: #fff;
 }
 
 .rootHeader {
+  .header__menu {
+    color: #acb7b8;
+    margin-left: 1rem;
+    &:focus,
+    &:active {
+      opacity: 0.5;
+    }
+  }
   .bx--header {
     background-color: $menuColor;
     border-bottom: none;

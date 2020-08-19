@@ -1,5 +1,4 @@
 import React, { Component, Fragment } from "react";
-import { Modal } from "carbon-components-react";
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 import SideMenu from "../../components/SideMenu";
@@ -9,64 +8,51 @@ import { getToken } from "../../utils/token";
 import "./index.scss";
 
 class BasicLayout extends Component {
-  hideModal = () => {
-    const { setDataUserReducer } = this.props;
+  _handleMenu = () => {
+    const { openMenu, setDataUserReducer } = this.props;
     setDataUserReducer({
-      expiredToken: false
+      openMenu: !openMenu
     });
   };
 
-  _logout = history => {
-    const { logout } = this.props;
-    logout(history);
-  };
-
   render() {
-    const { children, history, expiredToken } = this.props;
+    const { children, history, openMenu } = this.props;
     const { token } = getToken();
+
     if (!token) {
       return <Redirect to="/signin" />;
     }
+    const padding = openMenu ? "225px" : "90px";
     return (
       <Fragment>
         <div className="container_basic_layout">
-          <Header history={history} />
+          <Header history={history} handleMenu={this._handleMenu} />
           <div className="body">
-            <SideMenu history={history} />
-            <div className="content">{children}</div>
+            <SideMenu history={history} openMenu={openMenu} />
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                paddingLeft: padding,
+                width: "100%"
+              }}
+            >
+              <div className="content">{children}</div>
+              <Footer />
+            </div>
           </div>
-          <Footer />
         </div>
-        <Modal
-          className="some-class"
-          modalHeading="Token Expired"
-          onRequestClose={this.hideModal}
-          onRequestSubmit={() => this._logout(undefined)}
-          onSecondarySubmit={this.hideModal}
-          open={expiredToken}
-          primaryButtonText="Sign In"
-          secondaryButtonText="Cancel"
-          size={undefined}
-        >
-          <p className="bx--modal-content__text">Please Sign In Again!!!</p>
-        </Modal>
       </Fragment>
     );
   }
 }
 
-const mapStateToProps = ({
-  user: { expiredToken, myInfo = {}, widthMenu } = {}
-}) => ({
-  expiredToken,
-  myInfo,
-  widthMenu
+const mapStateToProps = ({ user: { openMenu } = {} }) => ({
+  openMenu
 });
 
 const mapDispatchToProps = dispatch => ({
-  getMyInfo: () => dispatch({ type: "GET_MY_INFO" }),
-  setDataUserReducer: data => dispatch({ type: "UPDATE_STATE", data }),
-  logout: data => dispatch({ type: "USER_LOGOUT", data })
+  setDataUserReducer: data => dispatch({ type: "UPDATE_STATE", data })
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(BasicLayout);

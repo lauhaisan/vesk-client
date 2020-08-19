@@ -7,8 +7,8 @@ import {
 import {
   UserProfile20,
   Logout20,
-  ChevronSortDown20
-  // Menu20
+  ChevronSortDown20,
+  Menu20
 } from "@carbon/icons-react";
 import { getToken, setToken } from "../../utils/token";
 import "./index.scss";
@@ -29,7 +29,7 @@ class ComponentHeader extends Component {
   };
 
   render() {
-    const { history } = this.props;
+    const { history, handleMenu } = this.props;
     const { data = {} } = getToken();
 
     const rightMenuSignIn = (
@@ -65,12 +65,9 @@ class ComponentHeader extends Component {
           render={({ isSideNavExpanded, onClickSideNavExpand }) => (
             <>
               <Header aria-label="IBM Platform Name">
-                {/* <div
-                  style={{ color: "#acb7b8", marginLeft: "1rem" }}
-                  onClick={handleMenu}
-                >
+                <div className="header__menu" onClick={handleMenu}>
                   <Menu20 />
-                </div> */}
+                </div>
                 <HeaderGlobalBar>{rightMenuSignIn}</HeaderGlobalBar>
               </Header>
             </>

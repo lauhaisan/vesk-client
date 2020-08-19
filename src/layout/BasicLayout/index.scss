@@ -7,11 +7,11 @@ $menuColor: #7d5a5a;
     flex-direction: row;
     height: auto;
     background-color: #fafafa;
+    position: relative;
     .content {
       min-height: 95vh;
       width: 100%;
       padding: 2rem;
-      margin-left: 7rem;
       background-color: #fafafa;
     }
     .ads {
