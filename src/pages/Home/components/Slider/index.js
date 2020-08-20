@@ -13,7 +13,7 @@ class CustomSlide extends Component {
             src={require("../../../../images/testAvatar.jpg")}
             alt="img-avatar"
           />
-          <p className="itemSlider__content--name">user name {index}</p>
+          <p className="itemSlider__content--name">Name Chanel{index}</p>
           <p className="itemSlider__content--views">74,853 views</p>
         </div>
       </div>
