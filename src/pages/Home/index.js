@@ -90,10 +90,7 @@ class Home extends Component {
           ) : (
             <div className="bx--row">
               {listSocialMedia.map((item) => (
-                <div
-                  key={item.id}
-                  className="bx--col--lg-3 bx--col-md-2 bx--col-sm-4"
-                >
+                <div key={item.id} className="bx--col-md-2 bx--col-sm-4">
                   <ItemVideo item={item} />
                 </div>
               ))}
