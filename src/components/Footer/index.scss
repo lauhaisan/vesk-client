@@ -6,8 +6,6 @@
   align-items: center;
   padding: 15px;
   .viewStore {
-    display: flex;
-    flex-direction: row;
     &__logo {
       cursor: pointer;
       border-radius: 3px;
@@ -25,6 +23,18 @@
         color: #171b20;
         font-weight: 700;
       }
+    }
+  }
+}
+
+@media screen and (max-width: 992px) {
+  .footerWrapper {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 0px;
+    .viewStore__logo {
+      height: 30px;
     }
   }
 }
