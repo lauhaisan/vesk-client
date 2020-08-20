@@ -7,14 +7,20 @@ class CustomSlide extends Component {
     const { itemUser = {}, history, ...props } = this.props;
     const id = itemUser.userId;
     return (
-      <div {...props} onClick={() => history.push(`/channel/${id}`)}>
+      <div {...props}>
         <div className="itemSlider__content">
           <img
+            onClick={() => history.push(`/channel/${id}`)}
             className="itemSlider__content--avt"
             src={require("../../../../images/testAvatar.jpg")}
             alt="img-avatar"
           />
-          <p className="itemSlider__content--name">{itemUser.userName}</p>
+          <p
+            className="itemSlider__content--name"
+            onClick={() => history.push(`/channel/${id}`)}
+          >
+            {itemUser.userName}
+          </p>
           <p className="itemSlider__content--views">74,853 views</p>
         </div>
       </div>

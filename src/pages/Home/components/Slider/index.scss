@@ -2,7 +2,7 @@
   background-color: transparent;
   height: 8.5rem;
   &__content {
-    cursor: pointer;
+    cursor: grab;
     box-shadow: 0 0 6px #ececec;
     border-radius: 2px;
     margin: 0px 2.5px;
@@ -17,8 +17,10 @@
       height: 60px;
       border-radius: 50%;
       margin-bottom: 5px;
+      cursor: pointer;
     }
     &--name {
+      cursor: pointer;
       text-align: center;
       width: 70%;
       font-size: 13px;
