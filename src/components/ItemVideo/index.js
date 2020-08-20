@@ -5,11 +5,17 @@ class ItemVideo extends Component {
   render() {
     return (
       <div className="itemVideo">
-        <img
-          className="itemVideo__video"
-          src="https://i.ytimg.com/vi/YnuSPC-S_yc/hqdefault.jpg?sqp=-oaymwEZCOADEI4CSFXyq4qpAwsIARUAAIhCGAFwAQ==&rs=AOn4CLDtdEIdy1CUdr6jqsCxv4CFfB0BtQ"
-          alt="img-video"
-        />
+        <div className="viewImgVideo">
+          <div class="itemVideo__viewIconPlay">
+            <i class="far fa-play-circle iconPlay"></i>
+          </div>
+
+          <img
+            className="itemVideo__video"
+            src="https://i.ytimg.com/vi/YnuSPC-S_yc/hqdefault.jpg?sqp=-oaymwEZCOADEI4CSFXyq4qpAwsIARUAAIhCGAFwAQ==&rs=AOn4CLDtdEIdy1CUdr6jqsCxv4CFfB0BtQ"
+            alt="img-video"
+          />
+        </div>
         <div className="itemVideo__info">
           <div className="info__title">
             There are many variations of divassages of Lorem
