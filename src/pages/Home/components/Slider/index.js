@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Slider from "react-slick";
+import { Link } from "react-router-dom";
 import "./index.scss";
 
 class CustomSlide extends Component {
@@ -9,18 +10,19 @@ class CustomSlide extends Component {
     return (
       <div {...props}>
         <div className="itemSlider__content">
-          <img
-            onClick={() => history.push(`/channel/${id}`)}
-            className="itemSlider__content--avt"
-            src={require("../../../../images/testAvatar.jpg")}
-            alt="img-avatar"
-          />
-          <p
-            className="itemSlider__content--name"
-            onClick={() => history.push(`/channel/${id}`)}
+          <Link to={`/channel/${id}`}>
+            <img
+              className="itemSlider__content--avt"
+              src={require("../../../../images/testAvatar.jpg")}
+              alt="img-avatar"
+            />
+          </Link>
+          <Link
+            style={{ width: "70%", cursor: "pointer" }}
+            to={`/channel/${id}`}
           >
-            {itemUser.userName}
-          </p>
+            <div className="itemSlider__content--name">{itemUser.userName}</div>
+          </Link>
           <p className="itemSlider__content--views">74,853 views</p>
         </div>
       </div>

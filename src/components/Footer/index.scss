@@ -1,0 +1,30 @@
+.footerWrapper {
+  background-color: #e9ecef;
+  height: 4rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+  .viewStore {
+    display: flex;
+    flex-direction: row;
+    &__logo {
+      cursor: pointer;
+      border-radius: 3px;
+      margin: 5px 0 0;
+      height: 38px;
+      object-fit: scale-down;
+      padding: 3px 4px;
+    }
+  }
+  .viewText {
+    &--textTop {
+      color: #888;
+      font-size: 13px;
+      &--bold {
+        color: #171b20;
+        font-weight: 700;
+      }
+    }
+  }
+}

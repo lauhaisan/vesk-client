@@ -142,7 +142,7 @@ const socialMediaReducer = (state = INITIAL_STATE, action) => {
         messageError: action.data
       };
 
-    case SOCIAL_MEDIA.SET_STATE_REDUCER:
+    case SOCIAL_MEDIA.UPDATE_SOCIAL_MEDIA_REDUCER:
       return {
         ...state,
         ...action.data

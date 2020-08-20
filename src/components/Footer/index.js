@@ -1,20 +1,42 @@
 import React, { Component } from "react";
-// import "./styles.scss";
+import "./index.scss";
 
 class Footer extends Component {
   render() {
     return (
-      <footer
-        style={{
-          backgroundColor: "#e9ecef",
-          height: "3rem",
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center"
-        }}
-      >
-        <div style={{ color: "#888" }}>
-          <p>© 2020 Vesk</p>
+      <footer className="footerWrapper">
+        <div className="viewText">
+          <p className="viewText--textTop">
+            © Copyright 2020{" "}
+            <span className="viewText--textTop--bold">Vesk</span>. All Rights
+            Reserved
+          </p>
+        </div>
+        <div className="viewStore">
+          <a
+            href="https://play.google.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            id="google-play-logo"
+          >
+            <img
+              className="viewStore__logo"
+              src={require("../../images/google.png")}
+              alt="google-play-logo"
+            />
+          </a>
+          <a
+            href="https://www.apple.com/ios/app-store/"
+            target="_blank"
+            rel="noopener noreferrer"
+            id="google-play-logo"
+          >
+            <img
+              className="viewStore__logo"
+              src={require("../../images/apple.png")}
+              alt="app-store-logo"
+            />
+          </a>
         </div>
       </footer>
     );

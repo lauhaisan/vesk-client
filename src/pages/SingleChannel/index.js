@@ -25,9 +25,15 @@ class Home extends Component {
   }
 
   componentWillUnmount() {
-    const { updateStateListUserReducer } = this.props;
+    const {
+      updateStateListUserReducer,
+      updateStateSocialMediaReducer
+    } = this.props;
     updateStateListUserReducer({
       itemUser: {}
+    });
+    updateStateSocialMediaReducer({
+      listByAuthor: []
     });
   }
 
@@ -124,7 +130,9 @@ const mapDispatchToProps = dispatch => ({
   getListSocialMediaByAuthor: data =>
     dispatch({ type: SOCIAL_MEDIA.GET_LIST_BY_AUTHOR, data: { data } }),
   updateStateListUserReducer: data =>
-    dispatch({ type: LIST_USER.UPDATE_LIST_USER_REDUCER, data })
+    dispatch({ type: LIST_USER.UPDATE_LIST_USER_REDUCER, data }),
+  updateStateSocialMediaReducer: data =>
+    dispatch({ type: SOCIAL_MEDIA.UPDATE_SOCIAL_MEDIA_REDUCER, data })
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home);
