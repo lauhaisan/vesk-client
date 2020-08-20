@@ -3,6 +3,7 @@ import { SOCIAL_MEDIA } from "../constant";
 const INITIAL_STATE = {
   loading: false,
   listSocialMedia: [],
+  listByAuthor: [],
   paging: {},
   messageError: "",
   loadingGetById: false,
@@ -145,6 +146,27 @@ const socialMediaReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         ...action.data
+      };
+
+    case SOCIAL_MEDIA.GET_LIST_BY_AUTHOR:
+      return {
+        ...state,
+        loading: true,
+        messageError: ""
+      };
+    case SOCIAL_MEDIA.GET_LIST_BY_AUTHOR_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        listByAuthor: action.data.items,
+        messageError: ""
+      };
+    case SOCIAL_MEDIA.GET_LIST_BY_AUTHOR_FAIL:
+      return {
+        ...state,
+        loading: false,
+        listByAuthor: [],
+        messageError: action.data
       };
 
     default:

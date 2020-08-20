@@ -91,7 +91,6 @@ class Login extends Component {
     return (
       <Fragment>
         <TitlePage title="Sign In" />
-
         <div
           className="content-signIn"
           style={{ height: check ? "525px" : "490px" }}

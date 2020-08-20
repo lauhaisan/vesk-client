@@ -29,8 +29,12 @@ const addNewSocialMediaAPI = async payload => {
 
 const searchSocialMediaAPI = async payload => {
   const param = queryString.stringify(payload);
-  console.log(param);
   const URL_WITH_PARAMS = `${URL.SOCIAL_MEDIA_SEARCH}?${param}`;
+  return request(URL_WITH_PARAMS, true);
+};
+
+const getListByAuthorAPI = async payload => {
+  const URL_WITH_PARAMS = `${URL.GET_LIST_SOCIAL_MEDIA_BY_AUTHOR}/${payload.id}/search`;
   return request(URL_WITH_PARAMS, true);
 };
 
@@ -40,5 +44,6 @@ export {
   editSocialMediaAPI,
   deleteSocialMediaAPI,
   addNewSocialMediaAPI,
-  searchSocialMediaAPI
+  searchSocialMediaAPI,
+  getListByAuthorAPI
 };

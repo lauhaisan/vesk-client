@@ -6,17 +6,22 @@ import {
   Loading
 } from "carbon-components-react";
 import { SOCIAL_MEDIA, LIST_USER } from "../../constant";
-// import Notification from "../../components/Notification";
+import Notification from "../../components/Notification";
+import Empty from "../../components/Empty";
 import ItemVideo from "../../components/ItemVideo";
 import TitlePage from "../../components/TitlePage";
+import NotFoundPage from "../404Page";
 import "./index.scss";
 
 class Home extends Component {
   componentDidMount() {
-    const { match: { params: { id = "" } = {} } = {} } = this.props;
-    console.log("id", id);
-    const { getUserInfo } = this.props;
+    const {
+      match: { params: { id = "" } = {} } = {},
+      getUserInfo,
+      getListSocialMediaByAuthor
+    } = this.props;
     getUserInfo({ data: id });
+    getListSocialMediaByAuthor({ id });
   }
 
   componentWillUnmount() {
@@ -27,7 +32,16 @@ class Home extends Component {
   }
 
   render() {
-    const { itemUser = {}, loading, listSocialMedia = [] } = this.props;
+    const {
+      itemUser = {},
+      loading,
+      listByAuthor = [],
+      messageError = ""
+    } = this.props;
+
+    if (messageError === "User not exist") {
+      return <NotFoundPage />;
+    }
     const _renderLoading = (
       <div className="viewLoading">
         <Loading withOverlay={false} />
@@ -35,7 +49,7 @@ class Home extends Component {
     );
     return (
       <Fragment>
-        <TitlePage title="ABC" />
+        <TitlePage title={itemUser.userName} />
         <div className="singleChanel">
           <div className="coverImage">
             <div className="singleChanel__profile">
@@ -44,7 +58,7 @@ class Home extends Component {
                 src={require("../../images/testAvatar.jpg")}
                 alt="img-avatar"
               />
-              <div className="singleChanel__profile__social">Social</div>
+              <div className="singleChanel__profile__social">Social Media</div>
             </div>
           </div>
           <div className="singleChanel__nameChanel">
@@ -71,37 +85,44 @@ class Home extends Component {
             _renderLoading
           ) : (
             <div className="bx--row">
-              {listSocialMedia.map(item => (
-                <div key={item.id} className="bx--col-md-2 bx--col-sm-4">
-                  <ItemVideo item={item} />
-                </div>
-              ))}
+              {listByAuthor.length === 0 ? (
+                <Empty text="No Video" />
+              ) : (
+                listByAuthor.map(item => (
+                  <div key={item.id} className="bx--col-md-2 bx--col-sm-4">
+                    <ItemVideo item={item} />
+                  </div>
+                ))
+              )}
             </div>
           )}
         </div>
-        {/* {messageErrorListUser !== "" ||
-          (messageError !== "" && (
-            <Notification
-              status="error"
-              message={messageError}
-              title="Edit User Failed"
-            />
-          ))} */}
+        {messageError !== "" && (
+          <Notification
+            status="error"
+            message={messageError}
+            title="Process Failed"
+          />
+        )}
       </Fragment>
     );
   }
 }
 
 const mapStateToProps = ({
-  // socialMedia: { loading, listSocialMedia = [], messageError = "" } = {},
+  socialMedia: { loading, listByAuthor = [] } = {},
   listUser: { itemUser, messageError = "" } = {}
 }) => ({
+  loading,
+  listByAuthor,
   itemUser,
   messageError
 });
 
 const mapDispatchToProps = dispatch => ({
   getUserInfo: data => dispatch({ type: LIST_USER.GET_USER_BY_ID, data }),
+  getListSocialMediaByAuthor: data =>
+    dispatch({ type: SOCIAL_MEDIA.GET_LIST_BY_AUTHOR, data: { data } }),
   updateStateListUserReducer: data =>
     dispatch({ type: LIST_USER.UPDATE_LIST_USER_REDUCER, data })
 });

@@ -1,0 +1,17 @@
+.emptyWrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: auto;
+  .empty__img {
+    width: 9rem;
+    height: auto;
+  }
+  .empty__text {
+    margin-bottom: 1rem;
+    color: rgba(0, 0, 0, 0.25);
+    font-weight: 600;
+  }
+}
