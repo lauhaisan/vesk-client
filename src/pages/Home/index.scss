@@ -41,10 +41,16 @@
     }
   }
 
+  .viewLoading {
+    width: 100%;
+    height: auto;
+    display: grid;
+    place-items: center;
+  }
+
   .listChanel {
     width: 100%;
     height: 12rem;
-    background-color: burlywood;
   }
 
   .divider {

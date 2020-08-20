@@ -1,101 +1,136 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
-import { OverflowMenu, OverflowMenuItem } from "carbon-components-react";
+import {
+  OverflowMenu,
+  OverflowMenuItem,
+  Loading
+} from "carbon-components-react";
+import { SOCIAL_MEDIA, LIST_USER } from "../../constant";
 import Slider from "./components/Slider";
+import Notification from "../../components/Notification";
 import ItemVideo from "../../components/ItemVideo";
 import TitlePage from "../../components/TitlePage";
 import "./index.scss";
 
 class Home extends Component {
-  // componentDidMount() {
-  //   const { getAllProduct } = this.props;
-  //   getAllProduct();
-  // }
-
-  componentWillUnmount() {
-    const { clearData } = this.props;
-    clearData();
+  componentDidMount() {
+    const { getListUser } = this.props;
+    this.handleGetListSocialMedia({});
+    getListUser({});
   }
+
+  handleGetListSocialMedia = payload => {
+    const { getListSocialMedia } = this.props;
+    getListSocialMedia(payload);
+  };
+
   render() {
-    // const {
-    // loading,
-    // listProduct,
-    // messageError,
-    // clearData,
-    //   // getAllProduct
-    //   history
-    // } = this.props;
-    const arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 4];
-    return (
-      <div className="container_page_home">
-        <TitlePage title="Home" />
-        <div className="titleBlock">
-          <p className="titleBlock__text">Chanels Categories</p>
-          <div className="titleBlock__btn">
-            <OverflowMenu
-              renderIcon={() => <i className="fas fa-ellipsis-h icon"></i>}
-              floatingMenu
-              flipped
-            >
-              <OverflowMenuItem itemText={<div>Top Rated</div>} />
-              <OverflowMenuItem itemText={<div>Viewed</div>} />
-            </OverflowMenu>
-          </div>
-        </div>
-        <div
-          className="listChanel"
-          style={{
-            width: "100%",
-            height: "8.5rem",
-            backgroundColor: "#fff"
-          }}
-        >
-          <Slider />
-        </div>
-        <div className="divider" />
-        <div className="titleBlock">
-          <p className="titleBlock__text">Featured Videos</p>
-          <div className="titleBlock__btn">
-            <OverflowMenu
-              renderIcon={() => <i className="fas fa-ellipsis-h icon"></i>}
-              floatingMenu
-              flipped
-            >
-              <OverflowMenuItem itemText={<div>Top Rated</div>} />
-              <OverflowMenuItem itemText={<div>Viewed</div>} />
-            </OverflowMenu>
-          </div>
-        </div>
-        <div className="bx--row">
-          {arr.map(item => (
-            <div className="bx--col-md-2 bx--col-sm-4">
-              <ItemVideo />
-            </div>
-          ))}
-        </div>
+    const {
+      loading,
+      listSocialMedia = [],
+      messageError,
+      loadingListUserName,
+      listUserData = [],
+      messageErrorListUser
+    } = this.props;
+    const _renderLoading = (
+      <div className="viewLoading">
+        <Loading withOverlay={false} />
       </div>
+    );
+    return (
+      <Fragment>
+        <div className="container_page_home">
+          <TitlePage title="Home" />
+          <div className="titleBlock">
+            <p className="titleBlock__text">Chanels Categories</p>
+            <div className="titleBlock__btn">
+              <OverflowMenu
+                renderIcon={() => <i className="fas fa-ellipsis-h icon"></i>}
+                floatingMenu
+                flipped
+              >
+                <OverflowMenuItem itemText={<div>Top Rated</div>} />
+                <OverflowMenuItem itemText={<div>Viewed</div>} />
+              </OverflowMenu>
+            </div>
+          </div>
+          <div
+            className="listChanel"
+            style={{
+              width: "100%",
+              height: "8.5rem"
+            }}
+          >
+            {loadingListUserName ? (
+              _renderLoading
+            ) : (
+              <Slider listData={listUserData} />
+            )}
+          </div>
+
+          <div className="divider" />
+          <div className="titleBlock">
+            <p className="titleBlock__text">Featured Videos</p>
+            <div className="titleBlock__btn">
+              <OverflowMenu
+                renderIcon={() => <i className="fas fa-ellipsis-h icon"></i>}
+                floatingMenu
+                flipped
+              >
+                <OverflowMenuItem itemText={<div>Top Rated</div>} />
+                <OverflowMenuItem itemText={<div>Viewed</div>} />
+              </OverflowMenu>
+            </div>
+          </div>
+          {loading ? (
+            _renderLoading
+          ) : (
+            <div className="bx--row">
+              {listSocialMedia.map(item => (
+                <div key={item.id} className="bx--col-md-2 bx--col-sm-4">
+                  <ItemVideo item={item} />
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+        {messageErrorListUser !== "" ||
+          (messageError !== "" && (
+            <Notification
+              status="error"
+              message={messageError}
+              title="Edit User Failed"
+            />
+          ))}
+      </Fragment>
     );
   }
 }
 
 const mapStateToProps = ({
-  products: {
-    loading,
-    listProduct = [],
-    messageError = "",
-    dummyListVideo
+  socialMedia: { loading, listSocialMedia = [], messageError = "" } = {},
+  listUser: {
+    loading: loadingListUserName,
+    listUserData = [],
+    messageError: messageErrorListUser = ""
   } = {}
 }) => ({
   loading,
-  listProduct,
+  listSocialMedia,
   messageError,
-  dummyListVideo
+  loadingListUserName,
+  listUserData,
+  messageErrorListUser
 });
 
 const mapDispatchToProps = dispatch => ({
-  getAllProduct: () => dispatch({ type: "GET_ALL_PRODUCT" }),
-  clearData: () => dispatch({ type: "CLEAR_DATA" }),
-  setData: data => dispatch({ type: "SET_STATE_REDUCER", data })
+  getListSocialMedia: data =>
+    dispatch({ type: SOCIAL_MEDIA.GET_LIST_SOCIAL_MEDIA, data }),
+  getListUser: data => dispatch({ type: LIST_USER.GET_LIST_USER, data })
+
+  // clearData: () => dispatch({ type: "CLEAR_DATA" }),
+  // setData: data => dispatch({ type: "SET_STATE_REDUCER", data })
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home);

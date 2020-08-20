@@ -4,7 +4,7 @@ import "./index.scss";
 
 class CustomSlide extends Component {
   render() {
-    const { index, ...props } = this.props;
+    const { itemUser = {}, ...props } = this.props;
     return (
       <div {...props}>
         <div className="itemSlider__content">
@@ -13,7 +13,7 @@ class CustomSlide extends Component {
             src={require("../../../../images/testAvatar.jpg")}
             alt="img-avatar"
           />
-          <p className="itemSlider__content--name">Name Chanel{index}</p>
+          <p className="itemSlider__content--name">{itemUser.userName}</p>
           <p className="itemSlider__content--views">74,853 views</p>
         </div>
       </div>
@@ -21,7 +21,7 @@ class CustomSlide extends Component {
   }
 }
 
-function SampleNextArrow(props) {
+function NextArrow(props) {
   const { className, style, onClick } = props;
   return (
     <div
@@ -34,7 +34,7 @@ function SampleNextArrow(props) {
   );
 }
 
-function SamplePrevArrow(props) {
+function PrevArrow(props) {
   const { className, style, onClick } = props;
   return (
     <div
@@ -49,16 +49,17 @@ function SamplePrevArrow(props) {
 
 export default class MultipleItems extends Component {
   render() {
+    const { listData = [] } = this.props;
     const settings = {
       infinite: true,
       speed: 500,
       slidesToShow: 9,
-      slidesToScroll: 1,
+      slidesToScroll: 3,
       autoplay: true,
-      autoplaySpeed: 1500,
+      autoplaySpeed: 2500,
       dots: false,
-      nextArrow: <SampleNextArrow />,
-      prevArrow: <SamplePrevArrow />,
+      nextArrow: <NextArrow />,
+      prevArrow: <PrevArrow />,
       responsive: [
         {
           breakpoint: 1024,
@@ -83,12 +84,15 @@ export default class MultipleItems extends Component {
         }
       ]
     };
-    const listItem = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
     return (
       <div className="containerSlider">
         <Slider {...settings}>
-          {listItem.map(item => (
-            <CustomSlide className="itemSlider" index={item} />
+          {listData.map(item => (
+            <CustomSlide
+              key={item.userId}
+              className="itemSlider"
+              itemUser={item}
+            />
           ))}
         </Slider>
       </div>

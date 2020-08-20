@@ -20,16 +20,16 @@ class Detail extends React.Component {
   componentDidMount() {
     this.isComponentMounted = true;
     // Fetch video by Id
-    const {
-      match: { params: { id = "" } = {} } = {},
-      dummyListVideo
-    } = this.props;
-    const videoById = dummyListVideo.find(element => element._id === id);
-    if (videoById) {
-      this.setState({
-        itemVideo: videoById
-      });
-    }
+    // const {
+    //   match: { params: { id = "" } = {} } = {},
+    //   dummyListVideo
+    // } = this.props;
+    // const videoById = dummyListVideo.find(element => element._id === id);
+    // if (videoById) {
+    //   this.setState({
+    //     itemVideo: videoById
+    //   });
+    // }
     if (!window.YT) {
       const tag = document.createElement("script");
       tag.src = "https://www.youtube.com/iframe_api";
@@ -77,9 +77,9 @@ class Detail extends React.Component {
   };
   stopVideo = () => {
     this.player.stopVideo();
-    const {token} = getToken()
+    const { token } = getToken();
     if (this.isComponentMounted && token) {
-      alert("Bạn đã xem đủ 10 giây, bạn nhận được 100 CXC")
+      alert("Bạn đã xem đủ 10 giây, bạn nhận được 100 CXC");
     }
   };
 

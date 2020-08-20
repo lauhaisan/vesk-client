@@ -16,7 +16,6 @@ export default class SideMenu extends PureComponent {
 
   render() {
     const { openMenu } = this.props;
-    console.log("open", openMenu);
     const classNameMenu = openMenu ? "sideBarOpen" : "sideBarClose";
 
     return (

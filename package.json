@@ -10,6 +10,7 @@
     "carbon-components-react": "^7.14.0",
     "carbon-icons": "^7.0.7",
     "history": "^5.0.0",
+    "millify": "^3.3.0",
     "moment": "^2.27.0",
     "query-string": "^6.13.1",
     "react": "^16.13.1",
