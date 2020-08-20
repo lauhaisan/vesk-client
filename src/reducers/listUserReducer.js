@@ -75,7 +75,7 @@ const listUserReducer = (state = INITIAL_STATE, action) => {
         editUserSuccessfully: false,
         messageError: action.data
       };
-    case LIST_USER.SET_STATE_REDUCER:
+    case LIST_USER.UPDATE_LIST_USER_REDUCER:
       return {
         ...state,
         ...action.data

@@ -4,9 +4,10 @@ import "./index.scss";
 
 class CustomSlide extends Component {
   render() {
-    const { itemUser = {}, ...props } = this.props;
+    const { itemUser = {}, history, ...props } = this.props;
+    const id = itemUser.userId;
     return (
-      <div {...props}>
+      <div {...props} onClick={() => history.push(`/channel/${id}`)}>
         <div className="itemSlider__content">
           <img
             className="itemSlider__content--avt"
@@ -49,7 +50,7 @@ function PrevArrow(props) {
 
 export default class MultipleItems extends Component {
   render() {
-    const { listData = [] } = this.props;
+    const { listData = [], history } = this.props;
     const settings = {
       infinite: true,
       speed: 500,
@@ -92,6 +93,7 @@ export default class MultipleItems extends Component {
               key={item.userId}
               className="itemSlider"
               itemUser={item}
+              history={history}
             />
           ))}
         </Slider>

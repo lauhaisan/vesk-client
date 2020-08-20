@@ -1,4 +1,50 @@
-.container_page_home {
+.singleChanel {
+  .coverImage {
+    // background-image: url("https://d2r55xnwy6nx47.cloudfront.net/uploads/2018/11/UniversalCoverings_2880x1220.gif");
+    background-image: url("https://img-prod-cms-rt-microsoft-com.akamaized.net/cms/api/am/imageFileData/RE2FIhl?ver=f241");
+    height: 18rem;
+    background-position: center; /* Center the image */
+    background-repeat: no-repeat; /* Do not repeat the image */
+    background-size: cover;
+    position: relative;
+  }
+  &__profile {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 95%;
+    position: absolute;
+    left: 30px;
+    bottom: 16px;
+    z-index: 20;
+    &__avt {
+      width: 90px;
+      height: 90px;
+      border-radius: 50%;
+      border: 6px solid #fff;
+    }
+    &__social {
+      font-size: 20px;
+      font-weight: 600;
+      color: #fff;
+    }
+  }
+  &__nameChanel {
+    display: flex;
+    flex-direction: row;
+    background-color: #fff;
+    padding: 0px 30px 0px;
+    box-shadow: 0 0 11px #ececec;
+    height: 49px;
+    align-items: center;
+    &--text {
+      font-size: 16px;
+      font-weight: 600;
+    }
+  }
+}
+.container_page_singleChanel {
   min-height: 100vh;
   height: auto;
   padding: 2rem;

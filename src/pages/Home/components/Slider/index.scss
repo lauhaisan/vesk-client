@@ -1,7 +1,6 @@
 .itemSlider {
   background-color: transparent;
   height: 8.5rem;
-
   &__content {
     cursor: pointer;
     box-shadow: 0 0 6px #ececec;
@@ -46,6 +45,9 @@
       .itemSlider__content--avt {
         transform: scale(1.05);
       }
+    }
+    &:active {
+      transform: translateY(-1px);
     }
   }
 }

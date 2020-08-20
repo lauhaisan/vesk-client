@@ -8,7 +8,7 @@ import SignIn from "../pages/SignIn";
 // import Detail from "../pages/Detail";
 import ForgotPassword from "../pages/ForgotPassword";
 import ComingSoon from "../pages/ComingSoon";
-const SocialMeida = lazy(() => import("../pages/SocialMedia"));
+const SingleChannel = lazy(() => import("../pages/SingleChannel"));
 const Advertising = lazy(() => import("../pages/Advertising"));
 const Contact = lazy(() => import("../pages/Contact"));
 const Home = lazy(() => import("../pages/Home"));
@@ -46,11 +46,17 @@ const routes = [
     layout: BasicLayout,
     component: Advertising
   },
+  // {
+  //   path: "/social-media",
+  //   exact: true,
+  //   layout: BasicLayout,
+  //   component: SocialMeida
+  // },
   {
-    path: "/social-media",
+    path: "/channel/:id",
     exact: true,
     layout: BasicLayout,
-    component: SocialMeida
+    component: SingleChannel
   },
   // {
   //   path: "/detail",

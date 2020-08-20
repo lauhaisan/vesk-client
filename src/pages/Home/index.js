@@ -31,8 +31,10 @@ class Home extends Component {
       messageError,
       loadingListUserName,
       listUserData = [],
-      messageErrorListUser
+      messageErrorListUser,
+      history
     } = this.props;
+    const error = messageErrorListUser !== "" || messageError !== "";
     const _renderLoading = (
       <div className="viewLoading">
         <Loading withOverlay={false} />
@@ -65,7 +67,7 @@ class Home extends Component {
             {loadingListUserName ? (
               _renderLoading
             ) : (
-              <Slider listData={listUserData} />
+              <Slider listData={listUserData} history={history} />
             )}
           </div>
 
@@ -95,14 +97,13 @@ class Home extends Component {
             </div>
           )}
         </div>
-        {messageErrorListUser !== "" ||
-          (messageError !== "" && (
-            <Notification
-              status="error"
-              message={messageError}
-              title="Edit User Failed"
-            />
-          ))}
+        {error && (
+          <Notification
+            status="error"
+            message={messageError || messageErrorListUser}
+            title="Edit User Failed"
+          />
+        )}
       </Fragment>
     );
   }
