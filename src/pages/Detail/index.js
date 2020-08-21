@@ -7,6 +7,7 @@ import NotFoundPage from "../404Page";
 import { SOCIAL_MEDIA } from "../../constant";
 import ButtonLoading from "../../components/ButtonLoading";
 import Player from "./components/Player";
+import Comments from "./components/Comments";
 import "./index.scss";
 
 class Detail extends React.Component {
@@ -82,6 +83,7 @@ class Detail extends React.Component {
                 }}
               />
             </div>
+            <Comments />
           </div>
           <div className="rightList">List video vertical</div>
         </div>
@@ -90,7 +92,7 @@ class Detail extends React.Component {
           <Notification
             status="success"
             message=""
-            title="You received a reward 10 CXC"
+            title="You receive 10 CXC"
           />
         )}
       </div>
