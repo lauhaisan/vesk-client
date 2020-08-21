@@ -1,11 +1,11 @@
 import React from "react";
 import TitlePage from "../../components/TitlePage";
 import { connect } from "react-redux";
-// import { TextArea } from "carbon-components-react";
+import numeral from "numeral";
 import Notification from "../../components/Notification";
 import NotFoundPage from "../404Page";
-
 import { SOCIAL_MEDIA } from "../../constant";
+import ButtonLoading from "../../components/ButtonLoading";
 import Player from "./components/Player";
 import "./index.scss";
 
@@ -38,11 +38,13 @@ class Detail extends React.Component {
 
   render() {
     const { itemMediaSocial = {}, messageError = "" } = this.props;
-    const { name = "", videoUrl: url = "" } = itemMediaSocial;
+    const { name = "", videoUrl: url = "", countView = 0 } = itemMediaSocial;
     const { complete } = this.state;
     if (messageError === "Id not found") {
       return <NotFoundPage />;
     }
+    const stringCountView = numeral(countView).format("0,0");
+
     return (
       <div className="container__detail">
         <TitlePage title={name} />
@@ -53,12 +55,43 @@ class Detail extends React.Component {
           </div>
         </div>
         <div className="detail__viewRow" style={{ marginTop: "2rem" }}>
-          <div className="viewLeft">Comment</div>
+          <div className="viewLeft">
+            <div className="box boxName">
+              <p className="boxName__textName">{name}</p>
+              <p className="boxName__textViews">
+                <i className="fas fa-eye" style={{ marginRight: "5px" }}></i>
+                {stringCountView} views
+              </p>
+            </div>
+            <div className="box boxInfoChanel">
+              <div className="boxInfoChanel__rightContent">
+                <img
+                  className="boxInfoChanel__avatar"
+                  src={require("../../images/testAvatar.jpg")}
+                  alt="img-avatar"
+                />
+                <p className="boxInfoChanel__name">NAME CHANEL</p>
+              </div>
+              <ButtonLoading
+                onClick={() => alert("SUB")}
+                text="Subscribe"
+                style={{
+                  width: "140px",
+                  height: "38px",
+                  fontSize: "16px"
+                }}
+              />
+            </div>
+          </div>
           <div className="rightList">List video vertical</div>
         </div>
 
         {complete && (
-          <Notification status="success" message="" title="Successfully" />
+          <Notification
+            status="success"
+            message=""
+            title="You received a reward 10 CXC"
+          />
         )}
       </div>
     );

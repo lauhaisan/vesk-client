@@ -10,11 +10,60 @@
       border-radius: 2px;
       background-color: #fff;
       box-shadow: 0 0 11px #ececec;
+      min-height: 315px;
     }
     .viewLeft {
-      min-height: 50vh;
+      min-height: 100vh;
       width: 65%;
-      background-color: goldenrod;
+      background-color: transparent;
+      .box {
+        width: 100%;
+        height: auto;
+        padding: 15px;
+        border-radius: 2px;
+        box-shadow: 0 0 11px #ececec;
+        background-color: #fff;
+      }
+      .boxName {
+        &__textName {
+          font-size: 18px;
+          // font-weight: 500;
+          line-height: 1.2;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          display: -webkit-box;
+          -webkit-line-clamp: 2; /* number of lines to show */
+          -webkit-box-orient: vertical;
+        }
+        &__textViews {
+          font-size: 13px;
+          color: #888;
+        }
+      }
+      .boxInfoChanel {
+        margin-top: 2rem;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        &__rightContent {
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+        }
+        &__avatar {
+          width: 38px;
+          height: 38px;
+          border-radius: 50%;
+          display: inline-block;
+          margin-right: 1rem;
+        }
+        &__name {
+          color: #ff516b;
+          font-size: 13px;
+          font-weight: 600;
+        }
+      }
     }
   }
 }
@@ -36,7 +85,7 @@
       .viewLeft {
         min-height: 50vh;
         width: 100%;
-        background-color: goldenrod;
+        background-color: transparent;
       }
     }
   }

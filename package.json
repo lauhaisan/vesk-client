@@ -12,6 +12,7 @@
     "history": "^5.0.0",
     "millify": "^3.3.0",
     "moment": "^2.27.0",
+    "numeral": "^2.0.6",
     "query-string": "^6.13.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
