@@ -2,17 +2,17 @@ import { lazy } from "react";
 import BasicLayout from "../layout/BasicLayout";
 import LoginLayout from "../layout/LoginLayout";
 import Notfound from "../pages/404Page";
-// import ReviewUser from "../pages/User/ReviewUser";
 import SignUp from "../pages/SignUp";
 import SignIn from "../pages/SignIn";
 import ForgotPassword from "../pages/ForgotPassword";
 import ComingSoon from "../pages/ComingSoon";
 const SingleChannel = lazy(() => import("../pages/SingleChannel"));
-const Advertising = lazy(() => import("../pages/Advertising"));
-const Contact = lazy(() => import("../pages/Contact"));
+// const Contact = lazy(() => import("../pages/Contact"));
 const Home = lazy(() => import("../pages/Home"));
-const Users = lazy(() => import("../pages/User"));
 const Profile = lazy(() => import("../pages/Profile"));
+const TopRated = lazy(() => import("../pages/TopRated"));
+const MostPopular = lazy(() => import("../pages/MostPopular"));
+const Detail = lazy(() => import("../pages/Detail"));
 
 const routes = [
   {
@@ -22,62 +22,38 @@ const routes = [
     component: Home
   },
   {
-    path: "/users",
+    path: "/top-rated",
     exact: true,
     layout: BasicLayout,
-    component: Users
-  },
-  // {
-  //   path: "/users/:id",
-  //   exact: false,
-  //   layout: BasicLayout,
-  //   component: ReviewUser,
-  // },
-  {
-    path: "/users-exchange",
-    exact: true,
-    layout: BasicLayout,
-    component: ComingSoon
+    component: TopRated
   },
   {
-    path: "/advertising",
+    path: "/most-popular",
     exact: true,
     layout: BasicLayout,
-    component: Advertising
+    component: MostPopular
   },
-  // {
-  //   path: "/social-media",
-  //   exact: true,
-  //   layout: BasicLayout,
-  //   component: SocialMeida
-  // },
   {
     path: "/channel/:id",
     exact: true,
     layout: BasicLayout,
     component: SingleChannel
   },
-  // {
-  //   path: "/detail",
-  //   exact: true,
-  //   layout: BasicLayout,
-  //   component: Detail
-  // },
-  // {
-  //   path: "/detail/:id",
-  //   exact: false,
-  //   layout: BasicLayout,
-  //   component: Detail
-  // },
+  {
+    path: "/detail/:id",
+    exact: true,
+    layout: BasicLayout,
+    component: Detail
+  },
   {
     path: "/contact",
-    exact: false,
+    exact: true,
     layout: BasicLayout,
-    component: Contact
+    component: ComingSoon
   },
   {
     path: "/profile",
-    exact: false,
+    exact: true,
     layout: BasicLayout,
     component: Profile
   },

@@ -1,0 +1,81 @@
+import React, { Component, Fragment } from "react";
+import { connect } from "react-redux";
+import { Loading } from "carbon-components-react";
+import Empty from "../../components/Empty";
+import { MOST_POPULAR } from "../../constant";
+import Notification from "../../components/Notification";
+import ItemVideo from "../../components/ItemVideo";
+import TitlePage from "../../components/TitlePage";
+import "./index.scss";
+
+class MostPopular extends Component {
+  componentDidMount() {
+    const { getListMostPopular } = this.props;
+    getListMostPopular({});
+  }
+
+  render() {
+    const {
+      loading,
+      listMostPopular = [],
+      messageErrorMostPopular = ""
+    } = this.props;
+
+    const _renderLoading = (
+      <div className="viewLoading">
+        <Loading withOverlay={false} />
+      </div>
+    );
+    return (
+      <Fragment>
+        <div className="container_page_topRated">
+          <TitlePage title="Top Rated" />
+          <div className="titleBlock">
+            <p className="titleBlock__text">Most Popular Videos</p>
+          </div>
+          {loading ? (
+            _renderLoading
+          ) : (
+            <div className="bx--row">
+              {listMostPopular.length === 0 ? (
+                <Empty text="No Video" />
+              ) : (
+                listMostPopular.map(item => (
+                  <div key={item.id} className="bx--col-md-2 bx--col-sm-4">
+                    <ItemVideo item={item} />
+                  </div>
+                ))
+              )}
+            </div>
+          )}
+        </div>
+        {messageErrorMostPopular !== "" && (
+          <Notification
+            status="error"
+            message={messageErrorMostPopular}
+            title="Process Failed"
+          />
+        )}
+      </Fragment>
+    );
+  }
+}
+
+const mapStateToProps = ({
+  mostPopular: {
+    loading,
+    listMostPopular = [],
+    messageErrorMostPopular = ""
+  } = {}
+}) => ({
+  loading,
+  listMostPopular,
+  messageErrorMostPopular
+});
+
+const mapDispatchToProps = dispatch => ({
+  getListMostPopular: data =>
+    dispatch({ type: MOST_POPULAR.GET_LIST_POPULAR, data })
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(MostPopular);

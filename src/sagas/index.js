@@ -4,12 +4,16 @@ import { userSaga } from "./userSaga";
 import { listUserSaga } from "./listUserSaga";
 import { advertisingSaga } from "./advertisingSaga";
 import { socialMediaSaga } from "./socialMediaSaga";
+import { topRatedSaga } from "./topRatedSaga";
+import { mostPopularSaga } from "./mostPopularSaga";
 export default function* rootSaga() {
   yield all([
     ...productSaga,
     ...userSaga,
     ...listUserSaga,
     ...advertisingSaga,
-    ...socialMediaSaga
+    ...socialMediaSaga,
+    ...topRatedSaga,
+    ...mostPopularSaga
   ]);
 }
