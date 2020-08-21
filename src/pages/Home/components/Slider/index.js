@@ -36,7 +36,7 @@ function NextArrow(props) {
     <div
       className={className}
       style={{
-        ...style
+        ...style,
       }}
       onClick={onClick}
     />
@@ -49,7 +49,7 @@ function PrevArrow(props) {
     <div
       className={className}
       style={{
-        ...style
+        ...style,
       }}
       onClick={onClick}
     />
@@ -71,32 +71,53 @@ export default class MultipleItems extends Component {
       prevArrow: <PrevArrow />,
       responsive: [
         {
+          breakpoint: 1350,
+          settings: {
+            slidesToShow: 7,
+            slidesToScroll: 3,
+          },
+        },
+        {
+          breakpoint: 1140,
+          settings: {
+            slidesToShow: 5,
+            slidesToScroll: 3,
+          },
+        },
+        {
           breakpoint: 1024,
           settings: {
+            slidesToShow: 5,
+            slidesToScroll: 3,
+          },
+        },
+        {
+          breakpoint: 768,
+          settings: {
             slidesToShow: 3,
-            slidesToScroll: 3
-          }
+            slidesToScroll: 3,
+          },
         },
         {
           breakpoint: 600,
           settings: {
             slidesToShow: 2,
-            slidesToScroll: 2
-          }
+            slidesToScroll: 2,
+          },
         },
         {
           breakpoint: 480,
           settings: {
             slidesToShow: 1,
-            slidesToScroll: 1
-          }
-        }
-      ]
+            slidesToScroll: 1,
+          },
+        },
+      ],
     };
     return (
       <div className="containerSlider">
         <Slider {...settings}>
-          {listData.map(item => (
+          {listData.map((item) => (
             <CustomSlide
               key={item.userId}
               className="itemSlider"
