@@ -5,7 +5,6 @@ import Notfound from "../pages/404Page";
 // import ReviewUser from "../pages/User/ReviewUser";
 import SignUp from "../pages/SignUp";
 import SignIn from "../pages/SignIn";
-// import Detail from "../pages/Detail";
 import ForgotPassword from "../pages/ForgotPassword";
 import ComingSoon from "../pages/ComingSoon";
 const SingleChannel = lazy(() => import("../pages/SingleChannel"));
