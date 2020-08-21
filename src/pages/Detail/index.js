@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import numeral from "numeral";
 import Notification from "../../components/Notification";
 import NotFoundPage from "../404Page";
-import { SOCIAL_MEDIA } from "../../constant";
+import { SOCIAL_MEDIA, COMMENTS } from "../../constant";
 import ButtonLoading from "../../components/ButtonLoading";
 import Player from "./components/Player";
 import Comments from "./components/Comments";
@@ -20,8 +20,9 @@ class Detail extends React.Component {
 
   componentDidMount() {
     const { match: { params: { id = "" } = {} } = {} } = this.props;
-    const { getById } = this.props;
+    const { getById, getListComment = () => {} } = this.props;
     getById(id);
+    getListComment(id);
   }
 
   componentWillUnmount() {
@@ -109,6 +110,8 @@ const mapStateToProps = ({
 
 const mapDispatchToProps = dispatch => ({
   getById: id => dispatch({ type: SOCIAL_MEDIA.GET_BY_ID, data: { id } }),
+  getListComment: data =>
+    dispatch({ type: COMMENTS.GET_LIST_COMMENTS, data: { data } }),
   updateStateReducer: data =>
     dispatch({ type: SOCIAL_MEDIA.UPDATE_SOCIAL_MEDIA_REDUCER, data })
 });

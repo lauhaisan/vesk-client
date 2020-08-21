@@ -24,9 +24,10 @@ $menuColor: #7d5a5a;
       }
     }
   }
-  @media only screen and (max-width: 768px) {
-    .ads {
-      display: none;
-    }
+}
+
+@media screen and (max-width: 992px) {
+  .player-wrapper {
+    width: 100%;
   }
 }

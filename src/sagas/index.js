@@ -6,6 +6,7 @@ import { advertisingSaga } from "./advertisingSaga";
 import { socialMediaSaga } from "./socialMediaSaga";
 import { topRatedSaga } from "./topRatedSaga";
 import { mostPopularSaga } from "./mostPopularSaga";
+import { commentSaga } from "./commentSaga";
 export default function* rootSaga() {
   yield all([
     ...productSaga,
@@ -14,6 +15,7 @@ export default function* rootSaga() {
     ...advertisingSaga,
     ...socialMediaSaga,
     ...topRatedSaga,
-    ...mostPopularSaga
+    ...mostPopularSaga,
+    ...commentSaga
   ]);
 }
