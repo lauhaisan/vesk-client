@@ -19,7 +19,8 @@ const URL = {
   SOCIAL_MEDIA_SEARCH: "/v1/vesk/e-social-media/search",
   GET_LIST_SOCIAL_MEDIA_BY_AUTHOR: "/v1/vesk/e-social-media/author",
 
-  GET_LIST_TOP_RATED: "/v1/vesk/e-social-media/top/search"
+  GET_LIST_TOP_RATED: "/v1/vesk/e-social-media/top/search",
+  GET_LIST_MOST_POPULAR: "/v1/vesk/e-social-media/most-popular/search"
 };
 
 export default URL;

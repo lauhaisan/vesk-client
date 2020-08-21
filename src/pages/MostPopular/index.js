@@ -2,23 +2,23 @@ import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
 import { Loading } from "carbon-components-react";
 import Empty from "../../components/Empty";
-import { TOP_RATED } from "../../constant";
+import { MOST_POPULAR } from "../../constant";
 import Notification from "../../components/Notification";
 import ItemVideo from "../../components/ItemVideo";
 import TitlePage from "../../components/TitlePage";
 import "./index.scss";
 
-class TopRated extends Component {
+class MostPopular extends Component {
   componentDidMount() {
-    // const { getListTopRated } = this.props;
-    // getListTopRated({});
+    const { getListMostPopular } = this.props;
+    getListMostPopular({});
   }
 
   render() {
     const {
       loading,
-      listTopRated = [],
-      messageErrorTopRated = ""
+      listMostPopular = [],
+      messageErrorMostPopular = ""
     } = this.props;
 
     const _renderLoading = (
@@ -37,10 +37,10 @@ class TopRated extends Component {
             _renderLoading
           ) : (
             <div className="bx--row">
-              {listTopRated.length === 0 ? (
+              {listMostPopular.length === 0 ? (
                 <Empty text="No Video" />
               ) : (
-                listTopRated.map(item => (
+                listMostPopular.map(item => (
                   <div key={item.id} className="bx--col-md-2 bx--col-sm-4">
                     <ItemVideo item={item} />
                   </div>
@@ -49,10 +49,10 @@ class TopRated extends Component {
             </div>
           )}
         </div>
-        {messageErrorTopRated !== "" && (
+        {messageErrorMostPopular !== "" && (
           <Notification
             status="error"
-            message={messageErrorTopRated}
+            message={messageErrorMostPopular}
             title="Process Failed"
           />
         )}
@@ -62,16 +62,20 @@ class TopRated extends Component {
 }
 
 const mapStateToProps = ({
-  topRated: { loading, listTopRated = [], messageErrorTopRated = "" } = {}
+  mostPopular: {
+    loading,
+    listMostPopular = [],
+    messageErrorMostPopular = ""
+  } = {}
 }) => ({
   loading,
-  listTopRated,
-  messageErrorTopRated
+  listMostPopular,
+  messageErrorMostPopular
 });
 
 const mapDispatchToProps = dispatch => ({
-  getListTopRated: data =>
-    dispatch({ type: TOP_RATED.GET_LIST_TOP_RATED, data })
+  getListMostPopular: data =>
+    dispatch({ type: MOST_POPULAR.GET_LIST_POPULAR, data })
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(TopRated);
+export default connect(mapStateToProps, mapDispatchToProps)(MostPopular);

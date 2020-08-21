@@ -5,6 +5,7 @@ import listUserReducer from "./listUserReducer";
 import advertisingReducer from "./advertisingReducer";
 import socialMediaReducer from "./socialMediaReducer";
 import topRatedReducer from "./topRatedReducer";
+import mostPopularReducer from "./mostPopularReducer";
 
 const rootReducer = combineReducers({
   // products: productReducer,
@@ -12,7 +13,8 @@ const rootReducer = combineReducers({
   listUser: listUserReducer,
   advertising: advertisingReducer,
   socialMedia: socialMediaReducer,
-  topRated: topRatedReducer
+  topRated: topRatedReducer,
+  mostPopular: mostPopularReducer
 });
 
 export default rootReducer;
