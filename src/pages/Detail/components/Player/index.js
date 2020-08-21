@@ -18,7 +18,7 @@ class ResponsivePlayer extends Component {
           className="react-player"
           url={url}
           width="100%"
-          height="100%"
+          height="315px"
           controls={true}
           onProgress={this.handleProgress}
         />

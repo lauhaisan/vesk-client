@@ -1,21 +1,33 @@
 import React from "react";
-// import TitlePage from "../../components/TitlePage";
-// import { connect } from "react-redux";
+import TitlePage from "../../components/TitlePage";
+import { connect } from "react-redux";
 // import { TextArea } from "carbon-components-react";
-// import { Redirect } from "react-router-dom";
+import Notification from "../../components/Notification";
+import NotFoundPage from "../404Page";
+
+import { SOCIAL_MEDIA } from "../../constant";
 import Player from "./components/Player";
-// import ButtonLoading from "../../components/ButtonLoading";
-// import ButtonOutline from "../../components/ButtonOutline";
-// import { getToken } from "../../utils/token";
 import "./index.scss";
 
 class Detail extends React.Component {
   constructor(props) {
     super(props);
-    this.isComponentMounted = false;
     this.state = {
       complete: false
     };
+  }
+
+  componentDidMount() {
+    const { match: { params: { id = "" } = {} } = {} } = this.props;
+    const { getById } = this.props;
+    getById(id);
+  }
+
+  componentWillUnmount() {
+    const { updateStateReducer } = this.props;
+    updateStateReducer({
+      itemMediaSocial: {}
+    });
   }
 
   checkComplete = value => {
@@ -25,25 +37,45 @@ class Detail extends React.Component {
   };
 
   render() {
+    const { itemMediaSocial = {}, messageError = "" } = this.props;
+    const { name = "", videoUrl: url = "" } = itemMediaSocial;
     const { complete } = this.state;
+    if (messageError === "Id not found") {
+      return <NotFoundPage />;
+    }
     return (
       <div className="container__detail">
-        <div className="viewPlayer">
-          <Player
-            url="https://www.youtube.com/watch?v=eMemw3n8dtw"
-            checkComplete={this.checkComplete}
-          />
+        <TitlePage title={name} />
+        <div className="detail__viewRow">
+          <Player url={url} checkComplete={this.checkComplete} />
+          <div className="rightList" style={{ height: "315px" }}>
+            List video vertical
+          </div>
         </div>
-        {complete && <div>COMPLETE</div>}
+        <div className="detail__viewRow" style={{ marginTop: "2rem" }}>
+          <div className="viewLeft">Comment</div>
+          <div className="rightList">List video vertical</div>
+        </div>
+
+        {complete && (
+          <Notification status="success" message="" title="Successfully" />
+        )}
       </div>
     );
   }
 }
-// const mapStateToProps = ({ products: { dummyListVideo } = {} }) => ({
-//   dummyListVideo,
-// });
+const mapStateToProps = ({
+  socialMedia: { itemMediaSocial = {}, loadingGetById, messageError } = {}
+}) => ({
+  itemMediaSocial,
+  loadingGetById,
+  messageError
+});
 
-// const mapDispatchToProps = (dispatch) => ({});
+const mapDispatchToProps = dispatch => ({
+  getById: id => dispatch({ type: SOCIAL_MEDIA.GET_BY_ID, data: { id } }),
+  updateStateReducer: data =>
+    dispatch({ type: SOCIAL_MEDIA.UPDATE_SOCIAL_MEDIA_REDUCER, data })
+});
 
-export default //  connect(mapStateToProps, mapDispatchToProps)
-Detail;
+export default connect(mapStateToProps, mapDispatchToProps)(Detail);

@@ -1,9 +1,43 @@
 .container__detail {
   padding: 2rem;
   min-height: 100vh;
-  .viewPlayer {
-    width: 50%;
-    height: 50vh;
-    margin: 0 auto;
+  .detail__viewRow {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    .rightList {
+      width: 31%;
+      border-radius: 2px;
+      background-color: #fff;
+      box-shadow: 0 0 11px #ececec;
+    }
+    .viewLeft {
+      min-height: 50vh;
+      width: 65%;
+      background-color: goldenrod;
+    }
+  }
+}
+
+@media screen and (max-width: 992px) {
+  .container__detail {
+    padding: 2rem;
+    min-height: 100vh;
+    .detail__viewRow {
+      display: flex;
+      flex-direction: column;
+      .rightList {
+        margin-top: 2rem;
+        width: 100%;
+        border-radius: 2px;
+        background-color: #fff;
+        box-shadow: 0 0 11px #ececec;
+      }
+      .viewLeft {
+        min-height: 50vh;
+        width: 100%;
+        background-color: goldenrod;
+      }
+    }
   }
 }
