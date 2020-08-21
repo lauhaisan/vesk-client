@@ -1,25 +1,36 @@
 import React, { PureComponent } from "react";
 import { NavLink } from "react-router-dom";
+import windowSize from "react-window-size";
 import "./index.scss";
 
-export default class SideMenu extends PureComponent {
+class SideMenu extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
       openUser: false,
       openAds: false,
-      openSocialMedia: false
+      openSocialMedia: false,
     };
   }
 
   componentDidMount() {}
 
   render() {
-    const { openMenu } = this.props;
-    const classNameMenu = openMenu ? "sideBarOpen" : "sideBarClose";
+    const { openMenu, windowWidth } = this.props;
+    const isMobile = windowWidth < 768;
+    let classNameMenu;
+    if (isMobile) {
+      classNameMenu = "sideBarOpen";
+    } else {
+      openMenu
+        ? (classNameMenu = "sideBarOpen")
+        : (classNameMenu = "sideBarClose");
+    }
+
+    const checkMenuMobileOpen = isMobile && openMenu ? "none" : "block";
 
     return (
-      <div className={classNameMenu}>
+      <div className={classNameMenu} style={{ display: checkMenuMobileOpen }}>
         <div className={`${classNameMenu}__menu`}>
           <NavLink
             exact
@@ -61,3 +72,4 @@ export default class SideMenu extends PureComponent {
     );
   }
 }
+export default windowSize(SideMenu);
