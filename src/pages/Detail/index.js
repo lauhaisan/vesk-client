@@ -14,13 +14,13 @@ class Detail extends React.Component {
     super(props);
     this.isComponentMounted = false;
     this.state = {
-      complete: false,
+      complete: false
     };
   }
 
-  checkComplete = (value) => {
+  checkComplete = value => {
     this.setState({
-      complete: value,
+      complete: value
     });
   };
 
@@ -30,7 +30,7 @@ class Detail extends React.Component {
       <div className="container__detail">
         <div className="viewPlayer">
           <Player
-            url="https://www.youtube.com/watch?v=Nxs_mpWt2BA"
+            url="https://www.youtube.com/watch?v=eMemw3n8dtw"
             checkComplete={this.checkComplete}
           />
         </div>

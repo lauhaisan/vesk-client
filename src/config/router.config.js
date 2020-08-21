@@ -7,45 +7,59 @@ import SignUp from "../pages/SignUp";
 import SignIn from "../pages/SignIn";
 import Detail from "../pages/Detail";
 import ForgotPassword from "../pages/ForgotPassword";
-import ComingSoon from "../pages/ComingSoon";
+// import ComingSoon from "../pages/ComingSoon";
 const SingleChannel = lazy(() => import("../pages/SingleChannel"));
-const Advertising = lazy(() => import("../pages/Advertising"));
+// const Advertising = lazy(() => import("../pages/Advertising"));
 const Contact = lazy(() => import("../pages/Contact"));
 const Home = lazy(() => import("../pages/Home"));
-const Users = lazy(() => import("../pages/User"));
+// const Users = lazy(() => import("../pages/User"));
 const Profile = lazy(() => import("../pages/Profile"));
+const TopRated = lazy(() => import("../pages/TopRated"));
+const MostPopular = lazy(() => import("../pages/MostPopular"));
 
 const routes = [
   {
     path: "/",
     exact: true,
     layout: BasicLayout,
-    component: Home,
+    component: Home
   },
   {
-    path: "/users",
+    path: "/top-rated",
     exact: true,
     layout: BasicLayout,
-    component: Users,
+    component: TopRated
   },
+  {
+    path: "/most-popular",
+    exact: true,
+    layout: BasicLayout,
+    component: MostPopular
+  },
+  // {
+  //   path: "/users",
+  //   exact: true,
+  //   layout: BasicLayout,
+  //   component: Users
+  // },
   // {
   //   path: "/users/:id",
   //   exact: false,
   //   layout: BasicLayout,
   //   component: ReviewUser,
   // },
-  {
-    path: "/users-exchange",
-    exact: true,
-    layout: BasicLayout,
-    component: ComingSoon,
-  },
-  {
-    path: "/advertising",
-    exact: true,
-    layout: BasicLayout,
-    component: Advertising,
-  },
+  // {
+  //   path: "/users-exchange",
+  //   exact: true,
+  //   layout: BasicLayout,
+  //   component: ComingSoon
+  // },
+  // {
+  //   path: "/advertising",
+  //   exact: true,
+  //   layout: BasicLayout,
+  //   component: Advertising
+  // },
   // {
   //   path: "/social-media",
   //   exact: true,
@@ -56,56 +70,50 @@ const routes = [
     path: "/channel/:id",
     exact: true,
     layout: BasicLayout,
-    component: SingleChannel,
+    component: SingleChannel
   },
-  // {
-  //   path: "/detail",
-  //   exact: true,
-  //   layout: BasicLayout,
-  //   component: Detail,
-  // },
   {
     path: "/detail/:id",
     exact: true,
     layout: BasicLayout,
-    component: Detail,
+    component: Detail
   },
   {
     path: "/contact",
-    exact: false,
+    exact: true,
     layout: BasicLayout,
-    component: Contact,
+    component: Contact
   },
   {
     path: "/profile",
-    exact: false,
+    exact: true,
     layout: BasicLayout,
-    component: Profile,
+    component: Profile
   },
   {
     path: "/signin",
     exact: true,
     layout: LoginLayout,
-    component: SignIn,
+    component: SignIn
   },
   {
     path: "/signup",
     exact: true,
     layout: LoginLayout,
-    component: SignUp,
+    component: SignUp
   },
   {
     path: "/forgot-password",
     exact: true,
     layout: LoginLayout,
-    component: ForgotPassword,
+    component: ForgotPassword
   },
   {
     path: "",
     exact: false,
     layout: BasicLayout,
-    component: Notfound,
-  },
+    component: Notfound
+  }
 ];
 
 export default routes;

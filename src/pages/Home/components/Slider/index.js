@@ -18,7 +18,7 @@ class CustomSlide extends Component {
             />
           </Link>
           <Link
-            style={{ width: "70%", cursor: "pointer" }}
+            style={{ width: "70%", cursor: "pointer", textDecoration: "none" }}
             to={`/channel/${id}`}
           >
             <div className="itemSlider__content--name">{itemUser.userName}</div>

@@ -11,7 +11,7 @@ class ResponsivePlayer extends Component {
     }
   };
   render() {
-    const { url } = this.props;
+    const { url = "" } = this.props;
     return (
       <div className="player-wrapper">
         <ReactPlayer

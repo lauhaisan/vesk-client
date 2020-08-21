@@ -31,6 +31,24 @@ export default class SideMenu extends PureComponent {
             <span className="itemMenu__text">Home</span>
           </NavLink>
           <NavLink
+            exact
+            activeClassName={`${classNameMenu}__menu__itemMenu--active`}
+            to="/top-rated"
+            className={`${classNameMenu}__menu__itemMenu`}
+          >
+            <i className="fas fa-fire itemMenu__icon"></i>
+            <span className="itemMenu__text">Top Rated</span>
+          </NavLink>
+          <NavLink
+            exact
+            activeClassName={`${classNameMenu}__menu__itemMenu--active`}
+            to="/most-popular"
+            className={`${classNameMenu}__menu__itemMenu`}
+          >
+            <i className="fas fa-poll itemMenu__icon"></i>
+            <span className="itemMenu__text">Most Popular</span>
+          </NavLink>
+          <NavLink
             activeClassName={`${classNameMenu}__menu__itemMenu--active`}
             to="/contact"
             className={`${classNameMenu}__menu__itemMenu`}
