@@ -1,9 +1,10 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 import millify from "millify";
 import "./index.scss";
 
 class ItemVideo extends Component {
-  timeAgo = prevDate => {
+  timeAgo = (prevDate) => {
     const time = Date.parse(prevDate);
     const diff = Number(new Date()) - time;
     const minute = 60 * 1000;
@@ -32,35 +33,42 @@ class ItemVideo extends Component {
   render() {
     const { item = {} } = this.props;
     return (
-      <div className="itemVideo">
-        <div className="viewImgVideo">
-          <div className="itemVideo__viewIconPlay">
-            <i className="far fa-play-circle iconPlay"></i>
-          </div>
+      <Link to={`/detail/123`} className="link">
+        <div className="itemVideo">
+          <div className="viewImgVideo">
+            <div className="itemVideo__viewIconPlay">
+              <i className="far fa-play-circle iconPlay"></i>
+            </div>
 
-          <img
-            className="itemVideo__video"
-            src="https://i.ytimg.com/vi/YnuSPC-S_yc/hqdefault.jpg?sqp=-oaymwEZCOADEI4CSFXyq4qpAwsIARUAAIhCGAFwAQ==&rs=AOn4CLDtdEIdy1CUdr6jqsCxv4CFfB0BtQ"
-            alt="img-video"
-          />
-        </div>
-        <div className="itemVideo__info">
-          <div className="info__title">{item.name}</div>
-          <div className="info__nameChanel">Name Chanel</div>
-          <div>
-            <span className="info__viewAndTime" style={{ marginRight: "5px" }}>
-              {item.countView ? `${millify(item.countView)} views` : "0 views"}
-            </span>
-            <i
-              className="fas fa-calendar-alt info__viewAndTime"
-              style={{ marginRight: "3px" }}
-            ></i>
-            <span className="info__viewAndTime">
-              {this.timeAgo(item.created)}
-            </span>
+            <img
+              className="itemVideo__video"
+              src="https://i.ytimg.com/vi/YnuSPC-S_yc/hqdefault.jpg?sqp=-oaymwEZCOADEI4CSFXyq4qpAwsIARUAAIhCGAFwAQ==&rs=AOn4CLDtdEIdy1CUdr6jqsCxv4CFfB0BtQ"
+              alt="img-video"
+            />
+          </div>
+          <div className="itemVideo__info">
+            <div className="info__title">{item.name}</div>
+            <div className="info__nameChanel">Name Chanel</div>
+            <div>
+              <span
+                className="info__viewAndTime"
+                style={{ marginRight: "5px" }}
+              >
+                {item.countView
+                  ? `${millify(item.countView)} views`
+                  : "0 views"}
+              </span>
+              <i
+                className="fas fa-calendar-alt info__viewAndTime"
+                style={{ marginRight: "3px" }}
+              ></i>
+              <span className="info__viewAndTime">
+                {this.timeAgo(item.created)}
+              </span>
+            </div>
           </div>
         </div>
-      </div>
+      </Link>
     );
   }
 }
