@@ -14,7 +14,7 @@ class Detail extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      complete: false
+      complete: false,
     };
   }
 
@@ -26,20 +26,43 @@ class Detail extends React.Component {
   }
 
   componentWillUnmount() {
-    const { updateStateReducer } = this.props;
+    const { updateStateReducer, updateStateCommentReducer } = this.props;
     updateStateReducer({
-      itemMediaSocial: {}
+      itemMediaSocial: {},
+    });
+    updateStateCommentReducer({
+      listComment: [],
+      paging: {},
+      messageErrorComment: "",
     });
   }
 
-  checkComplete = value => {
+  handleAddComment = (comment) => {
+    const { addComment, itemMediaSocial: { id = "" } = {} } = this.props;
+    const payload = {
+      postId: id,
+      comment,
+      title: "My Comment",
+    };
+    addComment(payload);
+  };
+
+  checkComplete = (value) => {
     this.setState({
-      complete: value
+      complete: value,
     });
   };
 
   render() {
-    const { itemMediaSocial = {}, messageError = "" } = this.props;
+    const {
+      itemMediaSocial = {},
+      messageError = "",
+      fetchingComment,
+      listComment = [],
+      // messageErrorComment,
+      loadingAction,
+      // actionSuccessfully,
+    } = this.props;
     const { name = "", videoUrl: url = "", countView = 0 } = itemMediaSocial;
     const { complete } = this.state;
     if (messageError === "Id not found") {
@@ -80,15 +103,19 @@ class Detail extends React.Component {
                 style={{
                   width: "140px",
                   height: "38px",
-                  fontSize: "16px"
+                  fontSize: "16px",
                 }}
               />
             </div>
-            <Comments />
+            <Comments
+              listComment={listComment}
+              loadingComment={fetchingComment}
+              loadingActionComment={loadingAction}
+              handleAddComment={this.handleAddComment}
+            />
           </div>
           <div className="rightList">List video vertical</div>
         </div>
-
         {complete && (
           <Notification
             status="success"
@@ -101,19 +128,36 @@ class Detail extends React.Component {
   }
 }
 const mapStateToProps = ({
-  socialMedia: { itemMediaSocial = {}, loadingGetById, messageError } = {}
+  socialMedia: { itemMediaSocial = {}, loadingGetById, messageError } = {},
+  comment: {
+    loading: fetchingComment,
+    listComment = [],
+    // paging {},
+    messageErrorComment = "",
+    loadingAction = false,
+    actionSuccessfully = "",
+  } = {},
 }) => ({
   itemMediaSocial,
   loadingGetById,
-  messageError
+  messageError,
+  fetchingComment,
+  listComment,
+  messageErrorComment,
+  loadingAction,
+  actionSuccessfully,
 });
 
-const mapDispatchToProps = dispatch => ({
-  getById: id => dispatch({ type: SOCIAL_MEDIA.GET_BY_ID, data: { id } }),
-  getListComment: data =>
+const mapDispatchToProps = (dispatch) => ({
+  getById: (id) => dispatch({ type: SOCIAL_MEDIA.GET_BY_ID, data: { id } }),
+  getListComment: (data) =>
     dispatch({ type: COMMENTS.GET_LIST_COMMENTS, data: { data } }),
-  updateStateReducer: data =>
-    dispatch({ type: SOCIAL_MEDIA.UPDATE_SOCIAL_MEDIA_REDUCER, data })
+  addComment: (data) =>
+    dispatch({ type: COMMENTS.ADD_COMMENT, data: { data } }),
+  updateStateReducer: (data) =>
+    dispatch({ type: SOCIAL_MEDIA.UPDATE_SOCIAL_MEDIA_REDUCER, data }),
+  updateStateCommentReducer: (data) =>
+    dispatch({ type: COMMENTS.UPDATE_STATE_COMMENT_REDUCER, data }),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Detail);

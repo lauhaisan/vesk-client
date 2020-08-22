@@ -5,21 +5,21 @@ const BASE_URL_AUTH = process.env.REACT_APP_BASE_URL_AUTH;
 const BASE_URL_API = process.env.REACT_APP_BASE_URL_API;
 const request = async (url, isAuth, method = "GET", payload) => {
   const BASE_URL = !isAuth ? BASE_URL_AUTH : BASE_URL_API;
-  const urlAPI = `${BASE_URL}${url}`;
+  const urlAPI = BASE_URL + url;
   const payloadRequestRefreshToken = { urlAPI, method, payload };
   const { token } = await getToken();
   const body = payload ? JSON.stringify({ ...payload }) : undefined;
-  let headers = { "Content-Type": "application/json" };
+  let headers = { "Content-Type": "application/json;charset=UTF-8" };
   if (isAuth) {
     headers = {
       ...headers,
-      Authorization: token
+      Authorization: token,
     };
   }
   const requestOptions = {
     method,
     headers,
-    body
+    body,
   };
 
   const response = await callAPI(

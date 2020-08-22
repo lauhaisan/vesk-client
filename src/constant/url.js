@@ -27,7 +27,8 @@ const URL = {
   GET_LIST_MOST_POPULAR: "/v1/vesk/e-social-media/most-popular/search",
 
   //COMMENT
-  GET_LIST_COMMENT: "/v1/vesk/comment"
+  ADD_COMMENT: "/v1/vesk/comment",
+  GET_LIST_COMMENT: "/v1/vesk/comment/post",
 };
 
 export default URL;

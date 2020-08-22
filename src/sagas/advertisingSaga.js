@@ -45,7 +45,6 @@ function* deleteAdsById(obj) {
   const dat = obj.data.data;
   const hideModal = obj.data.functionHideModal;
   const resp = yield call(deleteAdsByIdAPI, dat);
-  console.log(resp);
   if (resp.code !== 200) {
     yield put({ type: ADVERTISING.DELETE_ADS_FAIL, data: resp.message });
     return;

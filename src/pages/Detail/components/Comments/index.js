@@ -8,24 +8,59 @@ export default class Comments extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      textComment: ""
+      textComment: "",
     };
   }
 
-  handleChangeComment = value => {
+  handleChangeComment = (value) => {
     this.setState({
-      textComment: value
+      textComment: value,
     });
   };
 
   handleSubmit = () => {
+    const { handleAddComment } = this.props;
     const { textComment } = this.state;
-    alert(textComment);
+    handleAddComment(textComment);
+    this.setState({
+      textComment: "",
+    });
+  };
+
+  timeAgo = (prevDate) => {
+    const time = Date.parse(prevDate);
+    const diff = Number(new Date()) - time;
+    const minute = 60 * 1000;
+    const hour = minute * 60;
+    const day = hour * 24;
+    const month = day * 30;
+    const year = day * 365;
+    switch (true) {
+      case diff < minute:
+        const seconds = Math.round(diff / 1000);
+        return `${seconds} ${seconds > 1 ? "seconds" : "second"} ago`;
+      case diff < hour:
+        return Math.round(diff / minute) + " minutes ago";
+      case diff < day:
+        return Math.round(diff / hour) + " hours ago";
+      case diff < month:
+        return Math.round(diff / day) + " days ago";
+      case diff < year:
+        return Math.round(diff / month) + " months ago";
+      case diff > year:
+        return Math.round(diff / year) + " years ago";
+      default:
+        return "";
+    }
   };
 
   render() {
+    const {
+      listComment = [],
+      // loadingComment,
+      loadingActionComment,
+    } = this.props;
     const { textComment = "" } = this.state;
-    const arr = [1, 2, 3, 4, 5, 6, 7, 8, 9];
     return (
       <div className="containerComments">
         <div className="viewTitleComment">Comments</div>
@@ -45,39 +80,42 @@ export default class Comments extends Component {
                 labelText=""
                 hideLabel
                 value={textComment}
-                onChange={event => this.handleChangeComment(event.target.value)}
+                onChange={(event) =>
+                  this.handleChangeComment(event.target.value)
+                }
                 placeholder="Add a public comment"
                 rows={0}
               />
             </div>
             <div className="viewBtnComment">
-              <div class="textTotalComments">10000 Comments</div>
+              <div className="textTotalComments">
+                {listComment.length} Comments
+              </div>
               <div style={{ display: "flex" }}>
                 <ButtonOutline
                   onClick={() =>
                     this.setState({
-                      textComment: ""
+                      textComment: "",
                     })
                   }
                   disabled={false}
                   text="Cancel"
                   style={{
                     width: "7rem",
-                    height: "30px"
+                    height: "30px",
                   }}
                 />
 
                 <ButtonLoading
                   onClick={this.handleSubmit}
-                  // disabled={loading}
-                  disabled={!textComment}
-                  // loading={loading ? "yes" : undefined}
+                  disabled={!textComment || loadingActionComment}
+                  loading={loadingActionComment ? "yes" : undefined}
                   text="Comment"
                   style={{
                     width: "7rem",
                     height: "30px",
 
-                    marginLeft: "10px"
+                    marginLeft: "10px",
                   }}
                 />
               </div>
@@ -85,8 +123,8 @@ export default class Comments extends Component {
           </div>
         </div>
         <div className="listComments">
-          {arr.map(item => (
-            <div className="itemComment" key={item}>
+          {listComment.map((item) => (
+            <div className="itemComment" key={item.id}>
               <img
                 className="avatarComment"
                 src={require("../../../../images/testAvatar.jpg")}
@@ -94,20 +132,12 @@ export default class Comments extends Component {
               />
               <div className="itemComment__content">
                 <div>
-                  <span className="content--name">Gurdeep Osahan</span>
-                  <span className="content--timeAgo">2 months ago</span>
+                  <span className="content--name">User Name</span>
+                  <span className="content--timeAgo">
+                    {this.timeAgo(item.createdAt)}
+                  </span>
                 </div>
-                <div className="content--textContent">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec
-                  odio urna, scelerisque et sapien non, sodales viverra velit.
-                  Sed et cursus magna. Nullam in scelerisque diam. Nam posuere
-                  pharetra dignissim. Sed ultrices a metus feugiat rhoncus. Sed
-                  facilisis pharetra mi non tempus. Integer et rhoncus turpis,
-                  sollicitudin ornare libero. Morbi dapibus ante a velit
-                  tincidunt tincidunt. Donec porta luctus tincidunt. Cras
-                  malesuada placerat augue, interdum condimentum enim laoreet
-                  eget. Mauris porta a sem eu tincidunt.
-                </div>
+                <div className="content--textContent">{item.comment}</div>
               </div>
             </div>
           ))}
