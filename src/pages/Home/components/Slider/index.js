@@ -13,7 +13,7 @@ class CustomSlide extends Component {
           <Link to={`/channel/${id}`}>
             <img
               className="itemSlider__content--avt"
-              src={require("../../../../images/testAvatar.jpg")}
+              src={itemUser.avatar}
               alt="img-avatar"
             />
           </Link>

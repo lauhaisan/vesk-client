@@ -61,7 +61,7 @@ class Home extends Component {
             <div className="singleChanel__profile">
               <img
                 className="singleChanel__profile__avt"
-                src={require("../../images/testAvatar.jpg")}
+                src={itemUser.avatar}
                 alt="img-avatar"
               />
               <div className="singleChanel__profile__social">Social Media</div>
