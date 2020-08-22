@@ -1,0 +1,73 @@
+.link {
+  text-decoration: none;
+  .itemVideoVertical {
+    display: flex;
+    flex-direction: row;
+    height: 77px;
+    padding: 9px;
+    position: relative;
+    .thumbnail {
+      width: 95px;
+      height: 59.5px;
+      object-fit: cover;
+      z-index: 10;
+    }
+    .rightInfo {
+      margin-left: 10px;
+      &__title {
+        font-size: 13px;
+        color: #333;
+        font-weight: 600;
+        line-height: 1.5;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 1; /* number of lines to show */
+        -webkit-box-orient: vertical;
+        margin-bottom: 5px;
+      }
+      &__nameChanel {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        width: 60%;
+        line-height: 1.5;
+        font-size: 11px;
+        color: #4eda92;
+      }
+      &__viewAndTime {
+        display: inline;
+        color: #acacac;
+        font-size: 10px;
+        line-height: 1.5;
+      }
+    }
+    &__viewIconPlay {
+      position: absolute;
+      width: 95px;
+      height: 59.5px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      .iconPlay {
+        opacity: 0.4;
+        color: #fff;
+        font-size: 35px;
+        z-index: 20;
+        display: none;
+      }
+    }
+    &:hover {
+      background-color: #eceff0;
+      .thumbnail {
+        filter: brightness(50%);
+      }
+      .itemVideoVertical__viewIconPlay {
+        .iconPlay {
+          display: block;
+        }
+      }
+    }
+  }
+}

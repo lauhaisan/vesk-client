@@ -18,7 +18,7 @@
       width: 100%;
       height: auto;
       max-height: 230px;
-      // object-fit: contain;
+      object-fit: cover;
       cursor: pointer;
     }
   }
@@ -32,6 +32,27 @@
       background-color: #fff;
       box-shadow: 0 0 11px #ececec;
       min-height: 315px;
+      .scrollView {
+        height: 315px;
+        overflow-y: scroll;
+        border-radius: 0 0 0 6px;
+      }
+      .scrollView::-webkit-scrollbar {
+        width: 6px;
+        background-color: transparent;
+      }
+
+      .scrollView::-webkit-scrollbar-track {
+        margin: 0 30px;
+      }
+
+      .scrollView::-webkit-scrollbar-track-piece {
+        background-color: transparent;
+      }
+      .scrollView::-webkit-scrollbar-thumb:vertical {
+        border-radius: 10px;
+        background-color: #888;
+      }
     }
     .viewLeft {
       min-height: 50vh;

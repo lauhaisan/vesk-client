@@ -4,7 +4,8 @@ import { connect } from "react-redux";
 import numeral from "numeral";
 import Notification from "../../components/Notification";
 import NotFoundPage from "../404Page";
-import { SOCIAL_MEDIA, COMMENTS } from "../../constant";
+import { SOCIAL_MEDIA, COMMENTS, MOST_POPULAR } from "../../constant";
+import ItemVideoVertical from "../../components/ItemVideoVertical";
 import ButtonLoading from "../../components/ButtonLoading";
 import Player from "./components/Player";
 import Comments from "./components/Comments";
@@ -15,14 +16,39 @@ class Detail extends React.Component {
     super(props);
     this.state = {
       complete: false,
+      id: "",
     };
   }
 
   componentDidMount() {
-    const { match: { params: { id = "" } = {} } = {} } = this.props;
-    const { getById, getListComment = () => {} } = this.props;
+    const {
+      match: { params: { id = "" } = {} } = {},
+      getById,
+      getListComment = () => {},
+      getListMostPopular,
+    } = this.props;
     getById(id);
     getListComment(id);
+    getListMostPopular({});
+    this.setState({
+      id,
+    });
+  }
+
+  componentDidUpdate(prevProps) {
+    const {
+      match: { params: { id: idParams = "" } = {} } = {},
+      getById,
+      getListComment = () => {},
+    } = this.props;
+    if (this.state.id !== idParams) {
+      getById(idParams);
+      getListComment(idParams);
+      this.setState({
+        id: idParams,
+        complete: false,
+      });
+    }
   }
 
   componentWillUnmount() {
@@ -63,6 +89,8 @@ class Detail extends React.Component {
       // messageErrorComment,
       loadingAction,
       // actionSuccessfully,
+      // loadingMostPopular,
+      listMostPopular = [],
     } = this.props;
     const {
       name = "",
@@ -70,20 +98,35 @@ class Detail extends React.Component {
       countView = 0,
       authorId = "",
     } = itemMediaSocial;
-    const { complete } = this.state;
+    const { complete, id } = this.state;
     if (messageError === "Id not found") {
       return <NotFoundPage />;
     }
     const stringCountView = numeral(countView).format("0,0");
     const itemChanel =
       listUserData.find((element) => element.userId === authorId) || {};
+    const formatListVideoMostPopular = listMostPopular.map((item) => {
+      return {
+        ...item,
+        author: listUserData.find(
+          (element) => element.userId === item.authorId
+        ),
+      };
+    });
+    const filterListVideoMostPopular = formatListVideoMostPopular.filter(
+      (item) => item.id !== id
+    );
     return (
       <div className="container__detail">
         <TitlePage title={name} />
         <div className="detail__viewRow">
           <Player url={url} checkComplete={this.checkComplete} />
           <div className="rightList" style={{ height: "315px" }}>
-            List video vertical
+            <div className="scrollView">
+              {filterListVideoMostPopular.map((item) => (
+                <ItemVideoVertical key={item.id} item={item} />
+              ))}
+            </div>
           </div>
         </div>
         <div className="viewAds">
@@ -136,7 +179,14 @@ class Detail extends React.Component {
               handleAddComment={this.handleAddComment}
             />
           </div>
-          <div className="rightList">List video vertical</div>
+          <div
+            className="rightList"
+            style={{ backgroundColor: "transparent", boxShadow: "none" }}
+          >
+            {filterListVideoMostPopular.map((item) => (
+              <ItemVideoVertical key={item.id} item={item} />
+            ))}
+          </div>
         </div>
         {complete && (
           <Notification
@@ -160,6 +210,7 @@ const mapStateToProps = ({
     actionSuccessfully = "",
   } = {},
   listUser: { listUserData = [] } = {},
+  mostPopular: { loading: loadingMostPopular, listMostPopular = [] } = {},
 }) => ({
   itemMediaSocial,
   loadingGetById,
@@ -170,6 +221,8 @@ const mapStateToProps = ({
   loadingAction,
   actionSuccessfully,
   listUserData,
+  loadingMostPopular,
+  listMostPopular,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -182,6 +235,8 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch({ type: SOCIAL_MEDIA.UPDATE_SOCIAL_MEDIA_REDUCER, data }),
   updateStateCommentReducer: (data) =>
     dispatch({ type: COMMENTS.UPDATE_STATE_COMMENT_REDUCER, data }),
+  getListMostPopular: (data) =>
+    dispatch({ type: MOST_POPULAR.GET_LIST_POPULAR, data }),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Detail);
