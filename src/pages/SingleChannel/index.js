@@ -42,6 +42,7 @@ class Home extends Component {
       itemUser = {},
       loading,
       listByAuthor = [],
+      listUserData = [],
       messageError = "",
     } = this.props;
 
@@ -53,6 +54,16 @@ class Home extends Component {
         <Loading withOverlay={false} />
       </div>
     );
+
+    const formatListVideo = listByAuthor.map((item) => {
+      return {
+        ...item,
+        author: listUserData.find(
+          (element) => element.userId === item.authorId
+        ),
+      };
+    });
+
     return (
       <Fragment>
         <TitlePage title={itemUser.userName} />
@@ -90,10 +101,10 @@ class Home extends Component {
             _renderLoading
           ) : (
             <div className="bx--row">
-              {listByAuthor.length === 0 ? (
+              {formatListVideo.length === 0 ? (
                 <Empty text="No Video" />
               ) : (
-                listByAuthor.map((item) => (
+                formatListVideo.map((item) => (
                   <div key={item.id} className="bx--col-md-2 bx--col-sm-4">
                     <ItemVideo item={item} />
                   </div>
@@ -116,10 +127,11 @@ class Home extends Component {
 
 const mapStateToProps = ({
   socialMedia: { loading, listByAuthor = [] } = {},
-  listUser: { itemUser, messageError = "" } = {},
+  listUser: { listUserData = [], itemUser, messageError = "" } = {},
 }) => ({
   loading,
   listByAuthor,
+  listUserData,
   itemUser,
   messageError,
 });

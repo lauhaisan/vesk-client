@@ -78,6 +78,22 @@ class Home extends Component {
           </div>
 
           <div className="divider" />
+          <div className="viewAds">
+            <a
+              href="https://vinhomes.vn/"
+              target="_blank"
+              rel="noopener noreferrer"
+              id="ads"
+              className="contentAds"
+            >
+              <img
+                className="viewAds__img"
+                src="https://phumyhungreals.com/wp-content/uploads/2020/02/vinhome-central-park.jpg"
+                alt="img-avatar"
+              />
+            </a>
+          </div>
+          <div className="divider" style={{ marginTop: "2rem" }} />
           <div className="titleBlock">
             <p className="titleBlock__text">Featured Videos</p>
             <div className="titleBlock__btn">

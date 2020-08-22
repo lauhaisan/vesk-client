@@ -1,6 +1,27 @@
 .container__detail {
   padding: 2rem;
   min-height: 100vh;
+  .viewAds {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: auto;
+    margin-top: 2rem;
+    .contentAds {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 60%;
+    }
+    &__img {
+      width: 100%;
+      height: auto;
+      max-height: 200px;
+      // object-fit: contain;
+      cursor: pointer;
+    }
+  }
   .detail__viewRow {
     display: flex;
     flex-direction: row;

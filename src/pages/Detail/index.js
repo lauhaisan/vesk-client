@@ -86,6 +86,21 @@ class Detail extends React.Component {
             List video vertical
           </div>
         </div>
+        <div className="viewAds">
+          <a
+            href="https://vinhomes.vn/"
+            target="_blank"
+            rel="noopener noreferrer"
+            id="ads"
+            className="contentAds"
+          >
+            <img
+              className="viewAds__img"
+              src="https://phumyhungreals.com/wp-content/uploads/2020/02/vinhome-central-park.jpg"
+              alt="img-avatar"
+            />
+          </a>
+        </div>
         <div className="detail__viewRow" style={{ marginTop: "2rem" }}>
           <div className="viewLeft">
             <div className="box boxName">

@@ -32,7 +32,7 @@ class ItemVideo extends Component {
   };
   render() {
     const { item = {} } = this.props;
-    const { url = "", name = "", author: { userName = "" } = {} } = item;
+    const { thumbnail = "", name = "", author: { userName = "" } = {} } = item;
 
     return (
       <Link to={`/detail/${item.id}`} className="link">
@@ -44,7 +44,10 @@ class ItemVideo extends Component {
 
             <img
               className="itemVideo__video"
-              src="https://i.ytimg.com/vi/YnuSPC-S_yc/hqdefault.jpg?sqp=-oaymwEZCOADEI4CSFXyq4qpAwsIARUAAIhCGAFwAQ==&rs=AOn4CLDtdEIdy1CUdr6jqsCxv4CFfB0BtQ"
+              src={
+                thumbnail ||
+                "https://i.ytimg.com/vi/YnuSPC-S_yc/hqdefault.jpg?sqp=-oaymwEZCOADEI4CSFXyq4qpAwsIARUAAIhCGAFwAQ==&rs=AOn4CLDtdEIdy1CUdr6jqsCxv4CFfB0BtQ"
+              }
               alt="img-video"
             />
           </div>

@@ -60,6 +60,27 @@
     width: 100%;
     background-color: rgba(0, 0, 0, 0.1);
   }
+  .viewAds {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: auto;
+    margin-top: 2rem;
+    .contentAds {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 60%;
+    }
+    &__img {
+      width: 100%;
+      height: auto;
+      max-height: 200px;
+      // object-fit: contain;
+      cursor: pointer;
+    }
+  }
   .bx--row {
     .bx--col-md-2 {
       margin-bottom: 2rem;
