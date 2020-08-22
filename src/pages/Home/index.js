@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import {
   OverflowMenu,
   OverflowMenuItem,
-  Loading
+  Loading,
 } from "carbon-components-react";
 import { SOCIAL_MEDIA, LIST_USER } from "../../constant";
 import Slider from "./components/Slider";
@@ -19,7 +19,7 @@ class Home extends Component {
     getListUser({});
   }
 
-  handleGetListSocialMedia = payload => {
+  handleGetListSocialMedia = (payload) => {
     const { getListSocialMedia } = this.props;
     getListSocialMedia(payload);
   };
@@ -32,7 +32,7 @@ class Home extends Component {
       loadingListUserName,
       listUserData = [],
       messageErrorListUser,
-      history
+      history,
     } = this.props;
     const error = messageErrorListUser !== "" || messageError !== "";
     const _renderLoading = (
@@ -49,7 +49,6 @@ class Home extends Component {
             <div className="titleBlock__btn">
               <OverflowMenu
                 renderIcon={() => <i className="fas fa-ellipsis-h icon"></i>}
-                floatingMenu
                 flipped
               >
                 <OverflowMenuItem itemText={<div>Top Rated</div>} />
@@ -61,7 +60,7 @@ class Home extends Component {
             className="listChanel"
             style={{
               width: "100%",
-              height: "8.5rem"
+              height: "8.5rem",
             }}
           >
             {loadingListUserName ? (
@@ -77,7 +76,6 @@ class Home extends Component {
             <div className="titleBlock__btn">
               <OverflowMenu
                 renderIcon={() => <i className="fas fa-ellipsis-h icon"></i>}
-                floatingMenu
                 flipped
               >
                 <OverflowMenuItem itemText={<div>Top Rated</div>} />
@@ -89,7 +87,7 @@ class Home extends Component {
             _renderLoading
           ) : (
             <div className="bx--row">
-              {listSocialMedia.map(item => (
+              {listSocialMedia.map((item) => (
                 <div key={item.id} className="bx--col-md-2 bx--col-sm-4">
                   <ItemVideo item={item} />
                 </div>
@@ -114,21 +112,21 @@ const mapStateToProps = ({
   listUser: {
     loading: loadingListUserName,
     listUserData = [],
-    messageError: messageErrorListUser = ""
-  } = {}
+    messageError: messageErrorListUser = "",
+  } = {},
 }) => ({
   loading,
   listSocialMedia,
   messageError,
   loadingListUserName,
   listUserData,
-  messageErrorListUser
+  messageErrorListUser,
 });
 
-const mapDispatchToProps = dispatch => ({
-  getListSocialMedia: data =>
+const mapDispatchToProps = (dispatch) => ({
+  getListSocialMedia: (data) =>
     dispatch({ type: SOCIAL_MEDIA.GET_LIST_SOCIAL_MEDIA, data }),
-  getListUser: data => dispatch({ type: LIST_USER.GET_LIST_USER, data })
+  getListUser: (data) => dispatch({ type: LIST_USER.GET_LIST_USER, data }),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home);

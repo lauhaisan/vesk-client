@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import {
   OverflowMenu,
   OverflowMenuItem,
-  Loading
+  Loading,
 } from "carbon-components-react";
 import { SOCIAL_MEDIA, LIST_USER } from "../../constant";
 import Notification from "../../components/Notification";
@@ -18,7 +18,7 @@ class Home extends Component {
     const {
       match: { params: { id = "" } = {} } = {},
       getUserInfo,
-      getListSocialMediaByAuthor
+      getListSocialMediaByAuthor,
     } = this.props;
     getUserInfo({ data: id });
     getListSocialMediaByAuthor({ id });
@@ -27,13 +27,13 @@ class Home extends Component {
   componentWillUnmount() {
     const {
       updateStateListUserReducer,
-      updateStateSocialMediaReducer
+      updateStateSocialMediaReducer,
     } = this.props;
     updateStateListUserReducer({
-      itemUser: {}
+      itemUser: {},
     });
     updateStateSocialMediaReducer({
-      listByAuthor: []
+      listByAuthor: [],
     });
   }
 
@@ -42,7 +42,7 @@ class Home extends Component {
       itemUser = {},
       loading,
       listByAuthor = [],
-      messageError = ""
+      messageError = "",
     } = this.props;
 
     if (messageError === "User not exist") {
@@ -79,7 +79,6 @@ class Home extends Component {
             <div className="titleBlock__btn">
               <OverflowMenu
                 renderIcon={() => <i className="fas fa-ellipsis-h icon"></i>}
-                floatingMenu
                 flipped
               >
                 <OverflowMenuItem itemText={<div>Top Rated</div>} />
@@ -94,7 +93,7 @@ class Home extends Component {
               {listByAuthor.length === 0 ? (
                 <Empty text="No Video" />
               ) : (
-                listByAuthor.map(item => (
+                listByAuthor.map((item) => (
                   <div key={item.id} className="bx--col-md-2 bx--col-sm-4">
                     <ItemVideo item={item} />
                   </div>
@@ -117,22 +116,22 @@ class Home extends Component {
 
 const mapStateToProps = ({
   socialMedia: { loading, listByAuthor = [] } = {},
-  listUser: { itemUser, messageError = "" } = {}
+  listUser: { itemUser, messageError = "" } = {},
 }) => ({
   loading,
   listByAuthor,
   itemUser,
-  messageError
+  messageError,
 });
 
-const mapDispatchToProps = dispatch => ({
-  getUserInfo: data => dispatch({ type: LIST_USER.GET_USER_BY_ID, data }),
-  getListSocialMediaByAuthor: data =>
+const mapDispatchToProps = (dispatch) => ({
+  getUserInfo: (data) => dispatch({ type: LIST_USER.GET_USER_BY_ID, data }),
+  getListSocialMediaByAuthor: (data) =>
     dispatch({ type: SOCIAL_MEDIA.GET_LIST_BY_AUTHOR, data: { data } }),
-  updateStateListUserReducer: data =>
+  updateStateListUserReducer: (data) =>
     dispatch({ type: LIST_USER.UPDATE_LIST_USER_REDUCER, data }),
-  updateStateSocialMediaReducer: data =>
-    dispatch({ type: SOCIAL_MEDIA.UPDATE_SOCIAL_MEDIA_REDUCER, data })
+  updateStateSocialMediaReducer: (data) =>
+    dispatch({ type: SOCIAL_MEDIA.UPDATE_SOCIAL_MEDIA_REDUCER, data }),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home);
