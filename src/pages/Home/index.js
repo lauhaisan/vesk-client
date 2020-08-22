@@ -5,7 +5,7 @@ import {
   OverflowMenuItem,
   Loading,
 } from "carbon-components-react";
-import { SOCIAL_MEDIA, LIST_USER } from "../../constant";
+import { SOCIAL_MEDIA } from "../../constant";
 import Slider from "./components/Slider";
 import Notification from "../../components/Notification";
 import ItemVideo from "../../components/ItemVideo";
@@ -14,9 +14,7 @@ import "./index.scss";
 
 class Home extends Component {
   componentDidMount() {
-    const { getListUser } = this.props;
     this.handleGetListSocialMedia({});
-    getListUser({});
   }
 
   handleGetListSocialMedia = (payload) => {
@@ -34,6 +32,15 @@ class Home extends Component {
       messageErrorListUser,
       history,
     } = this.props;
+    const formatListVideo = listSocialMedia.map((item) => {
+      return {
+        ...item,
+        author: listUserData.find(
+          (element) => element.userId === item.authorId
+        ),
+      };
+    });
+
     const error = messageErrorListUser !== "" || messageError !== "";
     const _renderLoading = (
       <div className="viewLoading">
@@ -87,7 +94,7 @@ class Home extends Component {
             _renderLoading
           ) : (
             <div className="bx--row">
-              {listSocialMedia.map((item) => (
+              {formatListVideo.map((item) => (
                 <div key={item.id} className="bx--col-md-2 bx--col-sm-4">
                   <ItemVideo item={item} />
                 </div>
@@ -126,7 +133,6 @@ const mapStateToProps = ({
 const mapDispatchToProps = (dispatch) => ({
   getListSocialMedia: (data) =>
     dispatch({ type: SOCIAL_MEDIA.GET_LIST_SOCIAL_MEDIA, data }),
-  getListUser: (data) => dispatch({ type: LIST_USER.GET_LIST_USER, data }),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home);

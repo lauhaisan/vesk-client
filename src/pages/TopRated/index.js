@@ -18,7 +18,8 @@ class TopRated extends Component {
     const {
       loading,
       listTopRated = [],
-      messageErrorTopRated = ""
+      listUserData = [],
+      messageErrorTopRated = "",
     } = this.props;
 
     const _renderLoading = (
@@ -26,6 +27,16 @@ class TopRated extends Component {
         <Loading withOverlay={false} />
       </div>
     );
+
+    const formatListVideo = listTopRated.map((item) => {
+      return {
+        ...item,
+        author: listUserData.find(
+          (element) => element.userId === item.authorId
+        ),
+      };
+    });
+
     return (
       <Fragment>
         <div className="container_page_topRated">
@@ -37,10 +48,10 @@ class TopRated extends Component {
             _renderLoading
           ) : (
             <div className="bx--row">
-              {listTopRated.length === 0 ? (
+              {formatListVideo.length === 0 ? (
                 <Empty text="No Video" />
               ) : (
-                listTopRated.map(item => (
+                formatListVideo.map((item) => (
                   <div key={item.id} className="bx--col-md-2 bx--col-sm-4">
                     <ItemVideo item={item} />
                   </div>
@@ -62,16 +73,18 @@ class TopRated extends Component {
 }
 
 const mapStateToProps = ({
-  topRated: { loading, listTopRated = [], messageErrorTopRated = "" } = {}
+  topRated: { loading, listTopRated = [], messageErrorTopRated = "" } = {},
+  listUser: { listUserData = [] } = {},
 }) => ({
   loading,
   listTopRated,
-  messageErrorTopRated
+  messageErrorTopRated,
+  listUserData,
 });
 
-const mapDispatchToProps = dispatch => ({
-  getListTopRated: data =>
-    dispatch({ type: TOP_RATED.GET_LIST_TOP_RATED, data })
+const mapDispatchToProps = (dispatch) => ({
+  getListTopRated: (data) =>
+    dispatch({ type: TOP_RATED.GET_LIST_TOP_RATED, data }),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(TopRated);

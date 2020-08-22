@@ -18,8 +18,18 @@ class MostPopular extends Component {
     const {
       loading,
       listMostPopular = [],
-      messageErrorMostPopular = ""
+      listUserData = [],
+      messageErrorMostPopular = "",
     } = this.props;
+
+    const formatListVideo = listMostPopular.map((item) => {
+      return {
+        ...item,
+        author: listUserData.find(
+          (element) => element.userId === item.authorId
+        ),
+      };
+    });
 
     const _renderLoading = (
       <div className="viewLoading">
@@ -37,10 +47,10 @@ class MostPopular extends Component {
             _renderLoading
           ) : (
             <div className="bx--row">
-              {listMostPopular.length === 0 ? (
+              {formatListVideo.length === 0 ? (
                 <Empty text="No Video" />
               ) : (
-                listMostPopular.map(item => (
+                formatListVideo.map((item) => (
                   <div key={item.id} className="bx--col-md-2 bx--col-sm-4">
                     <ItemVideo item={item} />
                   </div>
@@ -65,17 +75,19 @@ const mapStateToProps = ({
   mostPopular: {
     loading,
     listMostPopular = [],
-    messageErrorMostPopular = ""
-  } = {}
+    messageErrorMostPopular = "",
+  } = {},
+  listUser: { listUserData = [] } = {},
 }) => ({
   loading,
   listMostPopular,
-  messageErrorMostPopular
+  messageErrorMostPopular,
+  listUserData,
 });
 
-const mapDispatchToProps = dispatch => ({
-  getListMostPopular: data =>
-    dispatch({ type: MOST_POPULAR.GET_LIST_POPULAR, data })
+const mapDispatchToProps = (dispatch) => ({
+  getListMostPopular: (data) =>
+    dispatch({ type: MOST_POPULAR.GET_LIST_POPULAR, data }),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(MostPopular);

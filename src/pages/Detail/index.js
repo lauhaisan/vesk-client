@@ -59,17 +59,24 @@ class Detail extends React.Component {
       messageError = "",
       fetchingComment,
       listComment = [],
+      listUserData = [],
       // messageErrorComment,
       loadingAction,
       // actionSuccessfully,
     } = this.props;
-    const { name = "", videoUrl: url = "", countView = 0 } = itemMediaSocial;
+    const {
+      name = "",
+      videoUrl: url = "",
+      countView = 0,
+      authorId = "",
+    } = itemMediaSocial;
     const { complete } = this.state;
     if (messageError === "Id not found") {
       return <NotFoundPage />;
     }
     const stringCountView = numeral(countView).format("0,0");
-
+    const itemChanel =
+      listUserData.find((element) => element.userId === authorId) || {};
     return (
       <div className="container__detail">
         <TitlePage title={name} />
@@ -95,7 +102,7 @@ class Detail extends React.Component {
                   src={require("../../images/testAvatar.jpg")}
                   alt="img-avatar"
                 />
-                <p className="boxInfoChanel__name">NAME CHANEL</p>
+                <p className="boxInfoChanel__name">{itemChanel.userName}</p>
               </div>
               <ButtonLoading
                 onClick={() => alert("SUB")}
@@ -137,6 +144,7 @@ const mapStateToProps = ({
     loadingAction = false,
     actionSuccessfully = "",
   } = {},
+  listUser: { listUserData = [] } = {},
 }) => ({
   itemMediaSocial,
   loadingGetById,
@@ -146,6 +154,7 @@ const mapStateToProps = ({
   messageErrorComment,
   loadingAction,
   actionSuccessfully,
+  listUserData,
 });
 
 const mapDispatchToProps = (dispatch) => ({

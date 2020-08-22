@@ -4,7 +4,7 @@ import millify from "millify";
 import "./index.scss";
 
 class ItemVideo extends Component {
-  timeAgo = prevDate => {
+  timeAgo = (prevDate) => {
     const time = Date.parse(prevDate);
     const diff = Number(new Date()) - time;
     const minute = 60 * 1000;
@@ -32,6 +32,8 @@ class ItemVideo extends Component {
   };
   render() {
     const { item = {} } = this.props;
+    const { url = "", name = "", author: { userName = "" } = {} } = item;
+
     return (
       <Link to={`/detail/${item.id}`} className="link">
         <div className="itemVideo">
@@ -47,8 +49,8 @@ class ItemVideo extends Component {
             />
           </div>
           <div className="itemVideo__info">
-            <div className="info__title">{item.name}</div>
-            <div className="info__nameChanel">Name Chanel</div>
+            <div className="info__title">{name}</div>
+            <div className="info__nameChanel">{userName}</div>
             <div>
               <span
                 className="info__viewAndTime"
