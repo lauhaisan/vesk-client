@@ -38,7 +38,11 @@ class Profile extends Component {
       <div className="containerProfile">
         <TitlePage title={`${userName} | Profile`} />
         <div className="viewMyInfo">
-          <img className="avatarProfile" src={avatar} alt="img-avatar" />
+          <img
+            className="avatarProfile"
+            src={avatar || require("../../images/testAvatar.jpg")}
+            alt="img-avatar"
+          />
           {arrInfo.map((item) => (
             <div key={item.key} className="viewTextInfo">
               <span className="viewTextInfo__key">{item.key}</span>
