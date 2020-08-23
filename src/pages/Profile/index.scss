@@ -1,11 +1,10 @@
 .containerProfile {
   background-color: transparent;
   min-width: 500px;
-  //   min-height: 95vh;
   padding: 2rem;
   display: flex;
-  justify-content: center;
-  //   align-items: center;
+  align-items: center;
+  flex-direction: column;
   .viewMyInfo {
     width: 50%;
     height: auto;
@@ -34,6 +33,31 @@
       &__value {
         font-size: 16px;
       }
+    }
+  }
+  .viewWallet {
+    border-radius: 2px;
+    background-color: #fff;
+    box-shadow: 0 0 11px #ececec;
+    width: 100%;
+    margin-top: 2rem;
+    padding: 1rem;
+    .divider {
+      margin: 1rem 0px 1rem 0px;
+      height: 1px;
+      width: 100%;
+      background-color: rgba(0, 0, 0, 0.1);
+    }
+    &__title {
+      font-size: 1rem;
+      color: #333;
+      line-height: 1.2;
+      font-weight: 500;
+    }
+    &__subTitle {
+      color: #888;
+      font-size: 13px;
+      font-weight: 600;
     }
   }
 }

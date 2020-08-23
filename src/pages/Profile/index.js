@@ -31,6 +31,16 @@ class Profile extends Component {
             </div>
           ))}
         </div>
+        <div className="viewWallet">
+          <div className="viewWallet__title">Wallet</div>
+          <div style={{ display: "flex", marginTop: "1rem" }}>
+            <div className="viewWallet__subTitle">Current Point:</div>
+            <div style={{ marginLeft: "20px", fontWeight: "600" }}>100</div>
+          </div>
+          <div className="divider" />
+          <div className="viewWallet__subTitle">History</div>
+          {/* <div>Table history</div> */}
+        </div>
       </div>
     );
   }
