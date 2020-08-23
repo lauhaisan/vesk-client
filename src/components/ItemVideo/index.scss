@@ -6,7 +6,7 @@
   box-sizing: border-box;
   border-radius: 2px;
   box-shadow: 0 0 11px #ececec;
-  background-color: black;
+  // background-color: black;
   border-radius: 4px;
   overflow: hidden;
   .viewImgVideo {
@@ -18,7 +18,7 @@
     width: 100%;
     height: auto;
     min-height: 160px;
-    object-fit: contain;
+    object-fit: cover;
   }
   &__viewIconPlay {
     display: none;
