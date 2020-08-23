@@ -6,7 +6,7 @@ import Notification from "../../components/Notification";
 import NotFoundPage from "../404Page";
 import { SOCIAL_MEDIA, COMMENTS, MOST_POPULAR } from "../../constant";
 import ItemVideoVertical from "../../components/ItemVideoVertical";
-import ButtonLoading from "../../components/ButtonLoading";
+// import ButtonLoading from "../../components/ButtonLoading";
 import Player from "./components/Player";
 import Comments from "./components/Comments";
 import "./index.scss";
@@ -162,7 +162,7 @@ class Detail extends React.Component {
                 />
                 <p className="boxInfoChanel__name">{itemChanel.userName}</p>
               </div>
-              <ButtonLoading
+              {/* <ButtonLoading
                 onClick={() => alert("SUB")}
                 text="Subscribe"
                 style={{
@@ -170,7 +170,7 @@ class Detail extends React.Component {
                   height: "38px",
                   fontSize: "16px",
                 }}
-              />
+              /> */}
             </div>
             <Comments
               listComment={listComment}

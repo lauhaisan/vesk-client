@@ -14,6 +14,13 @@ class TopRated extends Component {
     getListTopRated({});
   }
 
+  sortByTopRank = (list) => {
+    const listSort = list.sort((item, nextItem) => {
+      return item.topRank - nextItem.topRank;
+    });
+    return listSort;
+  };
+
   render() {
     const {
       loading,
@@ -37,6 +44,8 @@ class TopRated extends Component {
       };
     });
 
+    const sortListTopRank = this.sortByTopRank(formatListVideo) || [];
+
     return (
       <Fragment>
         <div className="container_page_topRated">
@@ -48,10 +57,10 @@ class TopRated extends Component {
             _renderLoading
           ) : (
             <div className="bx--row">
-              {formatListVideo.length === 0 ? (
+              {sortListTopRank.length === 0 ? (
                 <Empty text="No Video" />
               ) : (
-                formatListVideo.map((item) => (
+                sortListTopRank.map((item) => (
                   <div key={item.id} className="bx--col-md-2 bx--col-sm-4">
                     <ItemVideo item={item} />
                   </div>

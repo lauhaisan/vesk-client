@@ -14,6 +14,13 @@ class MostPopular extends Component {
     getListMostPopular({});
   }
 
+  sortByCountView = (list) => {
+    const listSort = list.sort((item, nextItem) => {
+      return item.countView - nextItem.countView;
+    });
+    return listSort.reverse();
+  };
+
   render() {
     const {
       loading,
@@ -31,6 +38,8 @@ class MostPopular extends Component {
       };
     });
 
+    const sortListByCountView = this.sortByCountView(formatListVideo) || [];
+
     const _renderLoading = (
       <div className="viewLoading">
         <Loading withOverlay={false} />
@@ -47,10 +56,10 @@ class MostPopular extends Component {
             _renderLoading
           ) : (
             <div className="bx--row">
-              {formatListVideo.length === 0 ? (
+              {sortListByCountView.length === 0 ? (
                 <Empty text="No Video" />
               ) : (
-                formatListVideo.map((item) => (
+                sortListByCountView.map((item) => (
                   <div key={item.id} className="bx--col-md-2 bx--col-sm-4">
                     <ItemVideo item={item} />
                   </div>

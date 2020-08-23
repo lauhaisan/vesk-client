@@ -1,9 +1,9 @@
 import { takeLatest, call, put, delay } from "redux-saga/effects";
 import {
   signUpAPI,
-  signInAPI
+  signInAPI,
   // logoutAPI
-  // , getMyInfoAPI
+  getMyInfoAPI,
 } from "../service/user";
 import { setToken } from "../utils/token";
 import { USER } from "../constant";
@@ -20,7 +20,7 @@ function* handleSignUp(object) {
   const { data = {}, data: { token } = {} } = resp;
   setToken({
     token,
-    data
+    data,
   });
   yield put({ type: USER.SIGNUP_SUCCESS });
   yield delay(3000);
@@ -39,7 +39,7 @@ function* handleSignIn(object) {
   const { data = {}, data: { token } = {} } = resp;
   setToken({
     token,
-    data
+    data,
   });
   yield put({ type: USER.SIGNIN_SUCCESS });
   yield call(history.push, "/");
@@ -60,18 +60,19 @@ function* handleSignIn(object) {
 //   }
 // }
 
-// function* getMyInfo() {
-//   const resp = yield call(getMyInfoAPI);
-//   if (resp.statusCode !== 200) {
-//     yield put({ type: "GET_MY_INFO_FAIL" });
-//     return;
-//   }
-//   yield put({ type: "GET_MY_INFO_SUCCESS", data: resp });
-// }
+function* getMyInfo(obj) {
+  const dat = obj.data.data;
+  const resp = yield call(getMyInfoAPI, dat);
+  if (resp.code !== 200) {
+    yield put({ type: "GET_MY_INFO_FAIL" });
+    return;
+  }
+  yield put({ type: "GET_MY_INFO_SUCCESS", data: resp.data });
+}
 
 export const userSaga = [
   takeLatest(USER.SIGNUP, handleSignUp),
-  takeLatest(USER.SIGNIN, handleSignIn)
+  takeLatest(USER.SIGNIN, handleSignIn),
   // takeLatest(USER.LOGOUT, handleLogout)
-  // takeLatest(USER.GET_MY_INFO, getMyInfo)
+  takeLatest(USER.GET_MY_INFO, getMyInfo),
 ];

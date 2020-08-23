@@ -2,7 +2,7 @@ import React, { Component, Fragment } from "react";
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 import SideMenu from "../../components/SideMenu";
-import { LIST_USER } from "../../constant";
+import { LIST_USER, USER } from "../../constant";
 import windowSize from "react-window-size";
 import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
@@ -11,7 +11,9 @@ import "./index.scss";
 
 class BasicLayout extends Component {
   componentDidMount() {
-    const { getListUser } = this.props;
+    const { getListUser, getMyInfo } = this.props;
+    const { data: { userId = "" } = {} } = getToken();
+    getMyInfo(userId);
     getListUser({});
   }
 
@@ -61,6 +63,7 @@ const mapStateToProps = ({ user: { openMenu } = {} }) => ({
 const mapDispatchToProps = (dispatch) => ({
   setDataUserReducer: (data) => dispatch({ type: "UPDATE_STATE", data }),
   getListUser: (data) => dispatch({ type: LIST_USER.GET_LIST_USER, data }),
+  getMyInfo: (data) => dispatch({ type: USER.GET_MY_INFO, data: { data } }),
 });
 
 export default connect(

@@ -1,26 +1,46 @@
 import React, { Component } from "react";
 import TitlePage from "../../components/TitlePage";
 import { connect } from "react-redux";
-import { getToken } from "../../utils/token";
+import "./index.scss";
 
 class Profile extends Component {
   render() {
-    // const { history } = this.props;
-    const { data } = getToken();
+    const { myInfo: data = {} } = this.props;
+    const {
+      avatar = "",
+      firstName = "",
+      lastName = "",
+      userName = "",
+      email = "",
+    } = data;
+    const arrInfo = [
+      { key: "Email:", value: email },
+      { key: "First Name:", value: firstName },
+      { key: "LastName", value: lastName },
+      { key: "User Name:", value: userName },
+    ];
     return (
-      <div style={{ backgroundColor: "#fff", height: "500px" }}>
-        <TitlePage title={`${data.userName} | Profile`} />
-        <h1>This is profile {data.userName}</h1>
+      <div className="containerProfile">
+        <TitlePage title={`${userName} | Profile`} />
+        <div className="viewMyInfo">
+          <img className="avatarProfile" src={avatar} alt="img-avatar" />
+          {arrInfo.map((item) => (
+            <div key={item.key} className="viewTextInfo">
+              <span className="viewTextInfo__key">{item.key}</span>
+              <span className="viewTextInfo__value">{item.value}</span>
+            </div>
+          ))}
+        </div>
       </div>
     );
   }
 }
 const mapStateToProps = ({ user: { myInfo = {} } = {} }) => ({
-  myInfo
+  myInfo,
 });
 
-const mapDispatchToProps = dispatch => ({
-  // getMyInfo: () => dispatch({ type: "GET_MY_INFO" }),
-});
+// const mapDispatchToProps = (dispatch) => ({
+//   getMyInfo: () => dispatch({ type: "GET_MY_INFO" }),
+// });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Profile);
+export default connect(mapStateToProps, null)(Profile);

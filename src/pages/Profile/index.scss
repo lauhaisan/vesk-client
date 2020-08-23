@@ -1,0 +1,39 @@
+.containerProfile {
+  background-color: transparent;
+  min-width: 500px;
+  //   min-height: 95vh;
+  padding: 2rem;
+  display: flex;
+  justify-content: center;
+  //   align-items: center;
+  .viewMyInfo {
+    width: 50%;
+    height: auto;
+    border-radius: 2px;
+    background-color: #fff;
+    box-shadow: 0 0 11px #ececec;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+    flex-direction: column;
+    .avatarProfile {
+      height: 90px;
+      width: 90px;
+      border-radius: 50%;
+    }
+    .viewTextInfo {
+      width: 50%;
+      display: flex;
+      margin-top: 1rem;
+      justify-content: space-between;
+      &__key {
+        font-size: 16px;
+        font-weight: 600;
+      }
+      &__value {
+        font-size: 16px;
+      }
+    }
+  }
+}

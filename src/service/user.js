@@ -17,13 +17,14 @@ const signInAPI = async (payload) => {
 //   return request(URL.LOGOUT, false, "POST", payload);
 // };
 
-// const getMyInfoAPI = async () => {
-//   return request(URL.GET_MY_INFO, true);
-// };
+const getMyInfoAPI = async (payload) => {
+  const URL_WITH_PARAMS = `${URL.GET_MY_INFO}?${payload}`;
+  return request(URL_WITH_PARAMS, true);
+};
 
 export {
   signUpAPI,
   signInAPI,
   // logoutAPI
-  // , getMyInfoAPI
+  getMyInfoAPI,
 };

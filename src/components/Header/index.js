@@ -2,15 +2,16 @@ import React, { Component, Fragment } from "react";
 import {
   Header,
   HeaderContainer,
-  HeaderGlobalBar
+  HeaderGlobalBar,
 } from "carbon-components-react/lib/components/UIShell";
 import {
   UserProfile20,
   Logout20,
   ChevronSortDown20,
-  Menu20
+  Menu20,
 } from "@carbon/icons-react";
-import { getToken, setToken } from "../../utils/token";
+import { connect } from "react-redux";
+import { setToken } from "../../utils/token";
 import "./index.scss";
 
 class ComponentHeader extends Component {
@@ -21,7 +22,7 @@ class ComponentHeader extends Component {
 
   handleLogout = () => {
     const {
-      history
+      history,
       //  logout
     } = this.props;
     setToken(undefined);
@@ -30,16 +31,19 @@ class ComponentHeader extends Component {
 
   render() {
     const { history, handleMenu } = this.props;
-    const { data = {} } = getToken();
+    const { myInfo: data = {} } = this.props;
 
     const rightMenuSignIn = (
       <Fragment>
         <div className="rightMenu" onClick={this.showDropDownMenu}>
-          <img
-            className="rightMenu__avatar"
-            src={require("../../images/testAvatar.jpg")}
-            alt="img-avatar"
-          />
+          {data.avatar && (
+            <img
+              className="rightMenu__avatar"
+              src={data.avatar}
+              alt="img-avatar"
+            />
+          )}
+
           <p className="rightMenu__textName">{data.userName}</p>
           <ChevronSortDown20 className="icon" />
         </div>
@@ -78,4 +82,8 @@ class ComponentHeader extends Component {
   }
 }
 
-export default ComponentHeader;
+const mapStateToProps = ({ user: { myInfo = {} } = {} }) => ({
+  myInfo,
+});
+
+export default connect(mapStateToProps, null)(ComponentHeader);
