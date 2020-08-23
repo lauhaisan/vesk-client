@@ -6,7 +6,7 @@ import {
   getMyInfoAPI,
 } from "../service/user";
 import { setToken } from "../utils/token";
-import { USER } from "../constant";
+import { USER, WALLET } from "../constant";
 
 function* handleSignUp(object) {
   const dat = object.data.data;
@@ -23,6 +23,8 @@ function* handleSignUp(object) {
     data,
   });
   yield put({ type: USER.SIGNUP_SUCCESS });
+  const dataCreateWallet = { count: "10" };
+  yield put({ type: WALLET.CREATE_WALLET, data: { data: dataCreateWallet } });
   yield delay(3000);
   yield call(history.push, "/");
 }

@@ -11,10 +11,17 @@ import "./index.scss";
 
 class BasicLayout extends Component {
   componentDidMount() {
-    const { getListUser, getMyInfo } = this.props;
+    const {
+      getListUser,
+      getMyInfo,
+      // getWallet,
+      // , createWallet
+    } = this.props;
     const { data: { userId = "" } = {} } = getToken();
     getMyInfo(userId);
     getListUser({});
+    // getWallet();
+    // createWallet({ money: "0" });
   }
 
   _handleMenu = () => {
@@ -64,6 +71,9 @@ const mapDispatchToProps = (dispatch) => ({
   setDataUserReducer: (data) => dispatch({ type: "UPDATE_STATE", data }),
   getListUser: (data) => dispatch({ type: LIST_USER.GET_LIST_USER, data }),
   getMyInfo: (data) => dispatch({ type: USER.GET_MY_INFO, data: { data } }),
+  // getWallet: () => dispatch({ type: WALLET.GET_WALLET }),
+  // createWallet: (data) =>
+  //   dispatch({ type: WALLET.CREATE_WALLET, data: { data } }),
 });
 
 export default connect(

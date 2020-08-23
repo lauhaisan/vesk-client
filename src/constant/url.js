@@ -29,6 +29,9 @@ const URL = {
   //COMMENT
   ADD_COMMENT: "/v1/vesk/comment",
   GET_LIST_COMMENT: "/v1/vesk/comment/post",
+
+  //WALLET
+  WALLET: "/v1/vesk/wallet",
 };
 
 export default URL;
