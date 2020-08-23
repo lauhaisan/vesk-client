@@ -23,7 +23,7 @@ function* handleSignUp(object) {
     data,
   });
   yield put({ type: USER.SIGNUP_SUCCESS });
-  const dataCreateWallet = { money: "10" };
+  const dataCreateWallet = { money: 10 };
   yield put({ type: WALLET.CREATE_WALLET, data: { data: dataCreateWallet } });
   yield delay(3000);
   yield call(history.push, "/");

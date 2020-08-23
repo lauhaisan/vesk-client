@@ -12,7 +12,7 @@ class Profile extends Component {
   }
   handleCreateWallet = () => {
     const { createWallet } = this.props;
-    createWallet({ money: "0" });
+    createWallet({ money: 10 });
   };
   render() {
     const {
