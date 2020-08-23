@@ -36,14 +36,11 @@ class ComponentHeader extends Component {
     const rightMenuSignIn = (
       <Fragment>
         <div className="rightMenu" onClick={this.showDropDownMenu}>
-          {data.avatar && (
-            <img
-              className="rightMenu__avatar"
-              src={data.avatar}
-              alt="img-avatar"
-            />
-          )}
-
+          <img
+            className="rightMenu__avatar"
+            src={data.avatar || require("../../images/testAvatar.jpg")}
+            alt="img-avatar"
+          />
           <p className="rightMenu__textName">{data.userName}</p>
           <ChevronSortDown20 className="icon" />
         </div>
