@@ -1,11 +1,26 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import TitlePage from "../../components/TitlePage";
+import { WALLET } from "../../constant";
 import { connect } from "react-redux";
+import ButtonLoading from "../../components/ButtonLoading";
 import "./index.scss";
 
 class Profile extends Component {
+  componentDidMount() {
+    const { getWallet } = this.props;
+    getWallet();
+  }
+  handleCreateWallet = () => {
+    const { createWallet } = this.props;
+    createWallet({ money: "0" });
+  };
   render() {
-    const { myInfo: data = {} } = this.props;
+    const {
+      myInfo: data = {},
+      loading,
+      myWallet: { money = 0 } = {},
+      messageErrorWallet,
+    } = this.props;
     const {
       avatar = "",
       firstName = "",
@@ -33,24 +48,50 @@ class Profile extends Component {
         </div>
         <div className="viewWallet">
           <div className="viewWallet__title">Wallet</div>
-          <div style={{ display: "flex", marginTop: "1rem" }}>
-            <div className="viewWallet__subTitle">Current Point:</div>
-            <div style={{ marginLeft: "20px", fontWeight: "600" }}>100</div>
-          </div>
-          <div className="divider" />
-          <div className="viewWallet__subTitle">History</div>
-          {/* <div>Table history</div> */}
+          {messageErrorWallet === "not found" ? (
+            <ButtonLoading
+              onClick={this.handleCreateWallet}
+              disabled={loading}
+              loading={loading ? "yes" : undefined}
+              text="Create"
+              style={{
+                width: "140px",
+                height: "38px",
+                fontSize: "13px",
+                marginTop: "1rem",
+              }}
+            />
+          ) : (
+            <Fragment>
+              <div style={{ display: "flex", marginTop: "1rem" }}>
+                <div className="viewWallet__subTitle">Current Point:</div>
+                <div style={{ marginLeft: "20px", fontWeight: "600" }}>
+                  {money}
+                </div>
+              </div>
+              <div className="divider" />
+              <div className="viewWallet__subTitle">History</div>
+            </Fragment>
+          )}
         </div>
       </div>
     );
   }
 }
-const mapStateToProps = ({ user: { myInfo = {} } = {} }) => ({
+const mapStateToProps = ({
+  user: { myInfo = {} } = {},
+  wallet: { loading, myWallet, messageErrorWallet } = {},
+}) => ({
   myInfo,
+  loading,
+  myWallet,
+  messageErrorWallet,
 });
 
-// const mapDispatchToProps = (dispatch) => ({
-//   getMyInfo: () => dispatch({ type: "GET_MY_INFO" }),
-// });
+const mapDispatchToProps = (dispatch) => ({
+  getWallet: () => dispatch({ type: WALLET.GET_WALLET }),
+  createWallet: (data) =>
+    dispatch({ type: WALLET.CREATE_WALLET, data: { data } }),
+});
 
-export default connect(mapStateToProps, null)(Profile);
+export default connect(mapStateToProps, mapDispatchToProps)(Profile);
