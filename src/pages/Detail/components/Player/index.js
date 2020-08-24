@@ -4,7 +4,11 @@ import "./index.scss";
 
 class ResponsivePlayer extends Component {
   render() {
-    const { url = "", startTimer, stopTimer } = this.props;
+    const {
+      url = "",
+      startTimer = () => {},
+      stopTimer = () => {},
+    } = this.props;
 
     return (
       <div className="player-wrapper">
@@ -16,6 +20,7 @@ class ResponsivePlayer extends Component {
           controls={true}
           onPlay={startTimer}
           onPause={stopTimer}
+          onEnded={stopTimer}
         />
       </div>
     );

@@ -155,8 +155,8 @@ class Detail extends React.Component {
         <div className="detail__viewRow">
           <Player
             url={url}
-            startTimer={this.startTimer}
-            stopTimer={this.stopTimer}
+            startTimer={!complete && this.startTimer}
+            stopTimer={!complete && this.stopTimer}
           />
           <div className="rightList" style={{ height: "315px" }}>
             <div className="scrollView">
@@ -166,10 +166,14 @@ class Detail extends React.Component {
             </div>
           </div>
         </div>
-        <div className="Stopwatch-display">
-          You have viewed {hours} : {minutes} : {seconds} : {centiseconds}. You
-          receive {pointForUserView} CXC for watching {timeForRecvCoin} minutes.
-        </div>
+        {!complete && (
+          <div className="Stopwatch-display">
+            You have viewed {hours} : {minutes} : {seconds} : {centiseconds}.
+            You receive {pointForUserView} CXC for watching {timeForRecvCoin}{" "}
+            minutes.
+          </div>
+        )}
+
         <div className="viewAds">
           <a
             href="https://vinhomes.vn/"
