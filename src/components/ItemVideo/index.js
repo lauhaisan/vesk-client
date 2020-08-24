@@ -4,7 +4,7 @@ import millify from "millify";
 import "./index.scss";
 
 class ItemVideo extends Component {
-  timeAgo = (prevDate) => {
+  timeAgo = prevDate => {
     const time = Date.parse(prevDate);
     const diff = Number(new Date()) - time;
     const minute = 60 * 1000;
@@ -41,7 +41,6 @@ class ItemVideo extends Component {
             <div className="itemVideo__viewIconPlay">
               <i className="far fa-play-circle iconPlay"></i>
             </div>
-
             <img
               className="itemVideo__video"
               src={

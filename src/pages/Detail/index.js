@@ -195,7 +195,9 @@ class Detail extends React.Component {
               <div className="boxInfoChanel__rightContent">
                 <img
                   className="boxInfoChanel__avatar"
-                  src={itemChanel.avatar}
+                  src={
+                    itemChanel.avatar || require("../../images/testAvatar.jpg")
+                  }
                   alt="img-avatar"
                 />
                 <p className="boxInfoChanel__name">{itemChanel.userName}</p>

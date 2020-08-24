@@ -64,8 +64,8 @@ class TableCommon extends React.Component {
 
   render() {
     const {
-      rowData,
-      headerData,
+      rowData = [],
+      headerData = [],
       title,
       total = 0,
       limit = 10,

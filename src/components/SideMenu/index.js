@@ -9,7 +9,7 @@ class SideMenu extends PureComponent {
     this.state = {
       openUser: false,
       openAds: false,
-      openSocialMedia: false,
+      openSocialMedia: false
     };
   }
 
@@ -58,6 +58,15 @@ class SideMenu extends PureComponent {
           >
             <i className="fas fa-poll itemMenu__icon"></i>
             <span className="itemMenu__text">Most Popular</span>
+          </NavLink>
+          <NavLink
+            exact
+            activeClassName={`${classNameMenu}__menu__itemMenu--active`}
+            to="/history-point"
+            className={`${classNameMenu}__menu__itemMenu`}
+          >
+            <i className="fas fa-history itemMenu__icon"></i>
+            <span className="itemMenu__text">History Point</span>
           </NavLink>
           <NavLink
             activeClassName={`${classNameMenu}__menu__itemMenu--active`}

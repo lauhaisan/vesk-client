@@ -8,15 +8,14 @@ function* createWallet(object) {
   if (resp.code !== 200) {
     yield put({
       type: WALLET.CREATE_WALLET_FAIL,
-      data: resp.message,
+      data: resp.message
     });
     return;
   }
   yield put({
     type: WALLET.CREATE_WALLET_SUCCESS,
-    data: resp.data,
+    data: resp.data
   });
-  yield put({ type: WALLET.GET_WALLET });
 }
 
 function* getWallet() {
@@ -24,17 +23,17 @@ function* getWallet() {
   if (resp.code !== 200) {
     yield put({
       type: WALLET.GET_WALLET_FAIL,
-      data: resp.message,
+      data: resp.message
     });
     return;
   }
   yield put({
     type: WALLET.GET_WALLET_SUCCESS,
-    data: resp.data,
+    data: resp.data
   });
 }
 
 export const walletSaga = [
   takeLatest(WALLET.CREATE_WALLET, createWallet),
-  takeLatest(WALLET.GET_WALLET, getWallet),
+  takeLatest(WALLET.GET_WALLET, getWallet)
 ];

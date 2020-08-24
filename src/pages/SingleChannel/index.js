@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import {
   OverflowMenu,
   OverflowMenuItem,
-  Loading,
+  Loading
 } from "carbon-components-react";
 import { SOCIAL_MEDIA, LIST_USER } from "../../constant";
 import Notification from "../../components/Notification";
@@ -13,12 +13,12 @@ import TitlePage from "../../components/TitlePage";
 import NotFoundPage from "../404Page";
 import "./index.scss";
 
-class Home extends Component {
+class SignleChannel extends Component {
   componentDidMount() {
     const {
       match: { params: { id = "" } = {} } = {},
       getUserInfo,
-      getListSocialMediaByAuthor,
+      getListSocialMediaByAuthor
     } = this.props;
     getUserInfo({ data: id });
     getListSocialMediaByAuthor({ id });
@@ -27,13 +27,13 @@ class Home extends Component {
   componentWillUnmount() {
     const {
       updateStateListUserReducer,
-      updateStateSocialMediaReducer,
+      updateStateSocialMediaReducer
     } = this.props;
     updateStateListUserReducer({
-      itemUser: {},
+      itemUser: {}
     });
     updateStateSocialMediaReducer({
-      listByAuthor: [],
+      listByAuthor: []
     });
   }
 
@@ -43,7 +43,7 @@ class Home extends Component {
       loading,
       listByAuthor = [],
       listUserData = [],
-      messageError = "",
+      messageError = ""
     } = this.props;
 
     if (messageError === "User not exist") {
@@ -55,12 +55,10 @@ class Home extends Component {
       </div>
     );
 
-    const formatListVideo = listByAuthor.map((item) => {
+    const formatListVideo = listByAuthor.map(item => {
       return {
         ...item,
-        author: listUserData.find(
-          (element) => element.userId === item.authorId
-        ),
+        author: listUserData.find(element => element.userId === item.authorId)
       };
     });
 
@@ -104,7 +102,7 @@ class Home extends Component {
               {formatListVideo.length === 0 ? (
                 <Empty text="No Video" />
               ) : (
-                formatListVideo.map((item) => (
+                formatListVideo.map(item => (
                   <div key={item.id} className="bx--col-md-2 bx--col-sm-4">
                     <ItemVideo item={item} />
                   </div>
@@ -127,23 +125,23 @@ class Home extends Component {
 
 const mapStateToProps = ({
   socialMedia: { loading, listByAuthor = [] } = {},
-  listUser: { listUserData = [], itemUser, messageError = "" } = {},
+  listUser: { listUserData = [], itemUser, messageError = "" } = {}
 }) => ({
   loading,
   listByAuthor,
   listUserData,
   itemUser,
-  messageError,
+  messageError
 });
 
-const mapDispatchToProps = (dispatch) => ({
-  getUserInfo: (data) => dispatch({ type: LIST_USER.GET_USER_BY_ID, data }),
-  getListSocialMediaByAuthor: (data) =>
+const mapDispatchToProps = dispatch => ({
+  getUserInfo: data => dispatch({ type: LIST_USER.GET_USER_BY_ID, data }),
+  getListSocialMediaByAuthor: data =>
     dispatch({ type: SOCIAL_MEDIA.GET_LIST_BY_AUTHOR, data: { data } }),
-  updateStateListUserReducer: (data) =>
+  updateStateListUserReducer: data =>
     dispatch({ type: LIST_USER.UPDATE_LIST_USER_REDUCER, data }),
-  updateStateSocialMediaReducer: (data) =>
-    dispatch({ type: SOCIAL_MEDIA.UPDATE_SOCIAL_MEDIA_REDUCER, data }),
+  updateStateSocialMediaReducer: data =>
+    dispatch({ type: SOCIAL_MEDIA.UPDATE_SOCIAL_MEDIA_REDUCER, data })
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Home);
+export default connect(mapStateToProps, mapDispatchToProps)(SignleChannel);

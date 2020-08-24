@@ -12,6 +12,7 @@ const Home = lazy(() => import("../pages/Home"));
 const Profile = lazy(() => import("../pages/Profile"));
 const TopRated = lazy(() => import("../pages/TopRated"));
 const MostPopular = lazy(() => import("../pages/MostPopular"));
+const HistoryPoint = lazy(() => import("../pages/HistoryPoint"));
 const Detail = lazy(() => import("../pages/Detail"));
 
 const routes = [
@@ -44,6 +45,12 @@ const routes = [
     exact: true,
     layout: BasicLayout,
     component: Detail
+  },
+  {
+    path: "/history-point",
+    exact: true,
+    layout: BasicLayout,
+    component: HistoryPoint
   },
   {
     path: "/contact",
