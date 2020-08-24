@@ -17,7 +17,7 @@ class ResponsivePlayer extends Component {
           url={url}
           width="100%"
           height="315px"
-          controls={true}
+          // controls={true}
           onPlay={startTimer}
           onPause={stopTimer}
           onEnded={stopTimer}

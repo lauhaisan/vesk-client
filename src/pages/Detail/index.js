@@ -155,8 +155,8 @@ class Detail extends React.Component {
         <div className="detail__viewRow">
           <Player
             url={url}
-            startTimer={!complete && this.startTimer}
-            stopTimer={!complete && this.stopTimer}
+            startTimer={!complete ? this.startTimer : undefined}
+            stopTimer={!complete ? this.stopTimer : undefined}
           />
           <div className="rightList" style={{ height: "315px" }}>
             <div className="scrollView">
