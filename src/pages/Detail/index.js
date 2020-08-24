@@ -17,6 +17,8 @@ class Detail extends React.Component {
     this.state = {
       complete: false,
       id: "",
+      timerStart: 0,
+      timerTime: 0
     };
   }
 
@@ -25,57 +27,81 @@ class Detail extends React.Component {
       match: { params: { id = "" } = {} } = {},
       getById,
       getListComment = () => {},
-      getListMostPopular,
+      getListMostPopular
     } = this.props;
     getById(id);
     getListComment(id);
     getListMostPopular({});
     this.setState({
-      id,
+      id
     });
   }
 
-  componentDidUpdate(prevProps) {
+  componentDidUpdate() {
     const {
       match: { params: { id: idParams = "" } = {} } = {},
       getById,
       getListComment = () => {},
+      itemMediaSocial: { timeForRecvCoin } = {}
     } = this.props;
-    if (this.state.id !== idParams) {
+    const { id, timerTime, complete } = this.state;
+    if (id !== idParams) {
       getById(idParams);
       getListComment(idParams);
       this.setState({
         id: idParams,
         complete: false,
+        timerStart: 0,
+        timerTime: 0
       });
+      this.stopTimer();
+    }
+    if (timerTime > timeForRecvCoin * 60000 && !complete) {
+      this.checkComplete();
     }
   }
 
   componentWillUnmount() {
     const { updateStateReducer, updateStateCommentReducer } = this.props;
     updateStateReducer({
-      itemMediaSocial: {},
+      itemMediaSocial: {}
     });
     updateStateCommentReducer({
       listComment: [],
       paging: {},
-      messageErrorComment: "",
+      messageErrorComment: ""
     });
   }
 
-  handleAddComment = (comment) => {
+  startTimer = () => {
+    this.setState({
+      timerTime: this.state.timerTime,
+      timerStart: Date.now() - this.state.timerTime
+    });
+    this.timer = setInterval(() => {
+      this.setState({
+        timerTime: Date.now() - this.state.timerStart
+      });
+    }, 10);
+  };
+
+  stopTimer = () => {
+    clearInterval(this.timer);
+  };
+
+  handleAddComment = comment => {
     const { addComment, itemMediaSocial: { id = "" } = {} } = this.props;
     const payload = {
       postId: id,
       comment,
-      title: "My Comment",
+      title: "My Comment"
     };
     addComment(payload);
   };
 
-  checkComplete = (value) => {
+  checkComplete = () => {
     this.setState({
-      complete: value,
+      complete: true
     });
   };
 
@@ -90,44 +116,56 @@ class Detail extends React.Component {
       loadingAction,
       // actionSuccessfully,
       // loadingMostPopular,
-      listMostPopular = [],
+      listMostPopular = []
     } = this.props;
     const {
       name = "",
       videoUrl: url = "",
       countView = 0,
       authorId = "",
+      timeForRecvCoin,
+      pointForUserView
     } = itemMediaSocial;
-    const { complete, id } = this.state;
+    const { complete, id, timerTime } = this.state;
+    let centiseconds = ("0" + (Math.floor(timerTime / 10) % 100)).slice(-2);
+    let seconds = ("0" + (Math.floor(timerTime / 1000) % 60)).slice(-2);
+    let minutes = ("0" + (Math.floor(timerTime / 60000) % 60)).slice(-2);
+    let hours = ("0" + Math.floor(timerTime / 3600000)).slice(-2);
     if (messageError === "Id not found") {
       return <NotFoundPage />;
     }
     const stringCountView = numeral(countView).format("0,0");
     const itemChanel =
-      listUserData.find((element) => element.userId === authorId) || {};
-    const formatListVideoMostPopular = listMostPopular.map((item) => {
+      listUserData.find(element => element.userId === authorId) || {};
+    const formatListVideoMostPopular = listMostPopular.map(item => {
       return {
         ...item,
-        author: listUserData.find(
-          (element) => element.userId === item.authorId
-        ),
+        author: listUserData.find(element => element.userId === item.authorId)
       };
     });
     const filterListVideoMostPopular = formatListVideoMostPopular.filter(
-      (item) => item.id !== id
+      item => item.id !== id
     );
     return (
       <div className="container__detail">
         <TitlePage title={name} />
         <div className="detail__viewRow">
-          <Player url={url} checkComplete={this.checkComplete} />
+          <Player
+            url={url}
+            startTimer={this.startTimer}
+            stopTimer={this.stopTimer}
+          />
           <div className="rightList" style={{ height: "315px" }}>
             <div className="scrollView">
-              {filterListVideoMostPopular.map((item) => (
+              {filterListVideoMostPopular.map(item => (
                 <ItemVideoVertical key={item.id} item={item} />
               ))}
             </div>
           </div>
+        </div>
+        <div className="Stopwatch-display">
+          You have viewed {hours} : {minutes} : {seconds} : {centiseconds}. You
+          receive {pointForUserView} CXC for watching {timeForRecvCoin} minutes.
         </div>
         <div className="viewAds">
           <a
@@ -183,7 +221,7 @@ class Detail extends React.Component {
             className="rightList"
             style={{ backgroundColor: "transparent", boxShadow: "none" }}
           >
-            {filterListVideoMostPopular.map((item) => (
+            {filterListVideoMostPopular.map(item => (
               <ItemVideoVertical key={item.id} item={item} />
             ))}
           </div>
@@ -192,7 +230,7 @@ class Detail extends React.Component {
           <Notification
             status="success"
             message=""
-            title="You receive 10 CXC"
+            title={`You receive ${pointForUserView} CXC`}
           />
         )}
       </div>
@@ -207,10 +245,10 @@ const mapStateToProps = ({
     // paging {},
     messageErrorComment = "",
     loadingAction = false,
-    actionSuccessfully = "",
+    actionSuccessfully = ""
   } = {},
   listUser: { listUserData = [] } = {},
-  mostPopular: { loading: loadingMostPopular, listMostPopular = [] } = {},
+  mostPopular: { loading: loadingMostPopular, listMostPopular = [] } = {}
 }) => ({
   itemMediaSocial,
   loadingGetById,
@@ -222,21 +260,20 @@ const mapStateToProps = ({
   actionSuccessfully,
   listUserData,
   loadingMostPopular,
-  listMostPopular,
+  listMostPopular
 });
 
-const mapDispatchToProps = (dispatch) => ({
-  getById: (id) => dispatch({ type: SOCIAL_MEDIA.GET_BY_ID, data: { id } }),
-  getListComment: (data) =>
+const mapDispatchToProps = dispatch => ({
+  getById: id => dispatch({ type: SOCIAL_MEDIA.GET_BY_ID, data: { id } }),
+  getListComment: data =>
     dispatch({ type: COMMENTS.GET_LIST_COMMENTS, data: { data } }),
-  addComment: (data) =>
-    dispatch({ type: COMMENTS.ADD_COMMENT, data: { data } }),
-  updateStateReducer: (data) =>
+  addComment: data => dispatch({ type: COMMENTS.ADD_COMMENT, data: { data } }),
+  updateStateReducer: data =>
     dispatch({ type: SOCIAL_MEDIA.UPDATE_SOCIAL_MEDIA_REDUCER, data }),
-  updateStateCommentReducer: (data) =>
+  updateStateCommentReducer: data =>
     dispatch({ type: COMMENTS.UPDATE_STATE_COMMENT_REDUCER, data }),
-  getListMostPopular: (data) =>
-    dispatch({ type: MOST_POPULAR.GET_LIST_POPULAR, data }),
+  getListMostPopular: data =>
+    dispatch({ type: MOST_POPULAR.GET_LIST_POPULAR, data })
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Detail);

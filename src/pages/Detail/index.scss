@@ -1,6 +1,10 @@
 .container__detail {
   padding: 2rem;
   min-height: 100vh;
+  .Stopwatch-display {
+    margin-top: 0.5rem;
+    color: #acacac;
+  }
   .viewAds {
     display: flex;
     justify-content: center;

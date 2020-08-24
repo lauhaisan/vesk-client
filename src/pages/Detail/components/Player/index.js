@@ -3,15 +3,9 @@ import ReactPlayer from "react-player";
 import "./index.scss";
 
 class ResponsivePlayer extends Component {
-  handleProgress = ({ played, playedSeconds }) => {
-    // played : percent watched, playedSeconds: sec
-    const { checkComplete } = this.props;
-    if (playedSeconds >= 10) {
-      checkComplete(true);
-    }
-  };
   render() {
-    const { url = "" } = this.props;
+    const { url = "", startTimer, stopTimer } = this.props;
+
     return (
       <div className="player-wrapper">
         <ReactPlayer
@@ -20,7 +14,8 @@ class ResponsivePlayer extends Component {
           width="100%"
           height="315px"
           controls={true}
-          onProgress={this.handleProgress}
+          onPlay={startTimer}
+          onPause={stopTimer}
         />
       </div>
     );

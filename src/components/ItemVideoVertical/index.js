@@ -4,7 +4,7 @@ import millify from "millify";
 import "./index.scss";
 
 class ItemVideoVertical extends Component {
-  timeAgo = (prevDate) => {
+  timeAgo = prevDate => {
     const time = Date.parse(prevDate);
     const diff = Number(new Date()) - time;
     const minute = 60 * 1000;
@@ -32,7 +32,6 @@ class ItemVideoVertical extends Component {
   };
   render() {
     const { item = {} } = this.props;
-    // console.log("item vẻtical", item);
     const { thumbnail = "", name = "", author: { userName = "" } = {} } = item;
 
     return (
