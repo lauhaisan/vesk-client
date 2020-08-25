@@ -2,7 +2,9 @@ import { takeLatest, call, put } from "redux-saga/effects";
 import {
   createWalletApi,
   getWalletApi,
-  rewardViewApi
+  rewardViewApi,
+  getHistoryPointApi,
+  getHistoryExchangesApi,
 } from "../service/wallet";
 import { WALLET } from "../constant";
 
@@ -12,13 +14,13 @@ function* createWallet(object) {
   if (resp.code !== 200) {
     yield put({
       type: WALLET.CREATE_WALLET_FAIL,
-      data: resp.message
+      data: resp.message,
     });
     return;
   }
   yield put({
     type: WALLET.CREATE_WALLET_SUCCESS,
-    data: resp.data
+    data: resp.data,
   });
 }
 
@@ -27,13 +29,13 @@ function* getWallet() {
   if (resp.code !== 200) {
     yield put({
       type: WALLET.GET_WALLET_FAIL,
-      data: resp.message
+      data: resp.message,
     });
     return;
   }
   yield put({
     type: WALLET.GET_WALLET_SUCCESS,
-    data: resp.data
+    data: resp.data,
   });
 }
 
@@ -43,18 +45,53 @@ function* rewardView(object) {
   const { data: { point } = {} } = resp;
   if (!point) {
     yield put({
-      type: WALLET.REWARD_VIEW_FAIL
+      type: WALLET.REWARD_VIEW_FAIL,
     });
     return;
   }
   yield put({
-    type: WALLET.REWARD_VIEW_SUCCESS
+    type: WALLET.REWARD_VIEW_SUCCESS,
   });
   yield put({ type: WALLET.GET_WALLET });
+}
+
+function* getHistoryPoint(object) {
+  const dat = object.data.data;
+  const resp = yield call(getHistoryPointApi, dat);
+  if (resp.code !== 200) {
+    yield put({
+      type: WALLET.GET_HISTORY_POINT_FAIL,
+      data: resp.message,
+    });
+    return;
+  }
+  yield put({
+    type: WALLET.GET_HISTORY_POINT_SUCCESS,
+    data: resp.data,
+  });
+}
+
+function* getHistoryExchanges(object) {
+  const dat = object.data.data;
+
+  const resp = yield call(getHistoryExchangesApi, dat);
+  if (resp.code !== 200) {
+    yield put({
+      type: WALLET.GET_HISTORY_EXCHANGES_FAIL,
+      data: resp.message,
+    });
+    return;
+  }
+  yield put({
+    type: WALLET.GET_HISTORY_EXCHANGES_SUCCESS,
+    data: resp.data,
+  });
 }
 
 export const walletSaga = [
   takeLatest(WALLET.CREATE_WALLET, createWallet),
   takeLatest(WALLET.GET_WALLET, getWallet),
-  takeLatest(WALLET.REWARD_VIEW, rewardView)
+  takeLatest(WALLET.REWARD_VIEW, rewardView),
+  takeLatest(WALLET.GET_HISTORY_POINT, getHistoryPoint),
+  takeLatest(WALLET.GET_HISTORY_EXCHANGES, getHistoryExchanges),
 ];

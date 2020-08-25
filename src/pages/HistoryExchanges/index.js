@@ -9,7 +9,7 @@ import { getToken } from "../../utils/token";
 // import moment from "moment";
 import "./index.scss";
 
-class HistoryPoint extends React.Component {
+class HistoryExchanges extends React.Component {
   constructor(props) {
     super(props);
     this.state = {};
@@ -30,7 +30,7 @@ class HistoryPoint extends React.Component {
   };
 
   render() {
-    const { loading, historyPoint: { items = [] } = {} } = this.props;
+    const { loading, historyExchanges: { items = [] } = {} } = this.props;
 
     const headerData = [
       {
@@ -73,7 +73,7 @@ class HistoryPoint extends React.Component {
             </AccordionItem>
           </Accordion>
           <TableCommon
-            title="History Point"
+            title="History Exchanges"
             rowData={items}
             headerData={headerData}
             loading={loading}
@@ -84,14 +84,16 @@ class HistoryPoint extends React.Component {
   }
 }
 
-const mapStateToProps = ({ wallet: { loading, historyPoint = {} } = {} }) => ({
+const mapStateToProps = ({
+  wallet: { loading, historyExchanges = {} } = {},
+}) => ({
   loading,
-  historyPoint,
+  historyExchanges,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   getListHistory: (data) =>
-    dispatch({ type: WALLET.GET_HISTORY_POINT, data: { data } }),
+    dispatch({ type: WALLET.GET_HISTORY_EXCHANGES, data: { data } }),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(HistoryPoint);
+export default connect(mapStateToProps, mapDispatchToProps)(HistoryExchanges);

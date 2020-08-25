@@ -32,7 +32,9 @@ const URL = {
 
   //WALLET
   WALLET: "/v1/vesk/wallet",
-  REWARD_VIEW: "/v1/vesk/exchange/reward-view"
+  REWARD_VIEW: "/v1/vesk/exchange/reward-view",
+  GET_HISTORY_POINT: "/v1/vesk/wallet-history/user",
+  GET_HISTORY_EXCHANGE: "/v1/vesk/exchanges/user",
 };
 
 export default URL;

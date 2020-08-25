@@ -1,0 +1,37 @@
+.containerHistoryPoint {
+  // background-color: #fff;
+  min-height: 100vh;
+  padding: 2rem;
+  .viewFilter {
+    .bx--accordion__item {
+      border-top: none;
+    }
+    .bx--accordion__title {
+      margin: 0px;
+      z-index: 0;
+    }
+    .bx--accordion__heading {
+      background-color: transparent;
+      padding: 0.5rem 0px;
+      &:focus::before {
+        border: none;
+      }
+    }
+    .bx--accordion__content {
+      padding-right: 0px;
+    }
+    &__title {
+      font-size: 1.25rem;
+      font-weight: 600;
+      line-height: 1.75rem;
+      letter-spacing: 0;
+      color: #2a3f54;
+      display: flex;
+      align-items: center;
+      &--icon {
+        font-size: 1.25rem;
+        margin-left: 0.5em;
+      }
+    }
+  }
+}
