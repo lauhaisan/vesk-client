@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import numeral from "numeral";
 import Notification from "../../components/Notification";
 import NotFoundPage from "../404Page";
-import { SOCIAL_MEDIA, COMMENTS, MOST_POPULAR } from "../../constant";
+import { SOCIAL_MEDIA, COMMENTS, MOST_POPULAR, WALLET } from "../../constant";
 import ItemVideoVertical from "../../components/ItemVideoVertical";
 // import ButtonLoading from "../../components/ButtonLoading";
 import Player from "./components/Player";
@@ -42,7 +42,8 @@ class Detail extends React.Component {
       match: { params: { id: idParams = "" } = {} } = {},
       getById,
       getListComment = () => {},
-      itemMediaSocial: { timeForRecvCoin } = {}
+      itemMediaSocial: { timeForRecvCoin } = {},
+      updateWalletReducer
     } = this.props;
     const { id, timerTime, complete } = this.state;
     if (id !== idParams) {
@@ -55,6 +56,7 @@ class Detail extends React.Component {
         timerTime: 0
       });
       this.stopTimer();
+      updateWalletReducer({ isRewaredViewSuccessfully: "" });
     }
     if (timerTime > timeForRecvCoin * 60000 && !complete) {
       this.checkComplete();
@@ -101,13 +103,22 @@ class Detail extends React.Component {
   };
 
   checkComplete = () => {
-    this.setState({
-      complete: true
-    });
+    const {
+      rewardView,
+      myInfo: { userId = "" } = {},
+      itemMediaSocial: { id: videoId = "", authorId = "" } = {}
+    } = this.props;
+    if (userId !== authorId) {
+      this.setState({
+        complete: true
+      });
+      rewardView({ videoId });
+    }
   };
 
   render() {
     const {
+      myInfo: { userId = "" } = {},
       itemMediaSocial = {},
       messageError = "",
       fetchingComment,
@@ -117,7 +128,8 @@ class Detail extends React.Component {
       loadingAction,
       // actionSuccessfully,
       // loadingMostPopular,
-      listMostPopular = []
+      listMostPopular = [],
+      isRewaredViewSuccessfully = ""
     } = this.props;
     const {
       name = "",
@@ -128,6 +140,7 @@ class Detail extends React.Component {
       pointForUserView
     } = itemMediaSocial;
     const { complete, id, timerTime } = this.state;
+    const checkOwner = userId === authorId;
     let centiseconds = ("0" + (Math.floor(timerTime / 10) % 100)).slice(-2);
     let seconds = ("0" + (Math.floor(timerTime / 1000) % 60)).slice(-2);
     let minutes = ("0" + (Math.floor(timerTime / 60000) % 60)).slice(-2);
@@ -164,7 +177,7 @@ class Detail extends React.Component {
             </div>
           </div>
         </div>
-        {!complete && (
+        {!complete && !checkOwner && (
           <div className="Stopwatch-display">
             You have viewed {hours} : {minutes} : {seconds} : {centiseconds}.
             You receive {pointForUserView} CXC for watching {timeForRecvCoin}{" "}
@@ -233,7 +246,7 @@ class Detail extends React.Component {
             ))}
           </div>
         </div>
-        {complete && (
+        {isRewaredViewSuccessfully === true && (
           <Notification
             status="success"
             message=""
@@ -241,11 +254,20 @@ class Detail extends React.Component {
             title={`You receive ${pointForUserView} CXC`}
           />
         )}
+        {isRewaredViewSuccessfully === false && (
+          <Notification
+            status="error"
+            message=""
+            timeout={10000}
+            title="Reward Point Failed"
+          />
+        )}
       </div>
     );
   }
 }
 const mapStateToProps = ({
+  user: { myInfo = {} } = {},
   socialMedia: { itemMediaSocial = {}, loadingGetById, messageError } = {},
   comment: {
     loading: fetchingComment,
@@ -256,8 +278,10 @@ const mapStateToProps = ({
     actionSuccessfully = ""
   } = {},
   listUser: { listUserData = [] } = {},
-  mostPopular: { loading: loadingMostPopular, listMostPopular = [] } = {}
+  mostPopular: { loading: loadingMostPopular, listMostPopular = [] } = {},
+  wallet: { isRewaredViewSuccessfully = "" }
 }) => ({
+  myInfo,
   itemMediaSocial,
   loadingGetById,
   messageError,
@@ -268,7 +292,8 @@ const mapStateToProps = ({
   actionSuccessfully,
   listUserData,
   loadingMostPopular,
-  listMostPopular
+  listMostPopular,
+  isRewaredViewSuccessfully
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -281,7 +306,10 @@ const mapDispatchToProps = dispatch => ({
   updateStateCommentReducer: data =>
     dispatch({ type: COMMENTS.UPDATE_STATE_COMMENT_REDUCER, data }),
   getListMostPopular: data =>
-    dispatch({ type: MOST_POPULAR.GET_LIST_POPULAR, data })
+    dispatch({ type: MOST_POPULAR.GET_LIST_POPULAR, data }),
+  rewardView: data => dispatch({ type: WALLET.REWARD_VIEW, data: { data } }),
+  updateWalletReducer: data =>
+    dispatch({ type: WALLET.UPDATE_WALLET_REDUCER, data })
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Detail);

@@ -4,7 +4,7 @@ import URL from "../constant/url";
 
 // request( param1: url, param2: isAuth, param3: method = "GET", param4: payload)
 
-const createWalletApi = async (payload) => {
+const createWalletApi = async payload => {
   return request(URL.WALLET, true, "POST", payload);
 };
 
@@ -12,4 +12,8 @@ const getWalletApi = async () => {
   return request(URL.WALLET, true, "GET");
 };
 
-export { createWalletApi, getWalletApi };
+const rewardViewApi = async payload => {
+  return request(URL.REWARD_VIEW, true, "POST", payload);
+};
+
+export { createWalletApi, getWalletApi, rewardViewApi };

@@ -4,6 +4,7 @@ const INITIAL_STATE = {
   loading: false,
   myWallet: {},
   messageErrorWallet: "",
+  isRewaredViewSuccessfully: ""
 };
 
 const socialMediaReducer = (state = INITIAL_STATE, action) => {
@@ -12,47 +13,62 @@ const socialMediaReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         loading: true,
-        messageErrorWallet: "",
+        messageErrorWallet: ""
       };
     case WALLET.CREATE_WALLET_SUCCESS:
       return {
         ...state,
         loading: false,
         myWallet: action.data,
-        messageErrorWallet: "",
+        messageErrorWallet: ""
       };
     case WALLET.CREATE_WALLET_FAIL:
       return {
         ...state,
         loading: false,
         myWallet: {},
-        messageErrorWallet: action.data,
+        messageErrorWallet: action.data
       };
     case WALLET.GET_WALLET:
       return {
         ...state,
         loading: true,
-        messageErrorWallet: "",
+        messageErrorWallet: ""
       };
     case WALLET.GET_WALLET_SUCCESS:
       return {
         ...state,
         loading: false,
         myWallet: action.data,
-        messageErrorWallet: "",
+        messageErrorWallet: ""
       };
     case WALLET.GET_WALLET_FAIL:
       return {
         ...state,
         loading: false,
         myWallet: {},
-        messageErrorWallet: action.data,
+        messageErrorWallet: action.data
+      };
+    case WALLET.REWARD_VIEW:
+      return {
+        ...state,
+        isRewaredViewSuccessfully: ""
+      };
+    case WALLET.REWARD_VIEW_SUCCESS:
+      return {
+        ...state,
+        isRewaredViewSuccessfully: true
+      };
+    case WALLET.REWARD_VIEW_FAIL:
+      return {
+        ...state,
+        isRewaredViewSuccessfully: false
       };
 
     case WALLET.UPDATE_WALLET_REDUCER:
       return {
         ...state,
-        ...action.data,
+        ...action.data
       };
 
     default:
