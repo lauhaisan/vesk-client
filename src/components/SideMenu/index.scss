@@ -32,6 +32,37 @@
         background-color: rgba(255, 255, 255, 0.2);
       }
     }
+    .menuParent {
+      padding: 12px 14px;
+      height: 60px;
+      align-items: center;
+      color: white;
+      font-weight: 600;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      &--iconText {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      &:hover,
+      &:focus {
+        opacity: 0.5;
+        background-color: rgba(255, 255, 255, 0.2);
+      }
+      &__iconChevron {
+        margin-left: 0.5rem;
+        font-size: 10px;
+      }
+      &__text {
+        margin-top: 5px;
+        font-size: 0.65rem;
+      }
+      &__icon {
+        font-size: 14px;
+      }
+    }
   }
 }
 
@@ -68,6 +99,37 @@
         color: white;
         background-color: rgba(255, 255, 255, 0.2);
         width: 225px;
+      }
+    }
+    .isSubMenu {
+      margin-left: 1rem;
+    }
+    .menuParent {
+      padding: 12px 14px;
+      height: 60px;
+      align-items: center;
+      color: white;
+      font-weight: 600;
+      display: flex;
+      justify-content: space-between;
+      &--iconText {
+        display: flex;
+        align-items: center;
+      }
+      &:hover,
+      &:focus {
+        opacity: 0.5;
+        background-color: rgba(255, 255, 255, 0.2);
+      }
+      &__iconChevron {
+        font-size: 10px;
+      }
+      &__text {
+        display: block;
+        margin-left: 11px;
+      }
+      &__icon {
+        font-size: 14px;
       }
     }
   }

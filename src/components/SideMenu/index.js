@@ -1,4 +1,4 @@
-import React, { PureComponent } from "react";
+import React, { PureComponent, Fragment } from "react";
 import { NavLink } from "react-router-dom";
 import windowSize from "react-window-size";
 import "./index.scss";
@@ -7,16 +7,28 @@ class SideMenu extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
-      openUser: false,
-      openAds: false,
-      openSocialMedia: false
+      openHistory: false
     };
   }
 
-  componentDidMount() {}
+  componentDidMount() {
+    if (window.location.pathname.includes("history")) {
+      this.setState({
+        openHistory: true
+      });
+    }
+  }
+
+  handleClickHistory = () => {
+    const { openHistory } = this.state;
+    this.setState({
+      openHistory: !openHistory
+    });
+  };
 
   render() {
     const { openMenu, windowWidth } = this.props;
+    const { openHistory } = this.state;
     const isMobile = windowWidth < 768;
     let classNameMenu;
     if (isMobile) {
@@ -28,6 +40,7 @@ class SideMenu extends PureComponent {
     }
 
     const checkMenuMobileOpen = isMobile && openMenu ? "none" : "block";
+    const iconChevron = "fas fa-chevron-down";
 
     return (
       <div className={classNameMenu} style={{ display: checkMenuMobileOpen }}>
@@ -59,15 +72,37 @@ class SideMenu extends PureComponent {
             <i className="fas fa-poll itemMenu__icon"></i>
             <span className="itemMenu__text">Most Popular</span>
           </NavLink>
-          <NavLink
-            exact
-            activeClassName={`${classNameMenu}__menu__itemMenu--active`}
-            to="/history-point"
-            className={`${classNameMenu}__menu__itemMenu`}
-          >
-            <i className="fas fa-history itemMenu__icon"></i>
-            <span className="itemMenu__text">History Point</span>
-          </NavLink>
+          <Fragment>
+            <div className="menuParent" onClick={this.handleClickHistory}>
+              <div className="menuParent--iconText">
+                <i className="fas fa-history menuParent__icon"></i>
+                <span className="menuParent__text">History</span>
+              </div>
+              <i className={`${iconChevron} menuParent__iconChevron`}></i>
+            </div>
+            {openHistory && (
+              <Fragment>
+                <NavLink
+                  exact
+                  activeClassName={`${classNameMenu}__menu__itemMenu--active`}
+                  to="/history-point"
+                  className={`${classNameMenu}__menu__itemMenu `}
+                >
+                  <i className="fas fa-coins itemMenu__icon isSubMenu"></i>
+                  <span className="itemMenu__text">Point</span>
+                </NavLink>
+                <NavLink
+                  exact
+                  activeClassName={`${classNameMenu}__menu__itemMenu--active`}
+                  to="/history-exchange"
+                  className={`${classNameMenu}__menu__itemMenu `}
+                >
+                  <i className="fas fa-exchange-alt itemMenu__icon isSubMenu"></i>
+                  <span className="itemMenu__text">Exchange</span>
+                </NavLink>
+              </Fragment>
+            )}
+          </Fragment>
           <NavLink
             activeClassName={`${classNameMenu}__menu__itemMenu--active`}
             to="/contact"
