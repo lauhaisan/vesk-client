@@ -6,7 +6,6 @@ import Notification from "../../components/Notification";
 import NotFoundPage from "../404Page";
 import { SOCIAL_MEDIA, COMMENTS, MOST_POPULAR, WALLET } from "../../constant";
 import ItemVideoVertical from "../../components/ItemVideoVertical";
-// import ButtonLoading from "../../components/ButtonLoading";
 import Player from "./components/Player";
 import Comments from "./components/Comments";
 import "./index.scss";
@@ -15,10 +14,9 @@ class Detail extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      complete: false,
       id: "",
       timerStart: 0,
-      timerTime: 0
+      timerTime: 0,
     };
   }
 
@@ -27,13 +25,13 @@ class Detail extends React.Component {
       match: { params: { id = "" } = {} } = {},
       getById,
       getListComment = () => {},
-      getListMostPopular
+      getListMostPopular,
     } = this.props;
     getById(id);
     getListComment(id);
     getListMostPopular({});
     this.setState({
-      id
+      id,
     });
   }
 
@@ -43,9 +41,9 @@ class Detail extends React.Component {
       getById,
       getListComment = () => {},
       itemMediaSocial: { timeForRecvCoin } = {},
-      updateWalletReducer
+      updateWalletReducer,
     } = this.props;
-    const { id, timerTime, complete } = this.state;
+    const { id, timerTime } = this.state;
     if (id !== idParams) {
       getById(idParams);
       getListComment(idParams);
@@ -53,37 +51,42 @@ class Detail extends React.Component {
         id: idParams,
         complete: false,
         timerStart: 0,
-        timerTime: 0
+        timerTime: 0,
       });
       this.stopTimer();
       updateWalletReducer({ isRewaredViewSuccessfully: "" });
     }
-    if (timerTime > timeForRecvCoin * 60000 && !complete) {
+    if (timerTime > timeForRecvCoin * 60000) {
       this.checkComplete();
-      this.stopTimer();
     }
   }
 
   componentWillUnmount() {
-    const { updateStateReducer, updateStateCommentReducer } = this.props;
+    const {
+      updateStateReducer,
+      updateStateCommentReducer,
+      updateWalletReducer,
+    } = this.props;
+    this.stopTimer();
     updateStateReducer({
-      itemMediaSocial: {}
+      itemMediaSocial: {},
     });
     updateStateCommentReducer({
       listComment: [],
       paging: {},
-      messageErrorComment: ""
+      messageErrorComment: "",
     });
+    updateWalletReducer({ isRewaredViewSuccessfully: "" });
   }
 
   startTimer = () => {
     this.setState({
       timerTime: this.state.timerTime,
-      timerStart: Date.now() - this.state.timerTime
+      timerStart: Date.now() - this.state.timerTime,
     });
     this.timer = setInterval(() => {
       this.setState({
-        timerTime: Date.now() - this.state.timerStart
+        timerTime: Date.now() - this.state.timerStart,
       });
     }, 10);
   };
@@ -92,12 +95,12 @@ class Detail extends React.Component {
     clearInterval(this.timer);
   };
 
-  handleAddComment = comment => {
+  handleAddComment = (comment) => {
     const { addComment, itemMediaSocial: { id = "" } = {} } = this.props;
     const payload = {
       postId: id,
       comment,
-      title: "My Comment"
+      title: "My Comment",
     };
     addComment(payload);
   };
@@ -106,12 +109,19 @@ class Detail extends React.Component {
     const {
       rewardView,
       myInfo: { userId = "" } = {},
-      itemMediaSocial: { id: videoId = "", authorId = "" } = {}
+      itemMediaSocial: { id: videoId = "", authorId = "" } = {},
     } = this.props;
+    this.stopTimer();
     if (userId !== authorId) {
-      this.setState({
-        complete: true
-      });
+      this.setState(
+        {
+          timerStart: 0,
+          timerTime: 0,
+        },
+        () => {
+          this.startTimer();
+        }
+      );
       rewardView({ videoId });
     }
   };
@@ -129,7 +139,7 @@ class Detail extends React.Component {
       // actionSuccessfully,
       // loadingMostPopular,
       listMostPopular = [],
-      isRewaredViewSuccessfully = ""
+      isRewaredViewSuccessfully = "",
     } = this.props;
     const {
       name = "",
@@ -137,9 +147,9 @@ class Detail extends React.Component {
       countView = 0,
       authorId = "",
       timeForRecvCoin,
-      pointForUserView
+      pointForUserView,
     } = itemMediaSocial;
-    const { complete, id, timerTime } = this.state;
+    const { id, timerTime } = this.state;
     const checkOwner = userId === authorId;
     let centiseconds = ("0" + (Math.floor(timerTime / 10) % 100)).slice(-2);
     let seconds = ("0" + (Math.floor(timerTime / 1000) % 60)).slice(-2);
@@ -150,15 +160,17 @@ class Detail extends React.Component {
     }
     const stringCountView = numeral(countView).format("0,0");
     const itemChanel =
-      listUserData.find(element => element.userId === authorId) || {};
-    const formatListVideoMostPopular = listMostPopular.map(item => {
+      listUserData.find((element) => element.userId === authorId) || {};
+    const formatListVideoMostPopular = listMostPopular.map((item) => {
       return {
         ...item,
-        author: listUserData.find(element => element.userId === item.authorId)
+        author: listUserData.find(
+          (element) => element.userId === item.authorId
+        ),
       };
     });
     const filterListVideoMostPopular = formatListVideoMostPopular.filter(
-      item => item.id !== id
+      (item) => item.id !== id
     );
     return (
       <div className="container__detail">
@@ -166,21 +178,21 @@ class Detail extends React.Component {
         <div className="detail__viewRow">
           <Player
             url={url}
-            startTimer={!complete ? this.startTimer : undefined}
-            stopTimer={!complete ? this.stopTimer : undefined}
+            startTimer={!checkOwner ? this.startTimer : undefined}
+            stopTimer={!checkOwner ? this.stopTimer : undefined}
           />
           <div className="rightList" style={{ height: "315px" }}>
             <div className="scrollView">
-              {filterListVideoMostPopular.map(item => (
+              {filterListVideoMostPopular.map((item) => (
                 <ItemVideoVertical key={item.id} item={item} />
               ))}
             </div>
           </div>
         </div>
-        {!complete && !checkOwner && (
+        {!checkOwner && (
           <div className="Stopwatch-display">
             You have viewed {hours} : {minutes} : {seconds} : {centiseconds}.
-            You receive {pointForUserView} CXC for watching {timeForRecvCoin}{" "}
+            You receive {pointForUserView} point for watching {timeForRecvCoin}{" "}
             minutes.
           </div>
         )}
@@ -220,15 +232,6 @@ class Detail extends React.Component {
                 />
                 <p className="boxInfoChanel__name">{itemChanel.userName}</p>
               </div>
-              {/* <ButtonLoading
-                onClick={() => alert("SUB")}
-                text="Subscribe"
-                style={{
-                  width: "140px",
-                  height: "38px",
-                  fontSize: "16px",
-                }}
-              /> */}
             </div>
             <Comments
               listComment={listComment}
@@ -241,7 +244,7 @@ class Detail extends React.Component {
             className="rightList"
             style={{ backgroundColor: "transparent", boxShadow: "none" }}
           >
-            {filterListVideoMostPopular.map(item => (
+            {filterListVideoMostPopular.map((item) => (
               <ItemVideoVertical key={item.id} item={item} />
             ))}
           </div>
@@ -251,7 +254,7 @@ class Detail extends React.Component {
             status="success"
             message=""
             timeout={10000}
-            title={`You receive ${pointForUserView} CXC`}
+            title={`You receive ${pointForUserView} point`}
           />
         )}
         {isRewaredViewSuccessfully === false && (
@@ -272,14 +275,13 @@ const mapStateToProps = ({
   comment: {
     loading: fetchingComment,
     listComment = [],
-    // paging {},
     messageErrorComment = "",
     loadingAction = false,
-    actionSuccessfully = ""
+    actionSuccessfully = "",
   } = {},
   listUser: { listUserData = [] } = {},
   mostPopular: { loading: loadingMostPopular, listMostPopular = [] } = {},
-  wallet: { isRewaredViewSuccessfully = "" }
+  wallet: { isRewaredViewSuccessfully = "" },
 }) => ({
   myInfo,
   itemMediaSocial,
@@ -293,23 +295,24 @@ const mapStateToProps = ({
   listUserData,
   loadingMostPopular,
   listMostPopular,
-  isRewaredViewSuccessfully
+  isRewaredViewSuccessfully,
 });
 
-const mapDispatchToProps = dispatch => ({
-  getById: id => dispatch({ type: SOCIAL_MEDIA.GET_BY_ID, data: { id } }),
-  getListComment: data =>
+const mapDispatchToProps = (dispatch) => ({
+  getById: (id) => dispatch({ type: SOCIAL_MEDIA.GET_BY_ID, data: { id } }),
+  getListComment: (data) =>
     dispatch({ type: COMMENTS.GET_LIST_COMMENTS, data: { data } }),
-  addComment: data => dispatch({ type: COMMENTS.ADD_COMMENT, data: { data } }),
-  updateStateReducer: data =>
+  addComment: (data) =>
+    dispatch({ type: COMMENTS.ADD_COMMENT, data: { data } }),
+  updateStateReducer: (data) =>
     dispatch({ type: SOCIAL_MEDIA.UPDATE_SOCIAL_MEDIA_REDUCER, data }),
-  updateStateCommentReducer: data =>
+  updateStateCommentReducer: (data) =>
     dispatch({ type: COMMENTS.UPDATE_STATE_COMMENT_REDUCER, data }),
-  getListMostPopular: data =>
+  getListMostPopular: (data) =>
     dispatch({ type: MOST_POPULAR.GET_LIST_POPULAR, data }),
-  rewardView: data => dispatch({ type: WALLET.REWARD_VIEW, data: { data } }),
-  updateWalletReducer: data =>
-    dispatch({ type: WALLET.UPDATE_WALLET_REDUCER, data })
+  rewardView: (data) => dispatch({ type: WALLET.REWARD_VIEW, data: { data } }),
+  updateWalletReducer: (data) =>
+    dispatch({ type: WALLET.UPDATE_WALLET_REDUCER, data }),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Detail);
