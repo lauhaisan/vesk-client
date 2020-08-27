@@ -1,6 +1,7 @@
 import React, { Fragment } from "react";
 import { Accordion, AccordionItem } from "carbon-components-react";
 import { connect } from "react-redux";
+import numeral from "numeral";
 import TitlePage from "../../components/TitlePage";
 import TableCommon from "../../components/TableCommon";
 import Filter from "./component/Filter";
@@ -35,7 +36,7 @@ class HistoryExchanges extends React.Component {
     const headerData = [
       {
         header: "Created",
-        key: "createdAt",
+        key: "date",
       },
       {
         header: "Message",
@@ -45,15 +46,17 @@ class HistoryExchanges extends React.Component {
         header: "Money",
         key: "money",
       },
-      {
-        header: "User Id",
-        key: "userId",
-      },
-      {
-        header: "User Recv",
-        key: "userIdRecv",
-      },
     ];
+
+    const formatData = items.map((item) => {
+      const { date, money = 0 } = item;
+      return {
+        ...item,
+        date,
+        // createdAt: moment(createdAt).format("DD MMM YYYY hh:mm a"),
+        money: money && numeral(money).format("0,0"),
+      };
+    });
 
     return (
       <Fragment>
@@ -74,7 +77,7 @@ class HistoryExchanges extends React.Component {
           </Accordion>
           <TableCommon
             title="History Exchanges"
-            rowData={items}
+            rowData={formatData}
             headerData={headerData}
             loading={loading}
           />

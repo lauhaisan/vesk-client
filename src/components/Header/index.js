@@ -2,15 +2,16 @@ import React, { Component, Fragment } from "react";
 import {
   Header,
   HeaderContainer,
-  HeaderGlobalBar
+  HeaderGlobalBar,
 } from "carbon-components-react/lib/components/UIShell";
 import {
   UserProfile20,
   Logout20,
   ChevronSortDown20,
-  Menu20
+  Menu20,
 } from "@carbon/icons-react";
 import { connect } from "react-redux";
+import numeral from "numeral";
 import { setToken } from "../../utils/token";
 import "./index.scss";
 
@@ -22,7 +23,7 @@ class ComponentHeader extends Component {
 
   handleLogout = () => {
     const {
-      history
+      history,
       //  logout
     } = this.props;
     setToken(undefined);
@@ -34,7 +35,7 @@ class ComponentHeader extends Component {
       history,
       handleMenu,
       myInfo: data = {},
-      myWallet: { money = 0 } = {}
+      myWallet: { money = 0 } = {},
     } = this.props;
     const rightMenuSignIn = (
       <Fragment>
@@ -45,7 +46,9 @@ class ComponentHeader extends Component {
             className="fas fa-coins"
             style={{ marginRight: "0.5rem", color: "#FFCF40" }}
           ></i>
-          <span className="point__number">{money}</span>
+          <span className="point__number">
+            {money && numeral(money).format("0,0")}
+          </span>
         </div>
         <div className="rightMenu" onClick={this.showDropDownMenu}>
           <img
@@ -93,10 +96,10 @@ class ComponentHeader extends Component {
 
 const mapStateToProps = ({
   user: { myInfo = {} } = {},
-  wallet: { myWallet = {} } = {}
+  wallet: { myWallet = {} } = {},
 }) => ({
   myInfo,
-  myWallet
+  myWallet,
 });
 
 export default connect(mapStateToProps, null)(ComponentHeader);

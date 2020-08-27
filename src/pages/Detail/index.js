@@ -202,7 +202,6 @@ class Detail extends React.Component {
             href="https://vinhomes.vn/"
             target="_blank"
             rel="noopener noreferrer"
-            id="ads"
             className="contentAds"
           >
             <img

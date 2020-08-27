@@ -6,7 +6,7 @@ import TableCommon from "../../components/TableCommon";
 import Filter from "./component/Filter";
 import { WALLET } from "../../constant";
 import { getToken } from "../../utils/token";
-// import moment from "moment";
+import moment from "moment";
 import "./index.scss";
 
 class HistoryPoint extends React.Component {
@@ -42,7 +42,7 @@ class HistoryPoint extends React.Component {
         key: "message",
       },
       {
-        header: "Money",
+        header: "Point",
         key: "money",
       },
       {
@@ -54,6 +54,14 @@ class HistoryPoint extends React.Component {
         key: "userIdRecv",
       },
     ];
+
+    const formatData = items.map((item) => {
+      return {
+        ...item,
+        createdAt: moment(item.createdAt).format("DD MMM YYYY hh:mm a"),
+        // money: money && numeral(money).format("0,0"),
+      };
+    });
 
     return (
       <Fragment>
@@ -74,7 +82,7 @@ class HistoryPoint extends React.Component {
           </Accordion>
           <TableCommon
             title="History Point"
-            rowData={items}
+            rowData={formatData}
             headerData={headerData}
             loading={loading}
           />
