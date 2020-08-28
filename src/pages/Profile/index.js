@@ -47,11 +47,16 @@ class Profile extends Component {
         <TitlePage title={`${userName} | Profile`} />
         <div className="viewMyInfo">
           <div className="viewAvatar">
-            <img
-              className="avatarProfile"
-              src={avatar || require("../../images/testAvatar.jpg")}
-              alt="img-avatar"
-            />
+          
+         <img
+         className="avatarProfile"
+         src={avatar || require("../../images/testAvatar.jpg")}
+             alt="img-avatar"
+         />
+         {/* <img class="img-scaleX"
+         src={require("../../images/b.png")}
+             alt="img-avatar"
+         /> */}
           </div>
 
           <Form className="formData">
@@ -69,6 +74,42 @@ class Profile extends Component {
                 value={avatar || ""}
               />
             </FormGroup> */}
+            <div className="formData__row__profile">
+            <div className="card">
+
+  <div className="title">Video</div>
+  <div className="icon">
+  </div>
+  <div className="features">
+    <ul>
+      <li><span>12</span> views</li>
+    </ul>
+  </div>
+  </div>
+  <div className="card-2">
+
+  <div className="title">Follow</div>
+  <div className="icon">
+  </div>
+  <div className="features">
+    <ul>
+      <li><span>112</span> people</li>
+    </ul>
+  </div>
+  </div>
+  <div className="card">
+
+  <div className="title">Like</div>
+  <div className="icon">
+  </div>
+  <div className="features">
+    <ul>
+      <li><span>152</span> </li>
+    </ul>
+  </div>
+  </div>
+</div>
+            
             <div className="formData__row__profile">
               <FormGroup legendText="">
                 <TextInput
@@ -243,7 +284,9 @@ class Profile extends Component {
             />
           </div> */}
         </div>
+        
       </div>
+           
     );
   }
 }
