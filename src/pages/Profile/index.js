@@ -53,32 +53,26 @@ class Profile extends Component {
          src={avatar || require("../../images/testAvatar.jpg")}
              alt="img-avatar"
          />
-         {/* <img class="img-scaleX"
-         src={require("../../images/b.png")}
-             alt="img-avatar"
-         /> */}
+        
           </div>
 
           <Form className="formData">
-            {/* <FormGroup legendText="">
-              <TextInput
-                readOnly={!isEdit}
-                id="inputAvatar"
-                labelText="Avatar URL"
-                onChange={event =>
-                  this.onChangeFormData("avatar", event.target.value)
-                }
-                required
-                placeholder="Avatar URL"
-                type="text"
-                value={avatar || ""}
-              />
-            </FormGroup> */}
+          <div className="formData__row__profile">
+<img className="imgReward"
+         src={require("../../images/award.png")}
+             alt="img-avatar"
+         />  
+</div>
             <div className="formData__row__profile">
             <div className="card">
 
   <div className="title">Video</div>
   <div className="icon">
+  <img
+         className="avatarProfile"
+         src={require("../../images/eye-close-up.svg")}
+             alt="img-avatar"
+         />
   </div>
   <div className="features">
     <ul>
@@ -90,10 +84,15 @@ class Profile extends Component {
 
   <div className="title">Follow</div>
   <div className="icon">
+  <img
+         
+         src={require("../../images/people.png")}
+             alt="img-avatar"
+         />
   </div>
   <div className="features">
     <ul>
-      <li><span>112</span> people</li>
+      <li><span>622</span> people</li>
     </ul>
   </div>
   </div>
@@ -101,14 +100,22 @@ class Profile extends Component {
 
   <div className="title">Like</div>
   <div className="icon">
+  <img
+         className="avatarProfile"
+         src={require("../../images/like-outline.png")}
+             alt="img-avatar"
+         />
+       
   </div>
   <div className="features">
     <ul>
-      <li><span>152</span> </li>
+      <li><span>152</span> times</li>
+      
     </ul>
   </div>
   </div>
 </div>
+
             
             <div className="formData__row__profile">
               <FormGroup legendText="">
