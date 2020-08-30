@@ -92,7 +92,7 @@ class Home extends Component {
               />
             </a>
           </div>
-          <div className="divider" style={{ marginTop: "2rem" }} />
+          <div className="divider" style={{ marginTop: "1rem" }} />
           <div className="titleBlock">
             <p className="titleBlock__text">Featured Videos</p>
             <div className="titleBlock__btn">

@@ -11,7 +11,7 @@
     align-items: center;
     width: 100%;
     height: auto;
-    margin-top: 2rem;
+    margin-top: 1rem;
     .contentAds {
       display: flex;
       justify-content: center;
@@ -19,10 +19,10 @@
       width: 85%;
     }
     &__img {
-      width: 100%;
+      width: 80%;
       height: auto;
-      max-height: 230px;
-      object-fit: cover;
+      max-height: 170px;
+      // object-fit: cover;
       cursor: pointer;
     }
   }
