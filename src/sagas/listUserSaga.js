@@ -4,7 +4,7 @@ import {
   getUserByIdAPI,
   editUserAPI,
 } from "../service/listUser";
-import { LIST_USER, USER } from "../constant";
+import { LIST_USER } from "../constant";
 
 function* getListUser(object) {
   const dat = object.data.data;
@@ -36,7 +36,6 @@ function* editUser(obj) {
   }
   yield put({ type: LIST_USER.EDIT_USER_SUCCESS, data: resp.data });
   hideModal();
-  yield put({ type: USER.GET_MY_INFO, data: { data: dat.userId } });
 }
 
 export const listUserSaga = [

@@ -14,33 +14,40 @@ import ButtonLoading from "../../components/ButtonLoading";
 import Notification from "../../components/Notification";
 import CustomModal from "../../components/CustomModal";
 import { connect } from "react-redux";
+import { getToken } from "../../utils/token";
 import "./index.scss";
-import { UPLOAD, LIST_USER } from "../../constant";
+import { UPLOAD, LIST_USER, USER } from "../../constant";
 
 class Profile extends Component {
   constructor(props) {
     super(props);
     this.state = {
       isEdit: false,
-      user: {},
     };
+  }
+
+  static getDerivedStateFromProps(props) {
+    if ("myInfo" in props) {
+      return { myInfo: props.myInfo };
+    }
+    return null;
   }
 
   onChangeDatePicker = (e) => {
     const value = e.target ? e.target.value : e[0];
     const valueDate = moment(value).format("DD/MM/YYYY");
-    let { user } = this.state;
-    user.birthDate = valueDate;
+    let { myInfo } = this.state;
+    myInfo.birthDate = valueDate;
     this.setState({
-      user,
+      myInfo,
     });
   };
 
   onChangeFormData = (key, value) => {
-    let { user } = this.state;
-    user[key] = value;
+    let { myInfo } = this.state;
+    myInfo[key] = value;
     this.setState({
-      user,
+      myInfo,
     });
   };
 
@@ -51,48 +58,28 @@ class Profile extends Component {
   };
 
   hideModal = () => {
+    const { getMyInfo } = this.props;
+    const { data: { userId = "" } = {} } = getToken();
     this.setState({
       isEdit: false,
-      user: {},
     });
+    getMyInfo(userId);
   };
 
   handleFileChanged(e) {
     const { uploadImage } = this.props;
     uploadImage({ file: e.target.files[0] });
-    // this.setState({selectedFile: e.target.files[0]})
   }
 
   handleSaveProfile = () => {
-    const { user = {} } = this.state;
-    const { myInfo = {}, editUser } = this.props;
-    console.log(myInfo);
-    const payload = {
-      avatar: user.avatar || myInfo.avatar,
-      address: user.address || myInfo.address,
-      birthDate: user.birthDate || myInfo.birthDate,
-      city: user.city || myInfo.city,
-      email: user.email || myInfo.email,
-      firstName: user.firstName || myInfo.firstName,
-      lastName: user.lastName || myInfo.lastName,
-      gender: user.gender || myInfo.gender,
-      phone: user.phone || myInfo.phone,
-      region: user.region || myInfo.region,
-      userName: user.userName || myInfo.userName,
-      userId: myInfo.userId,
-    };
-    editUser(payload, this.hideModal);
+    const { myInfo = {} } = this.state;
+    const { editUser } = this.props;
+    editUser(myInfo, this.hideModal);
   };
 
   render() {
-    const {
-      myInfo = {},
-      loadingEditUser,
-      editUserSuccessfully,
-      messageError,
-    } = this.props;
-    const { isEdit } = this.state;
-
+    const { loadingEditUser, editUserSuccessfully, messageError } = this.props;
+    const { isEdit, myInfo } = this.state;
     const {
       avatar = "",
       address = "",
@@ -138,7 +125,7 @@ class Profile extends Component {
                 light={true}
                 placeholder="Email"
                 type="text"
-                defaultValue={email}
+                value={email}
               />
             </FormGroup>
             <FormGroup legendText="">
@@ -152,7 +139,7 @@ class Profile extends Component {
                   placeholder="Birthday"
                   labelText="Birthday"
                   type="text"
-                  defaultValue={birthDate}
+                  value={birthDate}
                 />
               </DatePicker>
             </FormGroup>
@@ -170,7 +157,7 @@ class Profile extends Component {
                 light={true}
                 placeholder="First Name"
                 type="text"
-                defaultValue={firstName}
+                value={firstName}
               />
             </FormGroup>
             <FormGroup legendText="">
@@ -185,7 +172,7 @@ class Profile extends Component {
                 light={true}
                 placeholder="Last Name"
                 type="text"
-                defaultValue={lastName}
+                value={lastName}
               />
             </FormGroup>
           </div>
@@ -203,7 +190,7 @@ class Profile extends Component {
                 light={true}
                 placeholder="User Name"
                 type="text"
-                defaultValue={userName}
+                value={userName}
               />
             </FormGroup>
             <FormGroup legendText="">
@@ -218,7 +205,7 @@ class Profile extends Component {
                 light={true}
                 placeholder="Gender"
                 type="text"
-                defaultValue={gender}
+                value={gender}
               />
             </FormGroup>
           </div>
@@ -235,7 +222,7 @@ class Profile extends Component {
                 light={true}
                 placeholder="Region"
                 type="text"
-                defaultValue={region}
+                value={region}
               />
             </FormGroup>
             <FormGroup legendText="">
@@ -250,7 +237,7 @@ class Profile extends Component {
                 light={true}
                 placeholder="City"
                 type="text"
-                defaultValue={city}
+                value={city}
               />
             </FormGroup>
           </div>
@@ -267,7 +254,7 @@ class Profile extends Component {
                 light={true}
                 placeholder="Address"
                 type="text"
-                defaultValue={address}
+                value={address}
               />
             </FormGroup>
             <FormGroup legendText="">
@@ -282,7 +269,7 @@ class Profile extends Component {
                 light={true}
                 placeholder="Phone"
                 type="text"
-                defaultValue={phone}
+                value={phone}
               />
             </FormGroup>
           </div>
@@ -538,6 +525,7 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch({ type: LIST_USER.EDIT_USER, data: { data, functionHideModal } }),
   uploadImage: (data) =>
     dispatch({ type: UPLOAD.UPLOAD_IMAGE, data: { data } }),
+  getMyInfo: (data) => dispatch({ type: USER.GET_MY_INFO, data: { data } }),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Profile);
