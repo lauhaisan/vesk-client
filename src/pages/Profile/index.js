@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 import {
-  Form,
-  FormGroup,
-  TextInput,
-  DatePicker,
-  DatePickerInput
+  Form
+  // FormGroup,
+  // TextInput,
+  // DatePicker,
+  // DatePickerInput
 } from "carbon-components-react";
 import TitlePage from "../../components/TitlePage";
 // import ButtonLoading from "../../components/ButtonLoading";
@@ -27,6 +27,7 @@ class Profile extends Component {
 
   render() {
     const { myInfo: data = {} } = this.props;
+    console.log(this.props);
     const {
       avatar = "",
       address = "",
@@ -40,7 +41,7 @@ class Profile extends Component {
       region,
       userName = ""
     } = data;
-    const { isEdit } = this.state;
+    // const { isEdit } = this.state;
 
     return (
       <div className="containerProfile">
@@ -125,7 +126,8 @@ class Profile extends Component {
                   <div className="detail">Hồ sơ</div>
                   <div className="detail-extra">
                     Một số thông tin có thể hiển thị cho những người khác đang
-                    sử dụng dịch vụ của Vesk. <a>Tìm hiểu thêm</a>
+                    sử dụng dịch vụ của Vesk.
+                    {/* <a href="">Tìm hiểu thêm</a> */}
                   </div>
                   <div className="row-info">
                     <span class="row-info-left">

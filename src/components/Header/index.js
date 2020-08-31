@@ -23,12 +23,21 @@ class Search extends Component {
       q: ""
     };
   }
+
   onChangeSearch = value => {
     this.setState({ q: value });
   };
+
+  handleSearch = () => {
+    const { history } = this.props;
+    const { q } = this.state;
+    if (q) {
+      history.push("/result-search", q);
+    }
+  };
+
   render() {
     const { q = "" } = this.state;
-    console.log("q", q);
     return (
       <div className="viewSearch">
         <TextInput
@@ -41,7 +50,7 @@ class Search extends Component {
           type="text"
           value={q}
         />
-        <div className="viewSearch__viewSearch" onClick={() => alert(q)}>
+        <div className="viewSearch__viewSearch" onClick={this.handleSearch}>
           <i className="fas fa-search iconSearch"></i>
         </div>
       </div>
@@ -120,7 +129,7 @@ class ComponentHeader extends Component {
                       justifyContent: "space-between"
                     }}
                   >
-                    <Search />
+                    <Search history={history} />
                     <div style={{ display: "flex" }}>{rightMenuSignIn}</div>
                   </div>
                 </HeaderGlobalBar>
@@ -140,9 +149,5 @@ const mapStateToProps = ({
   myInfo,
   myWallet
 });
-
-// const mapDispatchToProps = dispatch => ({
-//   updateStateReducer: data => dispatch({ type: USER.UPDATE_STATE, data })
-// });
 
 export default connect(mapStateToProps, null)(ComponentHeader);

@@ -81,6 +81,11 @@ $menuColor: #fff;
           color: #000;
         }
       }
+      &:active {
+        .iconSearch {
+          transform: translateY(-1px);
+        }
+      }
     }
   }
 
