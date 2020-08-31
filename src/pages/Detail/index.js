@@ -206,7 +206,7 @@ class Detail extends React.Component {
           >
             <img
               className="viewAds__img"
-              src="https://phumyhungreals.com/wp-content/uploads/2020/02/vinhome-central-park.jpg"
+              src="https://tpc.googlesyndication.com/daca_images/simgad/11849899324281530174"
               alt="img-avatar"
             />
           </a>
