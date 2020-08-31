@@ -2,9 +2,9 @@ import { takeLatest, call, put } from "redux-saga/effects";
 import {
   getListUserAPI,
   getUserByIdAPI,
-  editUserAPI
+  editUserAPI,
 } from "../service/listUser";
-import { LIST_USER } from "../constant";
+import { LIST_USER, USER } from "../constant";
 
 function* getListUser(object) {
   const dat = object.data.data;
@@ -36,11 +36,11 @@ function* editUser(obj) {
   }
   yield put({ type: LIST_USER.EDIT_USER_SUCCESS, data: resp.data });
   hideModal();
-  yield put({ type: LIST_USER.GET_LIST_USER, data: resp.data });
+  yield put({ type: USER.GET_MY_INFO, data: { data: dat.userId } });
 }
 
 export const listUserSaga = [
   takeLatest(LIST_USER.GET_LIST_USER, getListUser),
   takeLatest(LIST_USER.GET_USER_BY_ID, getUserById),
-  takeLatest(LIST_USER.EDIT_USER, editUser)
+  takeLatest(LIST_USER.EDIT_USER, editUser),
 ];
