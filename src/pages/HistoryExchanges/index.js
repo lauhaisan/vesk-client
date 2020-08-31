@@ -1,15 +1,16 @@
 import React, { Fragment } from "react";
 import { Accordion, AccordionItem } from "carbon-components-react";
 import { connect } from "react-redux";
+import numeral from "numeral";
 import TitlePage from "../../components/TitlePage";
 import TableCommon from "../../components/TableCommon";
 import Filter from "./component/Filter";
 import { WALLET } from "../../constant";
 import { getToken } from "../../utils/token";
-import moment from "moment";
+// import moment from "moment";
 import "./index.scss";
 
-class HistoryPoint extends React.Component {
+class HistoryExchanges extends React.Component {
   constructor(props) {
     super(props);
     this.state = {};
@@ -30,36 +31,30 @@ class HistoryPoint extends React.Component {
   };
 
   render() {
-    const { loading, historyPoint: { items = [] } = {} } = this.props;
+    const { loading, historyExchanges: { items = [] } = {} } = this.props;
 
     const headerData = [
       {
         header: "Created",
-        key: "createdAt",
+        key: "date",
       },
       {
         header: "Message",
         key: "message",
       },
       {
-        header: "Point",
+        header: "Money",
         key: "money",
-      },
-      {
-        header: "User Id",
-        key: "userId",
-      },
-      {
-        header: "User Recv",
-        key: "userIdRecv",
       },
     ];
 
     const formatData = items.map((item) => {
+      const { date, money = 0 } = item;
       return {
         ...item,
-        createdAt: moment(item.createdAt).format("DD MMM YYYY hh:mm a"),
-        // money: money && numeral(money).format("0,0"),
+        date,
+        // createdAt: moment(createdAt).format("DD MMM YYYY hh:mm a"),
+        money: money && numeral(money).format("0,0"),
       };
     });
 
@@ -81,7 +76,7 @@ class HistoryPoint extends React.Component {
             </AccordionItem>
           </Accordion>
           <TableCommon
-            title="History Point"
+            title="History Exchanges"
             rowData={formatData}
             headerData={headerData}
             loading={loading}
@@ -92,14 +87,16 @@ class HistoryPoint extends React.Component {
   }
 }
 
-const mapStateToProps = ({ wallet: { loading, historyPoint = {} } = {} }) => ({
+const mapStateToProps = ({
+  wallet: { loading, historyExchanges = {} } = {},
+}) => ({
   loading,
-  historyPoint,
+  historyExchanges,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   getListHistory: (data) =>
-    dispatch({ type: WALLET.GET_HISTORY_POINT, data: { data } }),
+    dispatch({ type: WALLET.GET_HISTORY_EXCHANGES, data: { data } }),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(HistoryPoint);
+export default connect(mapStateToProps, mapDispatchToProps)(HistoryExchanges);

@@ -12,6 +12,7 @@ import {
 } from "@carbon/icons-react";
 import { TextInput } from "carbon-components-react";
 import { connect } from "react-redux";
+import numeral from "numeral";
 import { setToken } from "../../utils/token";
 import "./index.scss";
 
@@ -73,7 +74,9 @@ class ComponentHeader extends Component {
             className="fas fa-coins"
             style={{ marginRight: "0.5rem", color: "#FFCF40" }}
           ></i>
-          <span className="point__number">{money}</span>
+          <span className="point__number">
+            {money && numeral(money).format("0,0")}
+          </span>
         </div>
         <div className="rightMenu" onClick={this.showDropDownMenu}>
           <img
@@ -135,7 +138,6 @@ const mapStateToProps = ({
   wallet: { myWallet = {} } = {}
 }) => ({
   myInfo,
-
   myWallet
 });
 
