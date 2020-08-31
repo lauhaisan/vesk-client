@@ -48,12 +48,39 @@ $menuColor: #fff;
   .point {
     @extend .itemMenu;
     font-weight: 600;
-    // &__text {
-    //   color: #333;
-    // }
+
     &__number {
       color: #52c41a;
-      // margin-left: 0.5rem;
+    }
+  }
+  .viewSearch {
+    display: flex;
+    width: 60%;
+    @extend .itemMenu;
+    .bx--text-input {
+      height: 30px !important;
+      border: 1px solid #ccc;
+      box-shadow: inset 0 1px 2px #eee;
+      &:focus {
+        outline: none;
+      }
+    }
+    &__viewSearch {
+      background-color: #f8f8f8;
+      height: 30px !important;
+      width: 65px;
+      border-top: 1px solid #ccc;
+      border-right: 1px solid #ccc;
+      border-bottom: 1px solid #ccc;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      &:hover {
+        .iconSearch {
+          color: #000;
+        }
+      }
     }
   }
 
@@ -104,6 +131,7 @@ $menuColor: #fff;
     background-color: $menuColor;
     position: absolute;
     top: 3rem;
+    right: 0;
     color: $textColor;
     font : {
       size: 1rem;

@@ -10,16 +10,45 @@ import {
   ChevronSortDown20,
   Menu20
 } from "@carbon/icons-react";
+import { TextInput } from "carbon-components-react";
 import { connect } from "react-redux";
 import { setToken } from "../../utils/token";
 import "./index.scss";
 
-class ComponentHeader extends Component {
+class Search extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      q: ""
+    };
   }
+  onChangeSearch = value => {
+    this.setState({ q: value });
+  };
+  render() {
+    const { q = "" } = this.state;
+    console.log("q", q);
+    return (
+      <div className="viewSearch">
+        <TextInput
+          key="inputSearchHeader"
+          id="inputSearchHeader"
+          light={true}
+          labelText=""
+          onChange={e => this.onChangeSearch(e.target.value)}
+          placeholder="Search"
+          type="text"
+          value={q}
+        />
+        <div className="viewSearch__viewSearch" onClick={() => alert(q)}>
+          <i className="fas fa-search iconSearch"></i>
+        </div>
+      </div>
+    );
+  }
+}
 
+class ComponentHeader extends Component {
   handleLogout = () => {
     const {
       history
@@ -36,11 +65,10 @@ class ComponentHeader extends Component {
       myInfo: data = {},
       myWallet: { money = 0 } = {}
     } = this.props;
+
     const rightMenuSignIn = (
       <Fragment>
         <div className="point">
-          {/* <span className="point__text">Current Point: </span> */}
-
           <i
             className="fas fa-coins"
             style={{ marginRight: "0.5rem", color: "#FFCF40" }}
@@ -81,7 +109,18 @@ class ComponentHeader extends Component {
                 <div className="header__menu" onClick={handleMenu}>
                   <Menu20 />
                 </div>
-                <HeaderGlobalBar>{rightMenuSignIn}</HeaderGlobalBar>
+                <HeaderGlobalBar>
+                  <div
+                    style={{
+                      width: "80%",
+                      display: "flex",
+                      justifyContent: "space-between"
+                    }}
+                  >
+                    <Search />
+                    <div style={{ display: "flex" }}>{rightMenuSignIn}</div>
+                  </div>
+                </HeaderGlobalBar>
               </Header>
             </>
           )}
@@ -96,7 +135,12 @@ const mapStateToProps = ({
   wallet: { myWallet = {} } = {}
 }) => ({
   myInfo,
+
   myWallet
 });
+
+// const mapDispatchToProps = dispatch => ({
+//   updateStateReducer: data => dispatch({ type: USER.UPDATE_STATE, data })
+// });
 
 export default connect(mapStateToProps, null)(ComponentHeader);

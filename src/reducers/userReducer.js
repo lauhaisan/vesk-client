@@ -10,6 +10,7 @@ const INITIAL_STATE = {
   loadingGetInfo: false,
   myInfo: {},
   openMenu: true,
+  q: ""
 };
 
 const userReducer = (state = INITIAL_STATE, action) => {
@@ -17,85 +18,85 @@ const userReducer = (state = INITIAL_STATE, action) => {
     case USER.UPDATE_STATE:
       return {
         ...state,
-        ...action.data,
+        ...action.data
       };
     case USER.SIGNUP:
       return {
         ...state,
         loading: true,
-        messageSignUp: "",
+        messageSignUp: ""
       };
     case USER.SIGNUP_SUCCESS:
       return {
         ...state,
         loading: false,
         isSignUpSuccessfully: true,
-        messageSignUp: "",
+        messageSignUp: ""
       };
     case USER.SIGNUP_FAIL:
       return {
         ...state,
         loading: false,
         isSignUpSuccessfully: false,
-        messageSignUp: action.data.message,
+        messageSignUp: action.data.message
       };
     case USER.SIGNIN:
       return {
         ...state,
         loading: true,
-        messageSignIn: "",
+        messageSignIn: ""
       };
     case USER.SIGNIN_SUCCESS:
       return {
         ...state,
         loading: false,
         isSignInSuccessfully: true,
-        messageSignIn: "",
+        messageSignIn: ""
       };
     case USER.SIGNIN_FAIL:
       return {
         ...state,
         loading: false,
         isSignInSuccessfully: false,
-        messageSignIn: action.data.message,
+        messageSignIn: action.data.message
       };
     case USER.EXPIRED_TOKEN:
       return {
         ...state,
-        expiredToken: true,
+        expiredToken: true
       };
     case USER.LOGOUT:
       return {
         ...state,
-        loading: true,
+        loading: true
       };
     case USER.LOGOUT_SUCCESS:
       return {
         ...state,
         loading: false,
-        expiredToken: false,
+        expiredToken: false
       };
     case USER.LOGOUT_FAIL:
       return {
         ...state,
-        loading: false,
+        loading: false
       };
     case USER.GET_MY_INFO:
       return {
         ...state,
-        loadingGetInfo: true,
+        loadingGetInfo: true
       };
     case USER.GET_MY_INFO_SUCCESS:
       return {
         ...state,
         loadingGetInfo: false,
-        myInfo: action.data,
+        myInfo: action.data
       };
     case USER.GET_MY_INFO_FAIL:
       return {
         ...state,
         loadingGetInfo: false,
-        myInfo: {},
+        myInfo: {}
       };
 
     default:
