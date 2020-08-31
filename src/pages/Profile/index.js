@@ -68,19 +68,17 @@ class Profile extends Component {
     const { myInfo = {}, editUser } = this.props;
     console.log(myInfo);
     const payload = {
-      avatar: user.avatar !== undefined ? user.avatar : myInfo.avatar,
-      address: user.address !== undefined ? user.address : myInfo.address,
-      birthDate:
-        user.birthDate !== undefined ? user.birthDate : myInfo.birthDate,
-      city: user.city !== undefined ? user.city : myInfo.city,
-      email: user.email !== undefined ? user.email : myInfo.email,
-      firstName:
-        user.firstName !== undefined ? user.firstName : myInfo.firstName,
-      lastName: user.lastName !== undefined ? user.lastName : myInfo.lastName,
-      gender: user.gender !== undefined ? user.gender : myInfo.gender,
-      phone: user.phone !== undefined ? user.phone : myInfo.phone,
-      region: user.region !== undefined ? user.region : myInfo.region,
-      userName: user.userName !== undefined ? user.userName : myInfo.userName,
+      avatar: user.avatar || myInfo.avatar,
+      address: user.address || myInfo.address,
+      birthDate: user.birthDate || myInfo.birthDate,
+      city: user.city || myInfo.city,
+      email: user.email || myInfo.email,
+      firstName: user.firstName || myInfo.firstName,
+      lastName: user.lastName || myInfo.lastName,
+      gender: user.gender || myInfo.gender,
+      phone: user.phone || myInfo.phone,
+      region: user.region || myInfo.region,
+      userName: user.userName || myInfo.userName,
       userId: myInfo.userId,
     };
     editUser(payload, this.hideModal);

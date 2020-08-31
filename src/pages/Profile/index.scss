@@ -269,8 +269,12 @@
     }
   }
 
+  .bx--date-picker-container {
+    width: 100%;
+  }
+
   .bx--date-picker.bx--date-picker--single .bx--date-picker__input {
-    width: 12rem;
+    width: 100%;
     &:focus {
       outline: none;
     }
