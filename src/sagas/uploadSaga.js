@@ -1,4 +1,4 @@
-import { takeLatest, call, put } from "redux-saga/effects";
+import { takeLatest, call } from "redux-saga/effects";
 import { uploadApi } from "../service/upload";
 import { UPLOAD } from "../constant";
 
@@ -6,6 +6,7 @@ function* createWallet(object) {
   const dat = object.data.data;
   console.log("dat", dat);
   const resp = yield call(uploadApi, dat);
+  console.log("resp", resp);
   // if (resp.code !== 200) {
   //   yield put({
   //     type: UPLOAD.UPLOAD_IMAGE_FAIL,
