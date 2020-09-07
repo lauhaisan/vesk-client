@@ -1,22 +1,23 @@
 import { getToken } from "../utils/token";
 
-const uploadApi = async payload => {
+const uploadApi = async (payload) => {
   const { token } = await getToken();
   const requestOptions = {
     method: "POST",
     headers: {
+      "Access-Control-Allow-Origin": "*",
       "Content-Type": "multipart/form-data",
+      "Access-Control-Request-Headers": "Content-Type, authorization",
       Authorization: token,
-      "Access-Control-Allow-Origin": "http://localhost:3000"
     },
-    body: JSON.stringify(payload)
+    body: payload,
   };
+  console.log("requestOptions", requestOptions);
   const response = await fetch(
-    "http://45.77.255.38:8075/vesk/upload",
+    "https://upload.vesk.fastfps.com/vesk/upload",
     requestOptions
   );
-  let data = await response.json();
-  console.log("data", data);
+  const data = await response.json();
   return data;
 };
 

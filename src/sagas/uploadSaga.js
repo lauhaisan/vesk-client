@@ -2,9 +2,8 @@ import { takeLatest, call } from "redux-saga/effects";
 import { uploadApi } from "../service/upload";
 import { UPLOAD } from "../constant";
 
-function* createWallet(object) {
+function* upload(object) {
   const dat = object.data.data;
-  console.log("dat", dat);
   const resp = yield call(uploadApi, dat);
   console.log("resp", resp);
   // if (resp.code !== 200) {
@@ -20,4 +19,4 @@ function* createWallet(object) {
   // });
 }
 
-export const uploadSaga = [takeLatest(UPLOAD.UPLOAD_IMAGE, createWallet)];
+export const uploadSaga = [takeLatest(UPLOAD.UPLOAD_IMAGE, upload)];

@@ -4,8 +4,8 @@ import {
   FormGroup,
   TextInput,
   DatePicker,
-  DatePickerInput
-  // FileUploader
+  DatePickerInput,
+  FileUploader,
 } from "carbon-components-react";
 import { Settings32 } from "@carbon/icons-react";
 import moment from "moment";
@@ -23,7 +23,7 @@ class Profile extends Component {
     super(props);
     this.state = {
       isEdit: false,
-      fileUpload: null
+      fileUpload: null,
     };
   }
 
@@ -38,17 +38,17 @@ class Profile extends Component {
     const { updateListUserReducer } = this.props;
     updateListUserReducer({
       editUserSuccessfully: "",
-      messageError: ""
+      messageError: "",
     });
   }
 
-  onChangeDatePicker = e => {
+  onChangeDatePicker = (e) => {
     const value = e.target ? e.target.value : e[0];
     const valueDate = moment(value).format("DD/MM/YYYY");
     let { myInfo } = this.state;
     myInfo.birthDate = valueDate;
     this.setState({
-      myInfo
+      myInfo,
     });
   };
 
@@ -56,13 +56,13 @@ class Profile extends Component {
     let { myInfo } = this.state;
     myInfo[key] = value;
     this.setState({
-      myInfo
+      myInfo,
     });
   };
 
   openModalEdit = () => {
     this.setState({
-      isEdit: true
+      isEdit: true,
     });
   };
 
@@ -70,27 +70,28 @@ class Profile extends Component {
     const { getMyInfo } = this.props;
     const { data: { userId = "" } = {} } = getToken();
     this.setState({
-      isEdit: false
+      isEdit: false,
     });
     getMyInfo(userId);
   };
 
-  handleFileChanged = e => {
-    const { fileUpload } = this.state;
-    const { uploadImage } = this.props;
-    console.log("onChange");
+  handleFileChanged = (e) => {
     this.setState(
       {
-        fileUpload: e.target.files[0]
+        fileUpload: e.target.files[0],
       },
       () => {
-        console.log("handleUpload");
-        let formData = new FormData();
-        formData.append("file", fileUpload);
-        console.log("formData", formData);
-        uploadImage({ file: formData });
+        this.handleUploadToServer();
       }
     );
+  };
+
+  handleUploadToServer = () => {
+    const { fileUpload } = this.state;
+    const { uploadImage } = this.props;
+    const formData = new FormData();
+    formData.append("file", fileUpload);
+    uploadImage({ file: formData });
   };
 
   handleSaveProfile = () => {
@@ -102,7 +103,6 @@ class Profile extends Component {
   render() {
     const { loadingEditUser, editUserSuccessfully, messageError } = this.props;
     const { isEdit, myInfo } = this.state;
-
     const {
       avatar = "",
       address = "",
@@ -114,7 +114,7 @@ class Profile extends Component {
       gender = "",
       phone = "",
       region = "",
-      userName = ""
+      userName = "",
     } = myInfo;
     const renderContentModal = (
       <div style={{ height: "auto", width: "100%" }}>
@@ -125,15 +125,15 @@ class Profile extends Component {
               src={require("../../images/testAvatar.jpg")}
               alt="img-avatar"
             />
-            {/* <div className="customButtonUpload">
+            <div className="customButtonUpload">
               <FileUploader
                 accept={[".jpg", ".png"]}
                 buttonKind="primary"
                 buttonLabel={<i className="fas fa-edit iconEdit"></i>}
                 labelTitle=""
-                onChange={e => this.handleFileChanged(e)}
+                onChange={(e) => this.handleFileChanged(e)}
               />
-            </div> */}
+            </div>
           </div>
           <div className="formData__row">
             <FormGroup legendText="">
@@ -141,7 +141,7 @@ class Profile extends Component {
                 id="inputEmail"
                 disabled={true}
                 labelText="Email"
-                onChange={event =>
+                onChange={(event) =>
                   this.onChangeFormData("email", event.target.value)
                 }
                 required
@@ -155,7 +155,7 @@ class Profile extends Component {
               <DatePicker
                 dateFormat="d/m/Y"
                 datePickerType="single"
-                onChange={e => this.onChangeDatePicker(e)}
+                onChange={(e) => this.onChangeDatePicker(e)}
               >
                 <DatePickerInput
                   id="date-picker-calendar-id"
@@ -173,7 +173,7 @@ class Profile extends Component {
                 className="formData__row__input"
                 id="inputFirstName"
                 labelText="First Name"
-                onChange={event =>
+                onChange={(event) =>
                   this.onChangeFormData("firstName", event.target.value)
                 }
                 required
@@ -188,7 +188,7 @@ class Profile extends Component {
                 className="formData__row__input"
                 id="inputLastName"
                 labelText="Last Name"
-                onChange={event =>
+                onChange={(event) =>
                   this.onChangeFormData("lastName", event.target.value)
                 }
                 required
@@ -206,7 +206,7 @@ class Profile extends Component {
                 className="formData__row__input"
                 id="inputUserName"
                 labelText="User Name"
-                onChange={event =>
+                onChange={(event) =>
                   this.onChangeFormData("userName", event.target.value)
                 }
                 required
@@ -221,7 +221,7 @@ class Profile extends Component {
                 className="formData__row__input"
                 id="inputGender"
                 labelText="Gender"
-                onChange={event =>
+                onChange={(event) =>
                   this.onChangeFormData("gender", event.target.value)
                 }
                 required
@@ -238,7 +238,7 @@ class Profile extends Component {
                 className="formData__row__input"
                 id="inputRegion"
                 labelText="Region"
-                onChange={event =>
+                onChange={(event) =>
                   this.onChangeFormData("region", event.target.value)
                 }
                 required
@@ -253,7 +253,7 @@ class Profile extends Component {
                 className="formData__row__input"
                 id="inputCity"
                 labelText="City"
-                onChange={event =>
+                onChange={(event) =>
                   this.onChangeFormData("city", event.target.value)
                 }
                 required
@@ -270,7 +270,7 @@ class Profile extends Component {
                 className="formData__row__input"
                 id="inputAddress"
                 labelText="Address"
-                onChange={event =>
+                onChange={(event) =>
                   this.onChangeFormData("address", event.target.value)
                 }
                 required
@@ -285,7 +285,7 @@ class Profile extends Component {
                 className="formData__row__input"
                 id="inputPhone"
                 labelText="Phone"
-                onChange={event =>
+                onChange={(event) =>
                   this.onChangeFormData("phone", event.target.value)
                 }
                 required
@@ -535,21 +535,22 @@ class Profile extends Component {
 }
 const mapStateToProps = ({
   user: { myInfo = {} } = {},
-  listUser: { loadingEditUser, editUserSuccessfully, messageError } = {}
+  listUser: { loadingEditUser, editUserSuccessfully, messageError } = {},
 }) => ({
   myInfo,
   loadingEditUser,
   editUserSuccessfully,
-  messageError
+  messageError,
 });
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
   editUser: (data, functionHideModal) =>
     dispatch({ type: LIST_USER.EDIT_USER, data: { data, functionHideModal } }),
-  uploadImage: data => dispatch({ type: UPLOAD.UPLOAD_IMAGE, data: { data } }),
-  getMyInfo: data => dispatch({ type: USER.GET_MY_INFO, data: { data } }),
-  updateListUserReducer: data =>
-    dispatch({ type: LIST_USER.UPDATE_LIST_USER_REDUCER, data })
+  uploadImage: (data) =>
+    dispatch({ type: UPLOAD.UPLOAD_IMAGE, data: { data } }),
+  getMyInfo: (data) => dispatch({ type: USER.GET_MY_INFO, data: { data } }),
+  updateListUserReducer: (data) =>
+    dispatch({ type: LIST_USER.UPDATE_LIST_USER_REDUCER, data }),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Profile);
