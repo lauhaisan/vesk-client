@@ -371,10 +371,7 @@ class Profile extends Component {
                     {/* <a href="">Tìm hiểu thêm</a> */}
                   </div>
                   <div className="row-info">
-                    <span className="row-info-left">
-                      ẢNH
-                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    </span>
+                    <span className="row-info-left">ẢNH</span>
                     <span className="row-info-right">
                       Một bức ảnh giúp cá nhân hóa tài khoản của bạn
                     </span>
@@ -388,7 +385,7 @@ class Profile extends Component {
                   </div>
                   <div className="row-info">
                     <span className="row-info-left">TÀI KHOẢN</span>
-                    <span className="row-info-right"> {userName || ""} </span>
+                    <span className="row-info-right">{userName || ""}</span>
                     <span>
                       <img
                         className="row-info-row"
@@ -398,11 +395,8 @@ class Profile extends Component {
                     </span>
                   </div>
                   <div className="row-info">
-                    <span className="row-info-left">
-                      TÊN
-                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    </span>
-                    <span className="row-info-right"> {firstName || ""} </span>
+                    <span className="row-info-left">TÊN</span>
+                    <span className="row-info-right">{firstName || ""}</span>
                     <span>
                       <img
                         className="row-info-row"
@@ -412,11 +406,8 @@ class Profile extends Component {
                     </span>
                   </div>
                   <div className="row-info">
-                    <span className="row-info-left">
-                      HỌ
-                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    </span>
-                    <span className="row-info-right"> {lastName || ""} </span>
+                    <span className="row-info-left">HỌ</span>
+                    <span className="row-info-right">{lastName || ""}</span>
                     <span>
                       <img
                         className="row-info-row"
@@ -428,8 +419,7 @@ class Profile extends Component {
                   <div className="row-info">
                     <span className="row-info-left">NGÀY SINH</span>
                     <span className="row-info-right">
-                      {" "}
-                      {birthDate || "22/04/1994"}{" "}
+                      {birthDate || "22/04/1994"}
                     </span>
                     <span>
                       <img
@@ -440,10 +430,8 @@ class Profile extends Component {
                     </span>
                   </div>
                   <div className="row-info">
-                    <span className="row-info-left">
-                      GIỚI TÍNH &nbsp;&nbsp;
-                    </span>
-                    <span className="row-info-right"> {gender || "N/A"} </span>
+                    <span className="row-info-left">GIỚI TÍNH</span>
+                    <span className="row-info-right">{gender || "N/A"}</span>
                     <span>
                       <img
                         className="row-info-row"
@@ -452,23 +440,9 @@ class Profile extends Component {
                       />
                     </span>
                   </div>
-                  <div className="row-info">
-                    <span className="row-info-left">MẬT KHẢU</span>
-                    <span className="row-info-right">************* </span>
-                    <span>
-                      <img
-                        className="row-info-row"
-                        src={require("../../images/arrow-right.png")}
-                        alt="img-avatar"
-                      />
-                    </span>
-                  </div>
-
                   <div className="detail detail-2">Liên Hệ</div>
                   <div className="row-info">
-                    <span className="row-info-left">
-                      KHU VỰC&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    </span>
+                    <span className="row-info-left">KHU VỰC</span>
                     <span className="row-info-right">{region || "N/A"}</span>
                     <span>
                       <img
@@ -479,10 +453,8 @@ class Profile extends Component {
                     </span>
                   </div>
                   <div className="row-info">
-                    <span className="row-info-left">
-                      ĐIỆN THOẠI&nbsp;&nbsp;&nbsp;
-                    </span>
-                    <span className="row-info-right"> {phone || "N/A"} </span>
+                    <span className="row-info-left">ĐIỆN THOẠI</span>
+                    <span className="row-info-right">{phone || "N/A"}</span>
                     <span>
                       <img
                         className="row-info-row"
@@ -492,25 +464,8 @@ class Profile extends Component {
                     </span>
                   </div>
                   <div className="row-info">
-                    <span className="row-info-left">
-                      EMAIL
-                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    </span>
-                    <span className="row-info-right"> {email || ""} </span>
-                    <span>
-                      <img
-                        className="row-info-row"
-                        src={require("../../images/arrow-right.png")}
-                        alt="img-avatar"
-                      />
-                    </span>
-                  </div>
-
-                  <div className="row-info">
-                    <span className="row-info-left">
-                      THÀNH PHỐ &nbsp;&nbsp;&nbsp;&nbsp;
-                    </span>
-                    <span className="row-info-right">{city || "N/A"} </span>
+                    <span className="row-info-left">EMAIL</span>
+                    <span className="row-info-right">{email || ""}</span>
                     <span>
                       <img
                         className="row-info-row"
@@ -520,11 +475,19 @@ class Profile extends Component {
                     </span>
                   </div>
                   <div className="row-info">
-                    <span className="row-info-left">
-                      ĐỊA CHỈ
-                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <span className="row-info-left">THÀNH PHỐ</span>
+                    <span className="row-info-right">{city || "N/A"}</span>
+                    <span>
+                      <img
+                        className="row-info-row"
+                        src={require("../../images/arrow-right.png")}
+                        alt="img-avatar"
+                      />
                     </span>
-                    <span className="row-info-right">{address || "N/A"} </span>
+                  </div>
+                  <div className="row-info">
+                    <span className="row-info-left">ĐỊA CHỈ</span>
+                    <span className="row-info-right">{address || "N/A"}</span>
                     <span>
                       <img
                         className="row-info-row"
