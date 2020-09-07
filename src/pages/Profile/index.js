@@ -6,6 +6,7 @@ import {
   DatePicker,
   DatePickerInput,
   FileUploader,
+  Loading,
 } from "carbon-components-react";
 import { Settings32 } from "@carbon/icons-react";
 import moment from "moment";
@@ -67,12 +68,16 @@ class Profile extends Component {
   };
 
   hideModal = () => {
-    const { getMyInfo } = this.props;
+    const { getMyInfo, updateUploadReducer } = this.props;
     const { data: { userId = "" } = {} } = getToken();
     this.setState({
       isEdit: false,
     });
     getMyInfo(userId);
+    updateUploadReducer({
+      link: "",
+      messageUpload: "",
+    });
   };
 
   handleFileChanged = (e) => {
@@ -96,12 +101,20 @@ class Profile extends Component {
 
   handleSaveProfile = () => {
     const { myInfo = {} } = this.state;
-    const { editUser } = this.props;
-    editUser(myInfo, this.hideModal);
+    const { link, editUser } = this.props;
+    const payload = { ...myInfo, avatar: link || myInfo.avatar };
+    editUser(payload, this.hideModal);
   };
 
   render() {
-    const { loadingEditUser, editUserSuccessfully, messageError } = this.props;
+    const {
+      loadingEditUser,
+      editUserSuccessfully,
+      messageError,
+      loadingUpload,
+      link,
+      messageUpload,
+    } = this.props;
     const { isEdit, myInfo } = this.state;
     const {
       avatar = "",
@@ -116,15 +129,30 @@ class Profile extends Component {
       region = "",
       userName = "",
     } = myInfo;
+    const linkAvatar = link || avatar || require("../../images/testAvatar.jpg");
     const renderContentModal = (
       <div style={{ height: "auto", width: "100%" }}>
         <Form className="formData">
           <div className="formData__avt">
-            <img
-              className="formData__avt--img"
-              src={require("../../images/testAvatar.jpg")}
-              alt="img-avatar"
-            />
+            {loadingUpload ? (
+              <div
+                className="formData__avt--img"
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <Loading small description="" withOverlay={false} />
+              </div>
+            ) : (
+              <img
+                className="formData__avt--img"
+                src={linkAvatar}
+                alt="img-avatar"
+              />
+            )}
+
             <div className="customButtonUpload">
               <FileUploader
                 accept={[".jpg", ".png"]}
@@ -529,6 +557,13 @@ class Profile extends Component {
         {editUserSuccessfully && (
           <Notification status="success" title="Edit Profile Successfully" />
         )}
+        {messageUpload === "Upload Image Failed" && (
+          <Notification
+            status="error"
+            message={messageUpload}
+            title="Upload Image Failed"
+          />
+        )}
       </Fragment>
     );
   }
@@ -536,11 +571,15 @@ class Profile extends Component {
 const mapStateToProps = ({
   user: { myInfo = {} } = {},
   listUser: { loadingEditUser, editUserSuccessfully, messageError } = {},
+  upload: { loading: loadingUpload, link, messageUpload } = {},
 }) => ({
   myInfo,
   loadingEditUser,
   editUserSuccessfully,
   messageError,
+  loadingUpload,
+  link,
+  messageUpload,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -551,6 +590,8 @@ const mapDispatchToProps = (dispatch) => ({
   getMyInfo: (data) => dispatch({ type: USER.GET_MY_INFO, data: { data } }),
   updateListUserReducer: (data) =>
     dispatch({ type: LIST_USER.UPDATE_LIST_USER_REDUCER, data }),
+  updateUploadReducer: (data) =>
+    dispatch({ type: UPLOAD.UPDATE_STATE_UPLOAD_REDUCER, data }),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Profile);

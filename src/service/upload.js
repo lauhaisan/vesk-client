@@ -6,13 +6,11 @@ const uploadApi = async (payload) => {
     method: "POST",
     headers: {
       "Access-Control-Allow-Origin": "*",
-      "Content-Type": "multipart/form-data",
       "Access-Control-Request-Headers": "Content-Type, authorization",
       Authorization: token,
     },
-    body: payload,
+    body: payload.file,
   };
-  console.log("requestOptions", requestOptions);
   const response = await fetch(
     "https://upload.vesk.fastfps.com/vesk/upload",
     requestOptions
