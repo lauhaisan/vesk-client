@@ -6,6 +6,7 @@ import TableCommon from "../../components/TableCommon";
 import Filter from "./component/Filter";
 import { WALLET } from "../../constant";
 import { getToken } from "../../utils/token";
+import { Redirect } from "react-router-dom";
 import moment from "moment";
 import "./index.scss";
 
@@ -62,6 +63,11 @@ class HistoryPoint extends React.Component {
         // money: money && numeral(money).format("0,0"),
       };
     });
+
+    const { token } = getToken();
+    if (!token) {
+      return <Redirect to="/" />;
+    }
 
     return (
       <Fragment>

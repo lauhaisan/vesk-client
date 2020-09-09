@@ -2,29 +2,30 @@ import React, { Component, Fragment } from "react";
 import {
   Header,
   HeaderContainer,
-  HeaderGlobalBar
+  HeaderGlobalBar,
 } from "carbon-components-react/lib/components/UIShell";
 import {
   UserProfile20,
   Logout20,
   ChevronSortDown20,
-  Menu20
+  Menu20,
 } from "@carbon/icons-react";
 import { TextInput } from "carbon-components-react";
 import { connect } from "react-redux";
 import numeral from "numeral";
-import { setToken } from "../../utils/token";
+import { Link } from "react-router-dom";
+import { setToken, getToken } from "../../utils/token";
 import "./index.scss";
 
 class Search extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      q: ""
+      q: "",
     };
   }
 
-  onChangeSearch = value => {
+  onChangeSearch = (value) => {
     this.setState({ q: value });
   };
 
@@ -45,7 +46,7 @@ class Search extends Component {
           id="inputSearchHeader"
           light={true}
           labelText=""
-          onChange={e => this.onChangeSearch(e.target.value)}
+          onChange={(e) => this.onChangeSearch(e.target.value)}
           placeholder="Search"
           type="text"
           value={q}
@@ -60,12 +61,8 @@ class Search extends Component {
 
 class ComponentHeader extends Component {
   handleLogout = () => {
-    const {
-      history
-      //  logout
-    } = this.props;
     setToken(undefined);
-    history.push("/");
+    window.location.reload();
   };
 
   render() {
@@ -73,8 +70,10 @@ class ComponentHeader extends Component {
       history,
       handleMenu,
       myInfo: data = {},
-      myWallet: { money = 0 } = {}
+      myWallet: { money = 0 } = {},
     } = this.props;
+
+    const { token } = getToken();
 
     const rightMenuSignIn = (
       <Fragment>
@@ -112,6 +111,20 @@ class ComponentHeader extends Component {
       </Fragment>
     );
 
+    const rightMenuNotSignIn = (
+      <Fragment>
+        <div className="menuNotSignIn">
+          <Link to="/signin" className="link">
+            <span className="menuNotSignIn__text">Sign In</span>
+          </Link>
+          <span className="menuNotSignIn__icon">|</span>
+          <Link to="/signup" className="link">
+            <span className="menuNotSignIn__text">Sign Up</span>
+          </Link>
+        </div>
+      </Fragment>
+    );
+
     return (
       <div className="rootHeader" style={{ height: "auto" }}>
         <HeaderContainer
@@ -126,11 +139,13 @@ class ComponentHeader extends Component {
                     style={{
                       width: "80%",
                       display: "flex",
-                      justifyContent: "space-between"
+                      justifyContent: "space-between",
                     }}
                   >
                     <Search history={history} />
-                    <div style={{ display: "flex" }}>{rightMenuSignIn}</div>
+                    <div style={{ display: "flex" }}>
+                      {token ? rightMenuSignIn : rightMenuNotSignIn}
+                    </div>
                   </div>
                 </HeaderGlobalBar>
               </Header>
@@ -144,10 +159,10 @@ class ComponentHeader extends Component {
 
 const mapStateToProps = ({
   user: { myInfo = {} } = {},
-  wallet: { myWallet = {} } = {}
+  wallet: { myWallet = {} } = {},
 }) => ({
   myInfo,
-  myWallet
+  myWallet,
 });
 
 export default connect(mapStateToProps, null)(ComponentHeader);

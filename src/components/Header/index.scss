@@ -89,6 +89,26 @@ $menuColor: #fff;
     }
   }
 
+  .menuNotSignIn {
+    @extend .itemMenu;
+    font-size: 1rem;
+    line-height: 1.2;
+    font-weight: 500;
+    .link {
+      color: #333;
+    }
+    &__icon {
+      margin: 0 0.5rem;
+    }
+    &__text {
+      cursor: pointer;
+      &:active,
+      &:hover {
+        opacity: 0.5;
+      }
+    }
+  }
+
   .rightMenu {
     @extend .itemMenu;
     cursor: pointer;
