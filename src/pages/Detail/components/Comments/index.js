@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { TextArea } from "carbon-components-react";
 import ButtonOutline from "../../../../components/ButtonOutline";
 import ButtonLoading from "../../../../components/ButtonLoading";
+import { getToken } from "../../../../utils/token";
 import "./index.scss";
 
 export default class Comments extends Component {
@@ -61,67 +62,76 @@ export default class Comments extends Component {
       loadingActionComment,
     } = this.props;
     const { textComment = "" } = this.state;
+    const { token } = getToken();
+
     return (
       <div className="containerComments">
         <div className="viewTitleComment">Comments</div>
-        <div className="commentEditor">
-          <img
-            className="avatarComment"
-            src={require("../../../../images/testAvatar.jpg")}
-            alt="img-avatar"
-          />
-          <div
-            style={{ display: "flex", flexDirection: "column", width: "100%" }}
-          >
-            <div className="viewEditor">
-              <TextArea
-                cols={0}
-                id="composeComment"
-                labelText=""
-                hideLabel
-                value={textComment}
-                onChange={(event) =>
-                  this.handleChangeComment(event.target.value)
-                }
-                placeholder="Add a public comment"
-                rows={0}
-              />
-            </div>
-            <div className="viewBtnComment">
-              <div className="textTotalComments">
-                {listComment.length} Comments
-              </div>
-              <div style={{ display: "flex" }}>
-                <ButtonOutline
-                  onClick={() =>
-                    this.setState({
-                      textComment: "",
-                    })
+        {token && (
+          <div className="commentEditor">
+            <img
+              className="avatarComment"
+              src={require("../../../../images/testAvatar.jpg")}
+              alt="img-avatar"
+            />
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                width: "100%",
+              }}
+            >
+              <div className="viewEditor">
+                <TextArea
+                  cols={0}
+                  id="composeComment"
+                  labelText=""
+                  hideLabel
+                  value={textComment}
+                  onChange={(event) =>
+                    this.handleChangeComment(event.target.value)
                   }
-                  disabled={false}
-                  text="Cancel"
-                  style={{
-                    width: "7rem",
-                    height: "30px",
-                  }}
+                  placeholder="Add a public comment"
+                  rows={0}
                 />
+              </div>
+              <div className="viewBtnComment">
+                <div className="textTotalComments">
+                  {listComment.length} Comments
+                </div>
+                <div style={{ display: "flex" }}>
+                  <ButtonOutline
+                    onClick={() =>
+                      this.setState({
+                        textComment: "",
+                      })
+                    }
+                    disabled={false}
+                    text="Cancel"
+                    style={{
+                      width: "7rem",
+                      height: "30px",
+                    }}
+                  />
 
-                <ButtonLoading
-                  onClick={this.handleSubmit}
-                  disabled={!textComment || loadingActionComment}
-                  loading={loadingActionComment ? "yes" : undefined}
-                  text="Comment"
-                  style={{
-                    width: "7rem",
-                    height: "30px",
+                  <ButtonLoading
+                    onClick={this.handleSubmit}
+                    disabled={!textComment || loadingActionComment}
+                    loading={loadingActionComment ? "yes" : undefined}
+                    text="Comment"
+                    style={{
+                      width: "7rem",
+                      height: "30px",
 
-                    marginLeft: "10px",
-                  }}
-                />
+                      marginLeft: "10px",
+                    }}
+                  />
+                </div>
               </div>
             </div>
           </div>
-        </div>
+        )}
+
         <div className="listComments">
           {listComment.map((item) => (
             <div className="itemComment" key={item.id}>

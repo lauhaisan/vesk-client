@@ -9,7 +9,7 @@ const URL = {
   PRODUCT: "/products",
 
   GET_LIST_USER: "/v1/vesk/public/users/search",
-  GET_USER_BY_ID: "/v1/vesk/users/userId",
+  GET_USER_BY_ID: "/v1/vesk/public/users/userId",
   EDIT_USER: "/v1/vesk/admin/users",
 
   //ADVERTISING
@@ -19,8 +19,8 @@ const URL = {
   //SOCIAL MEDIA
   GET_LIST_SOCIAL_MEDIA: "/v1/vesk/public/e-social-media",
   ADMIN_CRUD_SOCIAL_MEDIA: "/v1/vesk/admin/e-social-media",
-  SOCIAL_MEDIA_SEARCH: "/v1/vesk/e-social-media/search",
-  GET_LIST_SOCIAL_MEDIA_BY_AUTHOR: "/v1/vesk/e-social-media/author",
+  SOCIAL_MEDIA_SEARCH: "/v1/vesk/public/e-social-media/search",
+  GET_LIST_MEDIA_BY_ATHOR: "/v1/vesk/public/e-social-media/author",
 
   //TOP RATED, MOST POPULAR
   GET_LIST_TOP_RATED: "/v1/vesk/public/e-social-media/top/search",
@@ -28,7 +28,7 @@ const URL = {
 
   //COMMENT
   ADD_COMMENT: "/v1/vesk/comment",
-  GET_LIST_COMMENT: "/v1/vesk/comment/post",
+  GET_LIST_COMMENT: "/v1/vesk/public/comment/post",
 
   //WALLET
   WALLET: "/v1/vesk/wallet",

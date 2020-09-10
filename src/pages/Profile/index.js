@@ -14,6 +14,7 @@ import TitlePage from "../../components/TitlePage";
 import ButtonLoading from "../../components/ButtonLoading";
 import Notification from "../../components/Notification";
 import CustomModal from "../../components/CustomModal";
+import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import { getToken } from "../../utils/token";
 import "./index.scss";
@@ -327,6 +328,11 @@ class Profile extends Component {
         </Form>
       </div>
     );
+
+    const { token } = getToken();
+    if (!token) {
+      return <Redirect to="/" />;
+    }
 
     return (
       <Fragment>

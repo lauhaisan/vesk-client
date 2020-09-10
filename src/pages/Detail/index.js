@@ -8,6 +8,7 @@ import { SOCIAL_MEDIA, COMMENTS, MOST_POPULAR, WALLET } from "../../constant";
 import ItemVideoVertical from "../../components/ItemVideoVertical";
 import Player from "./components/Player";
 import Comments from "./components/Comments";
+import { getToken } from "../../utils/token";
 import "./index.scss";
 
 class Detail extends React.Component {
@@ -17,6 +18,7 @@ class Detail extends React.Component {
       id: "",
       timerStart: 0,
       timerTime: 0,
+      isLogin: false,
     };
   }
 
@@ -27,12 +29,18 @@ class Detail extends React.Component {
       getListComment = () => {},
       getListMostPopular,
     } = this.props;
+    const { token } = getToken();
     getById(id);
     getListComment(id);
     getListMostPopular({});
     this.setState({
       id,
     });
+    if (token) {
+      this.setState({
+        isLogin: true,
+      });
+    }
   }
 
   componentDidUpdate() {
@@ -106,13 +114,14 @@ class Detail extends React.Component {
   };
 
   checkComplete = () => {
+    const { isLogin } = this.state;
     const {
       rewardView,
       myInfo: { userId = "" } = {},
       itemMediaSocial: { id: videoId = "", authorId = "" } = {},
     } = this.props;
     this.stopTimer();
-    if (userId !== authorId) {
+    if (userId !== authorId && isLogin) {
       this.setState(
         {
           timerStart: 0,
@@ -149,7 +158,7 @@ class Detail extends React.Component {
       timeForRecvCoin,
       pointForUserView,
     } = itemMediaSocial;
-    const { id, timerTime } = this.state;
+    const { id, timerTime, isLogin } = this.state;
     const checkOwner = userId === authorId;
     let centiseconds = ("0" + (Math.floor(timerTime / 10) % 100)).slice(-2);
     let seconds = ("0" + (Math.floor(timerTime / 1000) % 60)).slice(-2);
@@ -172,6 +181,7 @@ class Detail extends React.Component {
     const filterListVideoMostPopular = formatListVideoMostPopular.filter(
       (item) => item.id !== id
     );
+
     return (
       <div className="container__detail">
         <TitlePage title={name} />
@@ -189,7 +199,7 @@ class Detail extends React.Component {
             </div>
           </div>
         </div>
-        {!checkOwner && (
+        {!checkOwner && isLogin && (
           <div className="Stopwatch-display">
             You have viewed {hours} : {minutes} : {seconds} : {centiseconds}.
             You receive {pointForUserView} point for watching {timeForRecvCoin}{" "}
