@@ -191,7 +191,7 @@ class Detail extends React.Component {
             startTimer={!checkOwner ? this.startTimer : undefined}
             stopTimer={!checkOwner ? this.stopTimer : undefined}
           />
-          <div className="rightList" style={{ height: "315px" }}>
+          <div className="rightList" style={{ height: "450px" }}>
             <div className="scrollView">
               {filterListVideoMostPopular.map((item) => (
                 <ItemVideoVertical key={item.id} item={item} />
