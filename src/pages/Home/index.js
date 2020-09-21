@@ -80,14 +80,14 @@ class Home extends Component {
           <div className="divider" />
           <div className="viewAds">
             <a
-              href="https://vinhomes.vn/"
+              href="https://kingofinvest.co"
               target="_blank"
               rel="noopener noreferrer"
               className="contentAds"
             >
               <img
                 className="viewAds__img"
-                src="https://phumyhungreals.com/wp-content/uploads/2020/02/vinhome-central-park.jpg"
+                src="https://statics.vesk.fastfps.com/21e9304a-fc04-11ea-bff0-5600023ed650.png"
                 alt="img-avatar"
               />
             </a>

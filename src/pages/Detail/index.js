@@ -209,14 +209,14 @@ class Detail extends React.Component {
 
         <div className="viewAds">
           <a
-            href="https://vinhomes.vn/"
+            href="https://kingofinvest.co"
             target="_blank"
             rel="noopener noreferrer"
             className="contentAds"
           >
             <img
               className="viewAds__img"
-              src="https://tpc.googlesyndication.com/daca_images/simgad/11849899324281530174"
+              src="https://statics.vesk.fastfps.com/dd5e9714-fc03-11ea-bff0-5600023ed650.png"
               alt="img-avatar"
             />
           </a>
