@@ -134,18 +134,10 @@ class ComponentHeader extends Component {
                 <div className="header__menu" onClick={handleMenu}>
                   <Menu20 />
                 </div>
+                <Search history={history} />
                 <HeaderGlobalBar>
-                  <div
-                    style={{
-                      width: "80%",
-                      display: "flex",
-                      justifyContent: "space-between",
-                    }}
-                  >
-                    <Search history={history} />
-                    <div style={{ display: "flex" }}>
-                      {token ? rightMenuSignIn : rightMenuNotSignIn}
-                    </div>
+                  <div style={{ display: "flex" }}>
+                    {token ? rightMenuSignIn : rightMenuNotSignIn}
                   </div>
                 </HeaderGlobalBar>
               </Header>
