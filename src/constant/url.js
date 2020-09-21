@@ -10,7 +10,7 @@ const URL = {
 
   GET_LIST_USER: "/v1/vesk/public/users/search",
   GET_USER_BY_ID: "/v1/vesk/public/users/userId",
-  EDIT_USER: "/v1/vesk/admin/users",
+  EDIT_USER: "/v1/vesk/users",
 
   //ADVERTISING
   GET_LIST_ADVERTISING: "/v1/vesk/ads",

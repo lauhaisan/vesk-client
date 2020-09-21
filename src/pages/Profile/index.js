@@ -334,6 +334,21 @@ class Profile extends Component {
       return <Redirect to="/" />;
     }
 
+    const data1 = [
+      { key: "TÀI KHOẢN", value: userName },
+      { key: "TÊN", value: firstName },
+      { key: "HỌ", value: lastName },
+      { key: "NGÀY SINH", value: birthDate },
+      { key: "GIỚI TÍNH", value: gender },
+    ];
+
+    const data2 = [
+      { key: "KHU VỰC", value: region },
+      { key: "ĐIỆN THOẠI", value: phone },
+      { key: "EMAIL", value: email },
+      { key: "THÀNH PHỐ", value: city },
+      { key: "ĐỊA CHỈ", value: address },
+    ];
     return (
       <Fragment>
         <div className="containerProfile">
@@ -346,7 +361,6 @@ class Profile extends Component {
                 alt="img-avatar"
               />
             </div>
-
             <div style={{ display: "flex", justifyContent: "space-between" }}>
               <img
                 className="imgReward"
@@ -361,7 +375,6 @@ class Profile extends Component {
               />
             </div>
 
-            <div className="formData__row__profile"></div>
             <div className="info">
               <div className="header">Thông tin cá nhân</div>
               <div className="header-extra">
@@ -369,140 +382,38 @@ class Profile extends Component {
                 dịch vụ trên Vesk
               </div>
               <div className="box-info">
-                <div className="padding-left">
-                  <div className="detail">Hồ sơ</div>
-                  <div className="detail-extra">
-                    Một số thông tin có thể hiển thị cho những người khác đang
-                    sử dụng dịch vụ của Vesk.
-                    {/* <a href="">Tìm hiểu thêm</a> */}
-                  </div>
-                  <div className="row-info">
-                    <span className="row-info-left">ẢNH</span>
-                    <span className="row-info-right">
-                      Một bức ảnh giúp cá nhân hóa tài khoản của bạn
-                    </span>
-                    <span>
-                      <img
-                        className="avatar-detail"
-                        src={avatar || require("../../images/testAvatar.jpg")}
-                        alt="img-avatar"
-                      />
-                    </span>
-                  </div>
-                  <div className="row-info">
-                    <span className="row-info-left">TÀI KHOẢN</span>
-                    <span className="row-info-right">{userName || ""}</span>
-                    <span>
-                      <img
-                        className="row-info-row"
-                        src={require("../../images/arrow-right.png")}
-                        alt="img-avatar"
-                      />
-                    </span>
-                  </div>
-                  <div className="row-info">
-                    <span className="row-info-left">TÊN</span>
-                    <span className="row-info-right">{firstName || ""}</span>
-                    <span>
-                      <img
-                        className="row-info-row"
-                        src={require("../../images/arrow-right.png")}
-                        alt="img-avatar"
-                      />
-                    </span>
-                  </div>
-                  <div className="row-info">
-                    <span className="row-info-left">HỌ</span>
-                    <span className="row-info-right">{lastName || ""}</span>
-                    <span>
-                      <img
-                        className="row-info-row"
-                        src={require("../../images/arrow-right.png")}
-                        alt="img-avatar"
-                      />
-                    </span>
-                  </div>
-                  <div className="row-info">
-                    <span className="row-info-left">NGÀY SINH</span>
-                    <span className="row-info-right">
-                      {birthDate || "22/04/1994"}
-                    </span>
-                    <span>
-                      <img
-                        className="row-info-row"
-                        src={require("../../images/arrow-right.png")}
-                        alt="img-avatar"
-                      />
-                    </span>
-                  </div>
-                  <div className="row-info">
-                    <span className="row-info-left">GIỚI TÍNH</span>
-                    <span className="row-info-right">{gender || "N/A"}</span>
-                    <span>
-                      <img
-                        className="row-info-row"
-                        src={require("../../images/arrow-right.png")}
-                        alt="img-avatar"
-                      />
-                    </span>
-                  </div>
-                  <div className="detail detail-2">Liên Hệ</div>
-                  <div className="row-info">
-                    <span className="row-info-left">KHU VỰC</span>
-                    <span className="row-info-right">{region || "N/A"}</span>
-                    <span>
-                      <img
-                        className="row-info-row"
-                        src={require("../../images/arrow-right.png")}
-                        alt="img-avatar"
-                      />
-                    </span>
-                  </div>
-                  <div className="row-info">
-                    <span className="row-info-left">ĐIỆN THOẠI</span>
-                    <span className="row-info-right">{phone || "N/A"}</span>
-                    <span>
-                      <img
-                        className="row-info-row"
-                        src={require("../../images/arrow-right.png")}
-                        alt="img-avatar"
-                      />
-                    </span>
-                  </div>
-                  <div className="row-info">
-                    <span className="row-info-left">EMAIL</span>
-                    <span className="row-info-right">{email || ""}</span>
-                    <span>
-                      <img
-                        className="row-info-row"
-                        src={require("../../images/arrow-right.png")}
-                        alt="img-avatar"
-                      />
-                    </span>
-                  </div>
-                  <div className="row-info">
-                    <span className="row-info-left">THÀNH PHỐ</span>
-                    <span className="row-info-right">{city || "N/A"}</span>
-                    <span>
-                      <img
-                        className="row-info-row"
-                        src={require("../../images/arrow-right.png")}
-                        alt="img-avatar"
-                      />
-                    </span>
-                  </div>
-                  <div className="row-info">
-                    <span className="row-info-left">ĐỊA CHỈ</span>
-                    <span className="row-info-right">{address || "N/A"}</span>
-                    <span>
-                      <img
-                        className="row-info-row"
-                        src={require("../../images/arrow-right.png")}
-                        alt="img-avatar"
-                      />
-                    </span>
-                  </div>
+                <div className="detail">Hồ sơ</div>
+                <div className="detail-extra">
+                  Một số thông tin có thể hiển thị cho những người khác đang sử
+                  dụng dịch vụ của Vesk.
                 </div>
+                {data1.map((item) => (
+                  <div className="row-info">
+                    <span className="row-info-left">{item.key}</span>
+                    <span className="row-info-right">{item.value}</span>
+                    <span>
+                      <img
+                        className="row-info-row"
+                        src={require("../../images/arrow-right.png")}
+                        alt="img-avatar"
+                      />
+                    </span>
+                  </div>
+                ))}
+                <div className="detail detail-2">Liên Hệ</div>
+                {data2.map((item) => (
+                  <div className="row-info">
+                    <span className="row-info-left">{item.key}</span>
+                    <span className="row-info-right">{item.value}</span>
+                    <span>
+                      <img
+                        className="row-info-row"
+                        src={require("../../images/arrow-right.png")}
+                        alt="img-avatar"
+                      />
+                    </span>
+                  </div>
+                ))}
               </div>
             </div>
           </div>

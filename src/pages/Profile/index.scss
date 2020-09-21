@@ -1,8 +1,7 @@
 .containerProfile {
   background-color: transparent;
-  min-width: 500px;
+  // min-width: 500px;
   padding: 2rem 1rem;
-
   .viewMyInfo {
     .viewAvatar {
       width: 100%;
@@ -21,154 +20,19 @@
         height: 185px;
         border-radius: 95%;
         border: 3px solid #ddd;
-        // border-radius: 4px;
       }
     }
-    .img {
-      /* flip horizontally */
-      width: 142px;
-      height: 180px;
-    }
-    .img-scaleX {
-      /* flip horizontally */
-      width: 142px;
-      height: 180px;
-      transform: scaleX(-1);
-    }
 
-    // Colors
-    $color-one: #1f2124;
-    $color-two: linear-gradient(to right, #90caf9, #047edf 99%);
-    $color-three: #f68657;
-    $color-four: #f6b352;
-
-    *,
-    *:before,
-    *:after {
-      box-sizing: border-box;
-    }
-
-    body {
-      background: $color-two;
-      font-family: "Varela Round", sans-serif;
-    }
-
-    .card {
-      background: linear-gradient(to right, #ffbf96, #fe7096);
-      box-shadow: 0 0 5px rgba(0, 0, 0, 0.4);
-      border-radius: 5px;
-      // margin: 100px 20px 40px 20px;
-      width: calc(33.3333% - 40px); /* 1/3 minus the margins (20+20) */
-      padding: 20px;
-      text-align: center;
-      color: white;
-      float: left;
-      @media (max-width: 768px) {
-        // width: calc(100% - 40px);
-      }
-
-      .title {
-        font-size: 25px;
-      }
-      .icon {
-        padding: 10px;
-        img {
-          width: 80px;
-          height: 80px;
-          path {
-            fill: $color-four;
-          }
-        }
-        svg {
-          width: 80px;
-          height: 80px;
-          path {
-            fill: $color-four;
-          }
-        }
-      }
-      .features {
-        ul {
-          padding: 0;
-          list-style-type: none;
-          li {
-            font-size: 20px;
-            span {
-              border-bottom: 2px $color-four;
-            }
-          }
-        }
-      }
-    }
     .imgReward {
       width: 70px;
       height: 70px;
-      padding: 10px;
-    }
-    .card-2 {
-      background: linear-gradient(to right, #ffbf96, #fe7096);
-      box-shadow: 0 0 5px rgba(0, 0, 0, 0.4);
-      border-radius: 5px;
-      // margin: 80px 20px 20px 20px;
-      width: calc(33.3333% - 40px); /* 1/3 minus the margins (20+20) */
-      padding: 20px;
-      text-align: center;
-      color: white;
-      float: left;
-      @media (max-width: 768px) {
-        // margin: 10px 20px;
-        width: calc(100% - 40px);
-        // &:first-child {
-        //   margin-top: 20px;
-        // }
-      }
-
-      .title {
-        font-size: 25px;
-      }
-      .icon {
-        padding: 10px;
-        img {
-          width: 100px;
-          height: 100px;
-          path {
-            fill: $color-four;
-          }
-        }
-      }
-      .features {
-        ul {
-          padding: 0;
-          list-style-type: none;
-          li {
-            font-size: 20px;
-            span {
-              border-bottom: 2px $color-four;
-            }
-          }
-          img {
-            width: 80px;
-            height: 80px;
-            path {
-              fill: $color-four;
-            }
-          }
-        }
-      }
     }
 
-    .viewButtonProfile {
-      display: flex;
-      justify-content: flex-end;
-      margin-top: 0.5rem;
-      padding: 0 1rem;
-    }
     .info {
       margin: auto;
       margin-top: 10px;
       margin-bottom: 20px;
       background-color: transparent;
-      min-width: 70%;
       padding: 2rem 5rem 5rem 5rem;
       box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
       transition: 0.3s;
@@ -186,17 +50,10 @@
         color: #888;
       }
       .box-info {
-        min-width: 500px;
         width: 100%;
         padding-top: 20px;
         justify-content: center;
         text-align: center;
-        // box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
-        // transition: 0.3s;
-        // border-radius: 3px; /* 5px rounded corners */
-        .padding-left {
-          padding-left: 20px;
-        }
         .avatar-detail {
           width: 30px;
           height: 30px;
@@ -204,8 +61,6 @@
           border: 1px solid #ddd;
           text-align: right;
           float: right;
-          margin-right: 20px;
-          // border-radius: 4px;
         }
       }
 
@@ -236,7 +91,7 @@
         display: inline-block;
       }
       .row-info-right {
-        min-width: 150px;
+        // min-width: 150px;
       }
       .row-info-row {
         text-align: right;
@@ -330,4 +185,36 @@
       flex-direction: row;
     }
   }
+}
+
+@media screen and (max-width: 1100px) {
+  .containerProfile {
+    .viewMyInfo {
+      .info {
+        .row-info {
+          display: flex;
+          justify-content: space-between;
+        }
+        .row-info-row {
+          display: none;
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .containerProfile {
+    .viewMyInfo {
+      .info {
+        padding: 2rem 1rem;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 524px) {
+  // .containerProfile {
+  //   padding: 0px;
+  // }
 }
