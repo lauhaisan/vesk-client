@@ -12,7 +12,7 @@ const uploadApi = async (payload) => {
     body: payload.file,
   };
   const response = await fetch(
-    "https://upload.vesk.fastfps.com/vesk/upload",
+    "https://upload.veskhub.co/vesk/upload",
     requestOptions
   );
   const data = await response.json();
