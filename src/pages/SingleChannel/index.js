@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import {
   OverflowMenu,
   OverflowMenuItem,
-  Loading
+  Loading,
 } from "carbon-components-react";
 import { SOCIAL_MEDIA, LIST_USER } from "../../constant";
 import Notification from "../../components/Notification";
@@ -18,7 +18,7 @@ class SignleChannel extends Component {
     const {
       match: { params: { id = "" } = {} } = {},
       getUserInfo,
-      getListSocialMediaByAuthor
+      getListSocialMediaByAuthor,
     } = this.props;
     getUserInfo({ data: id });
     getListSocialMediaByAuthor({ id });
@@ -27,13 +27,13 @@ class SignleChannel extends Component {
   componentWillUnmount() {
     const {
       updateStateListUserReducer,
-      updateStateSocialMediaReducer
+      updateStateSocialMediaReducer,
     } = this.props;
     updateStateListUserReducer({
-      itemUser: {}
+      itemUser: {},
     });
     updateStateSocialMediaReducer({
-      listByAuthor: []
+      listByAuthor: [],
     });
   }
 
@@ -43,8 +43,10 @@ class SignleChannel extends Component {
       loading,
       listByAuthor = [],
       listUserData = [],
-      messageError = ""
+      messageError = "",
     } = this.props;
+
+    const { firstName = "", lastName = "", avatar } = itemUser;
 
     if (messageError === "User not exist") {
       return <NotFoundPage />;
@@ -55,22 +57,24 @@ class SignleChannel extends Component {
       </div>
     );
 
-    const formatListVideo = listByAuthor.map(item => {
+    const formatListVideo = listByAuthor.map((item) => {
       return {
         ...item,
-        author: listUserData.find(element => element.userId === item.authorId)
+        author: listUserData.find(
+          (element) => element.userId === item.authorId
+        ),
       };
     });
 
     return (
       <Fragment>
-        <TitlePage title={itemUser.userName} />
+        <TitlePage title={`${firstName} ${lastName}`} />
         <div className="singleChanel">
           <div className="coverImage">
             <div className="singleChanel__profile">
               <img
                 className="singleChanel__profile__avt"
-                src={itemUser.avatar || require("../../images/testAvatar.jpg")}
+                src={avatar || require("../../images/testAvatar.jpg")}
                 alt="img-avatar"
               />
               <div className="singleChanel__profile__social">Social Media</div>
@@ -78,7 +82,7 @@ class SignleChannel extends Component {
           </div>
           <div className="singleChanel__nameChanel">
             <p className="singleChanel__nameChanel--text">
-              {itemUser.userName}
+              {`${firstName} ${lastName}`}
             </p>
           </div>
         </div>
@@ -102,7 +106,7 @@ class SignleChannel extends Component {
               {formatListVideo.length === 0 ? (
                 <Empty text="No Video" />
               ) : (
-                formatListVideo.map(item => (
+                formatListVideo.map((item) => (
                   <div key={item.id} className="bx--col-md-2 bx--col-sm-4">
                     <ItemVideo item={item} />
                   </div>
@@ -125,23 +129,23 @@ class SignleChannel extends Component {
 
 const mapStateToProps = ({
   socialMedia: { loading, listByAuthor = [] } = {},
-  listUser: { listUserData = [], itemUser, messageError = "" } = {}
+  listUser: { listUserData = [], itemUser, messageError = "" } = {},
 }) => ({
   loading,
   listByAuthor,
   listUserData,
   itemUser,
-  messageError
+  messageError,
 });
 
-const mapDispatchToProps = dispatch => ({
-  getUserInfo: data => dispatch({ type: LIST_USER.GET_USER_BY_ID, data }),
-  getListSocialMediaByAuthor: data =>
+const mapDispatchToProps = (dispatch) => ({
+  getUserInfo: (data) => dispatch({ type: LIST_USER.GET_USER_BY_ID, data }),
+  getListSocialMediaByAuthor: (data) =>
     dispatch({ type: SOCIAL_MEDIA.GET_LIST_BY_AUTHOR, data: { data } }),
-  updateStateListUserReducer: data =>
+  updateStateListUserReducer: (data) =>
     dispatch({ type: LIST_USER.UPDATE_LIST_USER_REDUCER, data }),
-  updateStateSocialMediaReducer: data =>
-    dispatch({ type: SOCIAL_MEDIA.UPDATE_SOCIAL_MEDIA_REDUCER, data })
+  updateStateSocialMediaReducer: (data) =>
+    dispatch({ type: SOCIAL_MEDIA.UPDATE_SOCIAL_MEDIA_REDUCER, data }),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(SignleChannel);

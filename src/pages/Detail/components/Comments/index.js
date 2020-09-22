@@ -60,6 +60,7 @@ export default class Comments extends Component {
       listComment = [],
       // loadingComment,
       loadingActionComment,
+      myInfo: { avatar = "" } = {},
     } = this.props;
     const { textComment = "" } = this.state;
     const { token } = getToken();
@@ -71,7 +72,7 @@ export default class Comments extends Component {
           <div className="commentEditor">
             <img
               className="avatarComment"
-              src={require("../../../../images/testAvatar.jpg")}
+              src={avatar || require("../../../../images/testAvatar.jpg")}
               alt="img-avatar"
             />
             <div
@@ -133,24 +134,39 @@ export default class Comments extends Component {
         )}
 
         <div className="listComments">
-          {listComment.map((item) => (
-            <div className="itemComment" key={item.id}>
-              <img
-                className="avatarComment"
-                src={require("../../../../images/testAvatar.jpg")}
-                alt="img-avatar"
-              />
-              <div className="itemComment__content">
-                <div>
-                  <span className="content--name">{item.userName}</span>
-                  <span className="content--timeAgo">
-                    {this.timeAgo(item.createdAt)}
-                  </span>
+          {/* {listComment.map((item) => (
+           
+          ))} */}
+          {listComment.map((item) => {
+            const {
+              id = "",
+              createdAt = "",
+              comment = "",
+              firstName = "",
+              lastName = "",
+              avatar = "",
+            } = item;
+            const fullName = `${firstName} ${lastName}`;
+
+            return (
+              <div className="itemComment" key={id}>
+                <img
+                  className="avatarComment"
+                  src={avatar || require("../../../../images/testAvatar.jpg")}
+                  alt="img-avatar"
+                />
+                <div className="itemComment__content">
+                  <div>
+                    <span className="content--name">{fullName}</span>
+                    <span className="content--timeAgo">
+                      {this.timeAgo(createdAt)}
+                    </span>
+                  </div>
+                  <div className="content--textContent">{comment}</div>
                 </div>
-                <div className="content--textContent">{item.comment}</div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
     );

@@ -130,6 +130,7 @@ class Profile extends Component {
       region = "",
       userName = "",
     } = myInfo;
+    const fullName = `${firstName} ${lastName}`;
     const linkAvatar = link || avatar || require("../../images/testAvatar.jpg");
     const renderContentModal = (
       <div style={{ height: "auto", width: "100%" }}>
@@ -352,7 +353,7 @@ class Profile extends Component {
     return (
       <Fragment>
         <div className="containerProfile">
-          <TitlePage title={`${userName} | Profile`} />
+          <TitlePage title={`${fullName} | Profile`} />
           <div className="viewMyInfo">
             <div className="viewAvatar">
               <img

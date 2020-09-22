@@ -72,6 +72,7 @@ class ComponentHeader extends Component {
       myInfo: data = {},
       myWallet: { money = 0 } = {},
     } = this.props;
+    const { firstName = "", lastName = "", avatar = "" } = data;
 
     const { token } = getToken();
 
@@ -86,13 +87,13 @@ class ComponentHeader extends Component {
             {money && numeral(money).format("0,0")}
           </span>
         </div>
-        <div className="rightMenu" onClick={this.showDropDownMenu}>
+        <div className="rightMenu">
           <img
             className="rightMenu__avatar"
-            src={data.avatar || require("../../images/testAvatar.jpg")}
+            src={avatar || require("../../images/testAvatar.jpg")}
             alt="img-avatar"
           />
-          <p className="rightMenu__textName">{data.userName}</p>
+          <p className="rightMenu__textName">{`${firstName} ${lastName}`}</p>
           <ChevronSortDown20 className="icon" />
         </div>
         <div className="dropDownMenu">

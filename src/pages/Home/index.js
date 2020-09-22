@@ -88,20 +88,23 @@ class Home extends Component {
           </div>
 
           <div className="divider" />
-          <div className="viewAds">
-            <a
-              href={randomAds.LinkTarget}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="contentAds"
-            >
-              <img
-                className="viewAds__img"
-                src={randomAds.ImageUrl}
-                alt="img-avatar"
-              />
-            </a>
-          </div>
+          {randomAds.ImageUrl && (
+            <div className="viewAds">
+              <a
+                href={randomAds.LinkTarget}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="contentAds"
+              >
+                <img
+                  className="viewAds__img"
+                  src={randomAds.ImageUrl}
+                  alt="img-avatar"
+                />
+              </a>
+            </div>
+          )}
+
           <div className="divider" style={{ marginTop: "1rem" }} />
           <div className="titleBlock">
             <p className="titleBlock__text">Featured Videos</p>

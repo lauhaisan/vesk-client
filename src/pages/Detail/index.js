@@ -158,6 +158,7 @@ class Detail extends React.Component {
       listMostPopular = [],
       isRewaredViewSuccessfully = "",
       listAds = [],
+      myInfo,
     } = this.props;
     const {
       name = "",
@@ -179,6 +180,9 @@ class Detail extends React.Component {
     const stringCountView = numeral(countView).format("0,0");
     const itemChanel =
       listUserData.find((element) => element.userId === authorId) || {};
+    const { avatar = "", firstName = "", lastName = "" } = itemChanel;
+    const fullName = `${firstName} ${lastName}`;
+
     const formatListVideoMostPopular = listMostPopular.map((item) => {
       return {
         ...item,
@@ -192,7 +196,6 @@ class Detail extends React.Component {
     );
 
     const randomAds = this.randomAds(listAds);
-    console.log("detail ads", randomAds);
 
     return (
       <div className="container__detail">
@@ -219,20 +222,23 @@ class Detail extends React.Component {
           </div>
         )}
 
-        <div className="viewAds">
-          <a
-            href={randomAds.LinkTarget}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="contentAds"
-          >
-            <img
-              className="viewAds__img"
-              src={randomAds.ImageUrl}
-              alt="img-avatar"
-            />
-          </a>
-        </div>
+        {randomAds.ImageUrl && (
+          <div className="viewAds">
+            <a
+              href={randomAds.LinkTarget}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="contentAds"
+            >
+              <img
+                className="viewAds__img"
+                src={randomAds.ImageUrl}
+                alt="img-avatar"
+              />
+            </a>
+          </div>
+        )}
+
         <div className="detail__viewRow" style={{ marginTop: "2rem" }}>
           <div className="viewLeft">
             <div className="box boxName">
@@ -246,12 +252,10 @@ class Detail extends React.Component {
               <div className="boxInfoChanel__rightContent">
                 <img
                   className="boxInfoChanel__avatar"
-                  src={
-                    itemChanel.avatar || require("../../images/testAvatar.jpg")
-                  }
+                  src={avatar || require("../../images/testAvatar.jpg")}
                   alt="img-avatar"
                 />
-                <p className="boxInfoChanel__name">{itemChanel.userName}</p>
+                <p className="boxInfoChanel__name">{fullName}</p>
               </div>
             </div>
             <Comments
@@ -259,6 +263,7 @@ class Detail extends React.Component {
               loadingComment={fetchingComment}
               loadingActionComment={loadingAction}
               handleAddComment={this.handleAddComment}
+              myInfo={myInfo}
             />
           </div>
           <div

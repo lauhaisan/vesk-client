@@ -6,16 +6,14 @@ import "./index.scss";
 class CustomSlide extends Component {
   render() {
     const { itemUser = {}, history, ...props } = this.props;
-    const id = itemUser.userId;
+    const { avatar, firstName = "", lastName = "", userId: id = "" } = itemUser;
     return (
       <div {...props}>
         <div className="itemSlider__content">
           <Link to={`/channel/${id}`}>
             <img
               className="itemSlider__content--avt"
-              src={
-                itemUser.avatar || require("../../../../images/testAvatar.jpg")
-              }
+              src={avatar || require("../../../../images/testAvatar.jpg")}
               alt="img-avatar"
             />
           </Link>
@@ -23,7 +21,7 @@ class CustomSlide extends Component {
             style={{ width: "70%", cursor: "pointer", textDecoration: "none" }}
             to={`/channel/${id}`}
           >
-            <div className="itemSlider__content--name">{itemUser.userName}</div>
+            <div className="itemSlider__content--name">{`${firstName} ${lastName}`}</div>
           </Link>
           <p className="itemSlider__content--views">74,853 views</p>
         </div>

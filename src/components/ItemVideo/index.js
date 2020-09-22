@@ -4,7 +4,7 @@ import millify from "millify";
 import "./index.scss";
 
 class ItemVideo extends Component {
-  timeAgo = prevDate => {
+  timeAgo = (prevDate) => {
     const time = Date.parse(prevDate);
     const diff = Number(new Date()) - time;
     const minute = 60 * 1000;
@@ -32,10 +32,17 @@ class ItemVideo extends Component {
   };
   render() {
     const { item = {} } = this.props;
-    const { thumbnail = "", name = "", author: { userName = "" } = {} } = item;
+    const {
+      id = "",
+      thumbnail = "",
+      name = "",
+      author: { firstName = "", lastName = "" } = {},
+      countView,
+      created,
+    } = item;
 
     return (
-      <Link to={`/detail/${item.id}`} className="link">
+      <Link to={`/detail/${id}`} className="link">
         <div className="itemVideo">
           <div className="viewImgVideo">
             <div className="itemVideo__viewIconPlay">
@@ -52,23 +59,19 @@ class ItemVideo extends Component {
           </div>
           <div className="itemVideo__info">
             <div className="info__title">{name}</div>
-            <div className="info__nameChanel">{userName}</div>
+            <div className="info__nameChanel">{`${firstName} ${lastName}`}</div>
             <div>
               <span
                 className="info__viewAndTime"
                 style={{ marginRight: "5px" }}
               >
-                {item.countView
-                  ? `${millify(item.countView)} views`
-                  : "0 views"}
+                {item.countView ? `${millify(countView)} views` : "0 views"}
               </span>
               <i
                 className="fas fa-calendar-alt info__viewAndTime"
                 style={{ marginRight: "3px" }}
               ></i>
-              <span className="info__viewAndTime">
-                {this.timeAgo(item.created)}
-              </span>
+              <span className="info__viewAndTime">{this.timeAgo(created)}</span>
             </div>
           </div>
         </div>
