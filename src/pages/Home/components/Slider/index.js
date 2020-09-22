@@ -59,11 +59,18 @@ function PrevArrow(props) {
 export default class MultipleItems extends Component {
   render() {
     const { listData = [], history } = this.props;
+    const total = listData.length;
+    const slidesToShowSmall = total > 1 ? Math.floor(total / 2) : 1;
+    const checkLength = total > 9;
+    let slidesToScroll = 3;
+    if (slidesToShowSmall < 3) {
+      slidesToScroll = 1;
+    }
     const settings = {
       infinite: true,
       speed: 500,
-      slidesToShow: 9,
-      slidesToScroll: 3,
+      slidesToShow: checkLength ? 9 : slidesToShowSmall,
+      slidesToScroll,
       autoplay: true,
       autoplaySpeed: 2500,
       dots: false,
@@ -73,43 +80,36 @@ export default class MultipleItems extends Component {
         {
           breakpoint: 1350,
           settings: {
-            slidesToShow: 7,
-            slidesToScroll: 3,
-          },
-        },
-        {
-          breakpoint: 1140,
-          settings: {
-            slidesToShow: 5,
-            slidesToScroll: 3,
+            slidesToShow: checkLength ? 9 : slidesToShowSmall,
+            slidesToScroll,
           },
         },
         {
           breakpoint: 1024,
           settings: {
-            slidesToShow: 5,
-            slidesToScroll: 3,
+            slidesToShow: checkLength ? 9 : slidesToShowSmall,
+            slidesToScroll,
           },
         },
         {
           breakpoint: 768,
           settings: {
-            slidesToShow: 3,
-            slidesToScroll: 3,
+            slidesToShow: checkLength ? 3 : slidesToShowSmall,
+            slidesToScroll,
           },
         },
         {
           breakpoint: 600,
           settings: {
-            slidesToShow: 2,
-            slidesToScroll: 2,
+            slidesToShow: checkLength ? 2 : slidesToShowSmall,
+            slidesToScroll,
           },
         },
         {
           breakpoint: 480,
           settings: {
             slidesToShow: 1,
-            slidesToScroll: 1,
+            slidesToScroll,
           },
         },
       ],
