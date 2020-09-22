@@ -135,6 +135,14 @@ class Detail extends React.Component {
     }
   };
 
+  randomAds = (list) => {
+    let itemAds = {};
+    if (list.length > 0) {
+      itemAds = list[Math.floor(Math.random() * list.length)];
+    }
+    return itemAds;
+  };
+
   render() {
     const {
       myInfo: { userId = "" } = {},
@@ -149,6 +157,7 @@ class Detail extends React.Component {
       // loadingMostPopular,
       listMostPopular = [],
       isRewaredViewSuccessfully = "",
+      listAds = [],
     } = this.props;
     const {
       name = "",
@@ -182,6 +191,9 @@ class Detail extends React.Component {
       (item) => item.id !== id
     );
 
+    const randomAds = this.randomAds(listAds);
+    console.log("detail ads", randomAds);
+
     return (
       <div className="container__detail">
         <TitlePage title={name} />
@@ -209,14 +221,14 @@ class Detail extends React.Component {
 
         <div className="viewAds">
           <a
-            href="https://kingofinvest.co"
+            href={randomAds.LinkTarget}
             target="_blank"
             rel="noopener noreferrer"
             className="contentAds"
           >
             <img
               className="viewAds__img"
-              src="https://statics.vesk.fastfps.com/dd5e9714-fc03-11ea-bff0-5600023ed650.png"
+              src={randomAds.ImageUrl}
               alt="img-avatar"
             />
           </a>
@@ -291,6 +303,7 @@ const mapStateToProps = ({
   listUser: { listUserData = [] } = {},
   mostPopular: { loading: loadingMostPopular, listMostPopular = [] } = {},
   wallet: { isRewaredViewSuccessfully = "" },
+  advertising: { listAds = [] } = {},
 }) => ({
   myInfo,
   itemMediaSocial,
@@ -305,6 +318,7 @@ const mapStateToProps = ({
   loadingMostPopular,
   listMostPopular,
   isRewaredViewSuccessfully,
+  listAds,
 });
 
 const mapDispatchToProps = (dispatch) => ({

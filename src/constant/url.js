@@ -13,7 +13,7 @@ const URL = {
   EDIT_USER: "/v1/vesk/users",
 
   //ADVERTISING
-  GET_LIST_ADVERTISING: "/v1/vesk/ads",
+  GET_LIST_ADVERTISING: "/v1/vesk/public/ads",
   ADMIN_CRUD_ADVERTISING: "/v1/vesk/admin/ads",
 
   //SOCIAL MEDIA

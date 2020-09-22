@@ -22,6 +22,14 @@ class Home extends Component {
     getListSocialMedia(payload);
   };
 
+  randomAds = (list) => {
+    let itemAds = {};
+    if (list.length > 0) {
+      itemAds = list[Math.floor(Math.random() * list.length)];
+    }
+    return itemAds;
+  };
+
   render() {
     const {
       loading,
@@ -30,6 +38,7 @@ class Home extends Component {
       loadingListUserName,
       listUserData = [],
       messageErrorListUser,
+      listAds = [],
       history,
     } = this.props;
     const formatListVideo = listSocialMedia.map((item) => {
@@ -47,6 +56,7 @@ class Home extends Component {
         <Loading withOverlay={false} />
       </div>
     );
+    const randomAds = this.randomAds(listAds);
     return (
       <Fragment>
         <div className="container_page_home">
@@ -80,14 +90,14 @@ class Home extends Component {
           <div className="divider" />
           <div className="viewAds">
             <a
-              href="https://kingofinvest.co"
+              href={randomAds.LinkTarget}
               target="_blank"
               rel="noopener noreferrer"
               className="contentAds"
             >
               <img
                 className="viewAds__img"
-                src="https://statics.vesk.fastfps.com/21e9304a-fc04-11ea-bff0-5600023ed650.png"
+                src={randomAds.ImageUrl}
                 alt="img-avatar"
               />
             </a>
@@ -136,6 +146,7 @@ const mapStateToProps = ({
     listUserData = [],
     messageError: messageErrorListUser = "",
   } = {},
+  advertising: { listAds = [] } = {},
 }) => ({
   loading,
   listSocialMedia,
@@ -143,6 +154,7 @@ const mapStateToProps = ({
   loadingListUserName,
   listUserData,
   messageErrorListUser,
+  listAds,
 });
 
 const mapDispatchToProps = (dispatch) => ({

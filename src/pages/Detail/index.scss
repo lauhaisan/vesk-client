@@ -66,9 +66,10 @@
         width: 100%;
         height: auto;
         padding: 15px;
-        border-radius: 2px;
-        box-shadow: 0 0 11px #ececec;
-        background-color: #fff;
+        // border-radius: 2px;
+        // box-shadow: 0 0 11px #ececec;
+        // background-color: #fff;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.1);
       }
       .boxName {
         &__textName {
@@ -87,7 +88,6 @@
         }
       }
       .boxInfoChanel {
-        margin-top: 2rem;
         display: flex;
         flex-direction: row;
         justify-content: space-between;

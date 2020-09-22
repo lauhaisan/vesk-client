@@ -2,7 +2,7 @@ import React, { Component, Fragment } from "react";
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 import SideMenu from "../../components/SideMenu";
-import { LIST_USER, USER, WALLET } from "../../constant";
+import { LIST_USER, USER, WALLET, ADVERTISING } from "../../constant";
 import windowSize from "react-window-size";
 import { connect } from "react-redux";
 import { getToken } from "../../utils/token";
@@ -10,9 +10,10 @@ import "./index.scss";
 
 class BasicLayout extends Component {
   componentDidMount() {
-    const { getListUser, getMyInfo, getWallet } = this.props;
+    const { getListUser, getMyInfo, getWallet, getListAds } = this.props;
     const { data: { userId = "" } = {}, token } = getToken();
     getListUser({});
+    getListAds();
     if (token) {
       getMyInfo(userId);
       getWallet();
@@ -63,6 +64,7 @@ const mapDispatchToProps = (dispatch) => ({
   getListUser: (data) => dispatch({ type: LIST_USER.GET_LIST_USER, data }),
   getMyInfo: (data) => dispatch({ type: USER.GET_MY_INFO, data: { data } }),
   getWallet: () => dispatch({ type: WALLET.GET_WALLET }),
+  getListAds: () => dispatch({ type: ADVERTISING.GET_LIST_ADS }),
 });
 
 export default connect(
