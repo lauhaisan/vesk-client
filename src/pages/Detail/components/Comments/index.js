@@ -142,7 +142,7 @@ export default class Comments extends Component {
               />
               <div className="itemComment__content">
                 <div>
-                  <span className="content--name">User Name</span>
+                  <span className="content--name">{item.userName}</span>
                   <span className="content--timeAgo">
                     {this.timeAgo(item.createdAt)}
                   </span>
