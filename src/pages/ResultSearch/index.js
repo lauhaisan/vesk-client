@@ -13,14 +13,14 @@ class ResultSearch extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      kw: ""
+      kw: "",
     };
   }
   componentDidMount() {
     const { location: { state = "" } = {}, searchSocialMedia } = this.props;
     searchSocialMedia({ name: state });
     this.setState({
-      kw: state
+      kw: state,
     });
   }
 
@@ -30,7 +30,7 @@ class ResultSearch extends Component {
     if (state !== kw) {
       searchSocialMedia({ name: state });
       this.setState({
-        kw: state
+        kw: state,
       });
     }
   }
@@ -41,7 +41,7 @@ class ResultSearch extends Component {
       listSocialMedia = [],
       listUserData = [],
       messageError = "",
-      location: { state = "" } = {}
+      location: { state = "" } = {},
     } = this.props;
 
     if (!state) {
@@ -54,17 +54,19 @@ class ResultSearch extends Component {
       </div>
     );
 
-    const formatListVideo = listSocialMedia.map(item => {
+    const formatListVideo = listSocialMedia.map((item) => {
       return {
         ...item,
-        author: listUserData.find(element => element.userId === item.authorId)
+        author: listUserData.find(
+          (element) => element.userId === item.authorId
+        ),
       };
     });
 
     return (
       <Fragment>
         <div className="container_page_topRated">
-          <TitlePage title="Top Rated" />
+          <TitlePage title="Search" />
           <div className="titleBlock">
             <p className="titleBlock__text">Search by "{state}"</p>
           </div>
@@ -75,7 +77,7 @@ class ResultSearch extends Component {
               {formatListVideo.length === 0 ? (
                 <Empty text="No Video" />
               ) : (
-                formatListVideo.map(item => (
+                formatListVideo.map((item) => (
                   <div key={item.id} className="bx--col-md-2 bx--col-sm-4">
                     <ItemVideo item={item} />
                   </div>
@@ -98,20 +100,20 @@ class ResultSearch extends Component {
 
 const mapStateToProps = ({
   socialMedia: { loading, listSocialMedia = [], messageError = "" } = {},
-  listUser: { listUserData = [] } = {}
+  listUser: { listUserData = [] } = {},
 }) => ({
   loading,
   listSocialMedia,
   messageError,
-  listUserData
+  listUserData,
 });
 
-const mapDispatchToProps = dispatch => ({
-  searchSocialMedia: data =>
+const mapDispatchToProps = (dispatch) => ({
+  searchSocialMedia: (data) =>
     dispatch({
       type: SOCIAL_MEDIA.SEARCH_SOCIAL_MEDIA,
-      data: { data }
-    })
+      data: { data },
+    }),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ResultSearch);
