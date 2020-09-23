@@ -336,19 +336,19 @@ class Profile extends Component {
     }
 
     const data1 = [
-      { key: "TÀI KHOẢN", value: userName },
-      { key: "TÊN", value: firstName },
-      { key: "HỌ", value: lastName },
-      { key: "NGÀY SINH", value: birthDate },
-      { key: "GIỚI TÍNH", value: gender },
+      { key: "USERNAME", value: userName },
+      { key: "FIRST NAME", value: firstName },
+      { key: "LAST NAME", value: lastName },
+      { key: "BIRTHDAY", value: birthDate },
+      { key: "GENDER", value: gender },
     ];
 
     const data2 = [
-      { key: "KHU VỰC", value: region },
-      { key: "ĐIỆN THOẠI", value: phone },
+      { key: "REGION ", value: region },
+      { key: "PHONE", value: phone },
       { key: "EMAIL", value: email },
-      { key: "THÀNH PHỐ", value: city },
-      { key: "ĐỊA CHỈ", value: address },
+      { key: "CITY", value: city },
+      { key: "ADDRESS", value: address },
     ];
     return (
       <Fragment>
@@ -377,19 +377,19 @@ class Profile extends Component {
             </div>
 
             <div className="info">
-              <div className="header">Thông tin cá nhân</div>
+              <div className="header">Personal Information</div>
               <div className="header-extra">
-                Thông tin cơ bản, như tên và hình ảnh của bạn, đang được sử dụng
-                dịch vụ trên Vesk
+                Basic information, such as your name and picture, are using the
+                service on Vesk.
               </div>
               <div className="box-info">
-                <div className="detail">Hồ sơ</div>
+                <div className="detail">PROFILE</div>
                 <div className="detail-extra">
-                  Một số thông tin có thể hiển thị cho những người khác đang sử
-                  dụng dịch vụ của Vesk.
+                  Some information may be visible to other users of Vesk
+                  Services.
                 </div>
                 {data1.map((item) => (
-                  <div className="row-info">
+                  <div className="row-info" key={item.key}>
                     <span className="row-info-left">{item.key}</span>
                     <span className="row-info-right">{item.value}</span>
                     <span>
@@ -401,9 +401,9 @@ class Profile extends Component {
                     </span>
                   </div>
                 ))}
-                <div className="detail detail-2">Liên Hệ</div>
+                <div className="detail detail-2">CONTACT</div>
                 {data2.map((item) => (
-                  <div className="row-info">
+                  <div className="row-info" key={item.key}>
                     <span className="row-info-left">{item.key}</span>
                     <span className="row-info-right">{item.value}</span>
                     <span>
