@@ -84,10 +84,17 @@ export default class MultipleItems extends Component {
             slidesToScroll,
           },
         },
+        // {
+        //   breakpoint: 1025,
+        //   settings: {
+        //     slidesToShow: checkLength ? 9 : slidesToShowSmall,
+        //     slidesToScroll,
+        //   },
+        // },
         {
           breakpoint: 1024,
           settings: {
-            slidesToShow: checkLength ? 9 : slidesToShowSmall,
+            slidesToShow: checkLength ? 6 : slidesToShowSmall,
             slidesToScroll,
           },
         },
