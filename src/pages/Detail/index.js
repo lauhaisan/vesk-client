@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Component, PureComponent, Fragment } from "react";
 import TitlePage from "../../components/TitlePage";
 import { connect } from "react-redux";
 import numeral from "numeral";
@@ -11,7 +11,38 @@ import Comments from "./components/Comments";
 import { getToken } from "../../utils/token";
 import "./index.scss";
 
-class Detail extends React.Component {
+class ItemAdvertising extends PureComponent {
+  randomAds = (list) => {
+    let itemAds = {};
+    if (list.length > 0) {
+      itemAds = list[Math.floor(Math.random() * list.length)];
+    }
+    return itemAds;
+  };
+  render() {
+    const { listAds = [], key = "" } = this.props;
+    const randomAds = (listAds.length > 0 && this.randomAds(listAds)) || {};
+    const { ImageUrl = "", LinkTarget = "" } = randomAds;
+    return (
+      <Fragment>
+        {ImageUrl && (
+          <div className="viewAds" key={key}>
+            <a
+              href={LinkTarget}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="contentAds"
+            >
+              <img className="viewAds__img" src={ImageUrl} alt="img-avatar" />
+            </a>
+          </div>
+        )}
+      </Fragment>
+    );
+  }
+}
+
+class Detail extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -19,6 +50,7 @@ class Detail extends React.Component {
       timerStart: 0,
       timerTime: 0,
       isLogin: false,
+      idAdvertising: Date.now(),
     };
   }
 
@@ -60,6 +92,7 @@ class Detail extends React.Component {
         complete: false,
         timerStart: 0,
         timerTime: 0,
+        idAdvertising: Date.now(),
       });
       this.stopTimer();
       updateWalletReducer({ isRewaredViewSuccessfully: "" });
@@ -135,14 +168,6 @@ class Detail extends React.Component {
     }
   };
 
-  randomAds = (list) => {
-    let itemAds = {};
-    if (list.length > 0) {
-      itemAds = list[Math.floor(Math.random() * list.length)];
-    }
-    return itemAds;
-  };
-
   render() {
     const {
       myInfo: { userId = "" } = {},
@@ -151,10 +176,7 @@ class Detail extends React.Component {
       fetchingComment,
       listComment = [],
       listUserData = [],
-      // messageErrorComment,
       loadingAction,
-      // actionSuccessfully,
-      // loadingMostPopular,
       listMostPopular = [],
       isRewaredViewSuccessfully = "",
       listAds = [],
@@ -168,7 +190,7 @@ class Detail extends React.Component {
       timeForRecvCoin,
       pointForUserView,
     } = itemMediaSocial;
-    const { id, timerTime, isLogin } = this.state;
+    const { id, timerTime, isLogin, idAdvertising } = this.state;
     const checkOwner = userId === authorId;
     let centiseconds = ("0" + (Math.floor(timerTime / 10) % 100)).slice(-2);
     let seconds = ("0" + (Math.floor(timerTime / 1000) % 60)).slice(-2);
@@ -195,8 +217,6 @@ class Detail extends React.Component {
       (item) => item.id !== id
     );
 
-    const randomAds = this.randomAds(listAds);
-
     return (
       <div className="container__detail">
         <TitlePage title={name} />
@@ -221,24 +241,7 @@ class Detail extends React.Component {
             minutes.
           </div>
         )}
-
-        {randomAds.ImageUrl && (
-          <div className="viewAds">
-            <a
-              href={randomAds.LinkTarget}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="contentAds"
-            >
-              <img
-                className="viewAds__img"
-                src={randomAds.ImageUrl}
-                alt="img-avatar"
-              />
-            </a>
-          </div>
-        )}
-
+        <ItemAdvertising key={idAdvertising} listAds={listAds} />
         <div className="detail__viewRow" style={{ marginTop: "2rem" }}>
           <div className="viewLeft">
             <div className="box boxName">
