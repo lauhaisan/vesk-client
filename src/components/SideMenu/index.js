@@ -28,7 +28,7 @@ class SideMenu extends PureComponent {
   };
 
   render() {
-    const { openMenu, windowWidth } = this.props;
+    const { openMenu, windowWidth, handleMenuMobile = () => {} } = this.props;
     const { openHistory } = this.state;
     const isMobile = windowWidth < 768;
     let classNameMenu;
@@ -49,6 +49,7 @@ class SideMenu extends PureComponent {
         <div className={`${classNameMenu}__menu`}>
           <NavLink
             exact
+            onClick={isMobile && handleMenuMobile}
             activeClassName={`${classNameMenu}__menu__itemMenu--active`}
             to="/"
             className={`${classNameMenu}__menu__itemMenu`}
@@ -58,6 +59,7 @@ class SideMenu extends PureComponent {
           </NavLink>
           <NavLink
             exact
+            onClick={isMobile && handleMenuMobile}
             activeClassName={`${classNameMenu}__menu__itemMenu--active`}
             to="/top-rated"
             className={`${classNameMenu}__menu__itemMenu`}
@@ -67,6 +69,7 @@ class SideMenu extends PureComponent {
           </NavLink>
           <NavLink
             exact
+            onClick={isMobile && handleMenuMobile}
             activeClassName={`${classNameMenu}__menu__itemMenu--active`}
             to="/most-popular"
             className={`${classNameMenu}__menu__itemMenu`}
@@ -87,6 +90,7 @@ class SideMenu extends PureComponent {
                 <Fragment>
                   <NavLink
                     exact
+                    onClick={isMobile && handleMenuMobile}
                     activeClassName={`${classNameMenu}__menu__itemMenu--active`}
                     to="/history-point"
                     className={`${classNameMenu}__menu__itemMenu `}
@@ -96,6 +100,7 @@ class SideMenu extends PureComponent {
                   </NavLink>
                   <NavLink
                     exact
+                    onClick={isMobile && handleMenuMobile}
                     activeClassName={`${classNameMenu}__menu__itemMenu--active`}
                     to="/history-exchange"
                     className={`${classNameMenu}__menu__itemMenu `}
@@ -110,6 +115,7 @@ class SideMenu extends PureComponent {
 
           <NavLink
             activeClassName={`${classNameMenu}__menu__itemMenu--active`}
+            onClick={isMobile && handleMenuMobile}
             to="/contact"
             className={`${classNameMenu}__menu__itemMenu`}
           >

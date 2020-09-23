@@ -31,12 +31,27 @@ class BasicLayout extends Component {
     const { children, history, openMenu, windowWidth } = this.props;
     const isMobile = windowWidth < 768;
     const padding = openMenu ? "225px" : "90px";
+    const renderSiderMobile = (
+      <Fragment>
+        <SideMenu
+          history={history}
+          openMenu={openMenu}
+          handleMenuMobile={this._handleMenu}
+        />
+        <div className="backgroundSideMenuMobile" onClick={this._handleMenu} />
+      </Fragment>
+    );
     return (
       <Fragment>
         <div className="container_basic_layout">
           <Header history={history} handleMenu={this._handleMenu} />
           <div className="body">
-            <SideMenu history={history} openMenu={openMenu} />
+            {isMobile && !openMenu ? (
+              renderSiderMobile
+            ) : (
+              <SideMenu history={history} openMenu={openMenu} />
+            )}
+
             <div
               style={{
                 display: "flex",
