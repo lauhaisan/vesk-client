@@ -23,7 +23,7 @@ class CustomSlide extends Component {
           >
             <div className="itemSlider__content--name">{`${firstName} ${lastName}`}</div>
           </Link>
-          <p className="itemSlider__content--views">74,853 views</p>
+          {/* <p className="itemSlider__content--views">74,853 views</p> */}
         </div>
       </div>
     );
