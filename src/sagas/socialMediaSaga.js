@@ -6,9 +6,10 @@ import {
   deleteSocialMediaAPI,
   addNewSocialMediaAPI,
   searchSocialMediaAPI,
-  getListByAuthorAPI
+  getListByAuthorAPI,
 } from "../service/socialMedia";
 import { SOCIAL_MEDIA } from "../constant";
+import { getToken } from "../utils/token";
 
 function* getListSocialMedia(object) {
   const dat = object.data;
@@ -16,13 +17,13 @@ function* getListSocialMedia(object) {
   if (resp.code !== 200) {
     yield put({
       type: SOCIAL_MEDIA.GET_LIST_SOCIAL_MEDIA_FAIL,
-      data: resp.message
+      data: resp.message,
     });
     return;
   }
   yield put({
     type: SOCIAL_MEDIA.GET_LIST_SOCIAL_MEDIA_SUCCESS,
-    data: resp.data
+    data: resp.data,
   });
 }
 
@@ -39,17 +40,19 @@ function* getSocialMediaById(obj) {
 function* editSocialMedia(obj) {
   const dat = obj.data.data;
   const hideModal = obj.data.functionHideModal;
+  const { data: { userId: id = "" } = {} } = getToken();
+  const data = { id };
   const resp = yield call(editSocialMediaAPI, dat);
   if (resp.code !== 200) {
     yield put({
       type: SOCIAL_MEDIA.EDIT_SOCIAL_MEDIA_FAIL,
-      data: resp.message
+      data: resp.message,
     });
     return;
   }
   yield put({ type: SOCIAL_MEDIA.EDIT_SOCIAL_MEDIA_SUCCESS, data: resp.data });
   hideModal();
-  yield put({ type: SOCIAL_MEDIA.GET_LIST_SOCIAL_MEDIA, data: resp.data });
+  yield put({ type: SOCIAL_MEDIA.GET_LIST_BY_AUTHOR, data: { data } });
 }
 
 function* deleteSocialMedia(obj) {
@@ -59,13 +62,13 @@ function* deleteSocialMedia(obj) {
   if (resp.code !== 200) {
     yield put({
       type: SOCIAL_MEDIA.DELETE_SOCIAL_MEDIA_FAIL,
-      data: resp.message
+      data: resp.message,
     });
     return;
   }
   yield put({
     type: SOCIAL_MEDIA.DELETE_SOCIAL_MEDIA_SUCCESS,
-    data: resp.data
+    data: resp.data,
   });
   hideModal();
   yield put({ type: SOCIAL_MEDIA.GET_LIST_SOCIAL_MEDIA, data: resp.data });
@@ -74,6 +77,8 @@ function* deleteSocialMedia(obj) {
 function* addNewSocialMedia(obj) {
   const dat = obj.data.data;
   const hideModal = obj.data.functionHideModal;
+  const { data: { userId: id = "" } = {} } = getToken();
+  const data = { id };
   const resp = yield call(addNewSocialMediaAPI, dat);
   if (resp.code !== 200) {
     yield put({ type: SOCIAL_MEDIA.ADD_NEW_FAIL, data: resp.message });
@@ -81,7 +86,7 @@ function* addNewSocialMedia(obj) {
   }
   yield put({ type: SOCIAL_MEDIA.ADD_NEW_SUCCESS, data: resp.data });
   hideModal();
-  yield put({ type: SOCIAL_MEDIA.GET_LIST_SOCIAL_MEDIA, data: resp.data });
+  yield put({ type: SOCIAL_MEDIA.GET_LIST_BY_AUTHOR, data: { data } });
 }
 
 function* searchSocialMedia(obj) {
@@ -90,13 +95,13 @@ function* searchSocialMedia(obj) {
   if (resp.code !== 200) {
     yield put({
       type: SOCIAL_MEDIA.SEARCH_SOCIAL_MEDIA_FAIL,
-      data: resp.message
+      data: resp.message,
     });
     return;
   }
   yield put({
     type: SOCIAL_MEDIA.SEARCH_SOCIAL_MEDIA_SUCCESS,
-    data: resp.data
+    data: resp.data,
   });
 }
 
@@ -106,13 +111,13 @@ function* getListByAuthor(object) {
   if (resp.code !== 200) {
     yield put({
       type: SOCIAL_MEDIA.GET_LIST_BY_AUTHOR_FAIL,
-      data: resp.message
+      data: resp.message,
     });
     return;
   }
   yield put({
     type: SOCIAL_MEDIA.GET_LIST_BY_AUTHOR_SUCCESS,
-    data: resp.data
+    data: resp.data,
   });
 }
 
@@ -123,5 +128,5 @@ export const socialMediaSaga = [
   takeLatest(SOCIAL_MEDIA.ADD_NEW, addNewSocialMedia),
   takeLatest(SOCIAL_MEDIA.SEARCH_SOCIAL_MEDIA, searchSocialMedia),
   takeLatest(SOCIAL_MEDIA.DELETE_SOCIAL_MEDIA, deleteSocialMedia),
-  takeLatest(SOCIAL_MEDIA.GET_LIST_BY_AUTHOR, getListByAuthor)
+  takeLatest(SOCIAL_MEDIA.GET_LIST_BY_AUTHOR, getListByAuthor),
 ];

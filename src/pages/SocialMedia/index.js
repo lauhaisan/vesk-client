@@ -236,35 +236,6 @@ class SocialMedia extends React.Component {
                 />
               </FormGroup>
             </div>
-            {titleModal !== "Add New Social Media" && (
-              <div className="formData__row">
-                <FormGroup legendText="">
-                  <TextInput
-                    disabled={true}
-                    id="inputAuthorId"
-                    labelText="Author"
-                    required
-                    light={true}
-                    placeholder="Author"
-                    type="text"
-                    value={itemMediaSocial.authorId || ""}
-                  />
-                </FormGroup>
-                <FormGroup legendText="">
-                  <TextInput
-                    id="inputCreatedBy"
-                    disabled={true}
-                    labelText="Created By"
-                    required
-                    light={true}
-                    placeholder="Created By"
-                    type="text"
-                    value={itemMediaSocial.createdBy || ""}
-                  />
-                </FormGroup>
-              </div>
-            )}
-
             <div className="formData__row">
               <FormGroup legendText="">
                 <NumberInput
