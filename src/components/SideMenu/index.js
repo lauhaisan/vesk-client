@@ -110,9 +110,17 @@ class SideMenu extends PureComponent {
                   </NavLink>
                 </Fragment>
               )}
+              <NavLink
+                activeClassName={`${classNameMenu}__menu__itemMenu--active`}
+                onClick={isMobile && handleMenuMobile}
+                to="/manage-video"
+                className={`${classNameMenu}__menu__itemMenu`}
+              >
+                <i className="fas fa-tasks itemMenu__icon"></i>
+                <span className="itemMenu__text">Manage Video</span>
+              </NavLink>
             </Fragment>
           )}
-
           <NavLink
             activeClassName={`${classNameMenu}__menu__itemMenu--active`}
             onClick={isMobile && handleMenuMobile}

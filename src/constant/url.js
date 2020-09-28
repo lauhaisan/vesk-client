@@ -21,6 +21,7 @@ const URL = {
   ADMIN_CRUD_SOCIAL_MEDIA: "/v1/vesk/admin/e-social-media",
   SOCIAL_MEDIA_SEARCH: "/v1/vesk/public/e-social-media/search",
   GET_LIST_MEDIA_BY_ATHOR: "/v1/vesk/public/e-social-media/author",
+  ADD_NEW_VIDEO: "/v1/vesk/e-social-media",
 
   //TOP RATED, MOST POPULAR
   GET_LIST_TOP_RATED: "/v1/vesk/public/e-social-media/top/search",

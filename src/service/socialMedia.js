@@ -24,7 +24,7 @@ const deleteSocialMediaAPI = async (payload) => {
 };
 
 const addNewSocialMediaAPI = async (payload) => {
-  return request(URL.ADMIN_CRUD_SOCIAL_MEDIA, true, "POST", payload);
+  return request(URL.ADD_NEW_VIDEO, true, "POST", payload);
 };
 
 const searchSocialMediaAPI = async (payload) => {

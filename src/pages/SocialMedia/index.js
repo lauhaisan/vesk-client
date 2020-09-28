@@ -6,20 +6,19 @@ import ButtonLoading from "../../components/ButtonLoading";
 import Notification from "../../components/Notification";
 import { AddFilled32 } from "@carbon/icons-react";
 import Filter from "./component/Filter";
-import moment from "moment";
 import {
   Form,
   FormGroup,
   TextInput,
   NumberInput,
-  // DatePicker,
-  // DatePickerInput,
+  FileUploader,
   Loading,
   Accordion,
-  AccordionItem
+  AccordionItem,
 } from "carbon-components-react";
-import { SOCIAL_MEDIA } from "../../constant";
+import { SOCIAL_MEDIA, UPLOAD } from "../../constant";
 import { connect } from "react-redux";
+import { getToken } from "../../utils/token";
 import "./index.scss";
 
 class SocialMedia extends React.Component {
@@ -28,7 +27,8 @@ class SocialMedia extends React.Component {
     this.state = {
       openModal: false,
       titleModal: "",
-      isReview: false
+      isReview: false,
+      fileUpload: null,
     };
   }
 
@@ -40,7 +40,7 @@ class SocialMedia extends React.Component {
   }
 
   componentDidMount() {
-    this.handleGetListSocialMedia({});
+    this.handleGetListSocialMedia();
   }
 
   componentWillUnmount() {
@@ -48,20 +48,21 @@ class SocialMedia extends React.Component {
     updateStateReducer({
       itemMediaSocial: {},
       actionSuccessfully: "",
-      messageError: ""
+      messageError: "",
     });
   }
 
-  handleGetListSocialMedia = payload => {
-    const { getListSocialMedia } = this.props;
-    getListSocialMedia(payload);
+  handleGetListSocialMedia = () => {
+    const { getListSocialMediaByAuthor } = this.props;
+    const { data: { userId: id = "" } = {} } = getToken();
+    getListSocialMediaByAuthor({ id });
   };
 
   _resetFilter = () => {
-    this.handleGetListSocialMedia({});
+    this.handleGetListSocialMedia();
   };
 
-  _search = value => {
+  _search = (value) => {
     const { searchSocialMedia } = this.props;
     searchSocialMedia(value);
   };
@@ -69,31 +70,21 @@ class SocialMedia extends React.Component {
   openModalAddNewAdvertising = () => {
     this.setState({
       titleModal: "Add New Social Media",
-      openModal: true
+      openModal: true,
     });
   };
 
-  handeGetById = id => {
+  handeGetById = (id) => {
     const { getById } = this.props;
     getById(id);
   };
 
-  _actionReview = item => {
+  _actionReview = (item) => {
     this.handeGetById(item.id);
     this.setState({
       openModal: true,
       titleModal: "Review Media Social",
-      isReview: true
-    });
-  };
-
-  onChangeDatePicker = (key, e) => {
-    const value = e.target ? e.target.value : e[0];
-    const valueDate = moment(value).format("DD/MM/YYYY");
-    let { itemAds } = this.state;
-    itemAds[key] = valueDate;
-    this.setState({
-      itemAds
+      isReview: true,
     });
   };
 
@@ -101,35 +92,47 @@ class SocialMedia extends React.Component {
     let { itemMediaSocial } = this.state;
     itemMediaSocial[key] = value;
     this.setState({
-      itemMediaSocial
+      itemMediaSocial,
     });
   };
 
   _hideModal = () => {
-    const { updateStateReducer } = this.props;
+    const { updateStateReducer, updateUploadReducer } = this.props;
     this.setState({
       openModal: false,
-      isReview: false
+      isReview: false,
     });
     updateStateReducer({
-      itemMediaSocial: {}
+      itemMediaSocial: {},
+    });
+    updateUploadReducer({
+      link: "",
+      messageUpload: "",
+      linkContract: "",
     });
   };
 
-  _handleSubmit = event => {
+  _handleSubmit = (event) => {
     event.preventDefault();
-    const { editSocialMedia, addNewSocialMedia } = this.props;
+    const { editSocialMedia, addNewSocialMedia, linkThumbnail } = this.props;
     const { itemMediaSocial, titleModal } = this.state;
+    const arrayKey = ["point", "pointForUserView", "timeForRecvCoin"];
+    arrayKey.forEach((element) => {
+      if (!itemMediaSocial[element]) {
+        itemMediaSocial[element] = 1;
+      }
+    });
+    const payload = {
+      ...itemMediaSocial,
+      thumbnail: linkThumbnail || itemMediaSocial.thumbnail,
+      start: "2020",
+      end: "2020",
+    };
+    console.log("payload", payload);
     if (titleModal === "Add New Social Media") {
-      const arrayKey = ["point", "pointForUserView", "timeForRecvCoin"];
-      arrayKey.forEach(element => {
-        if (!itemMediaSocial[element]) {
-          itemMediaSocial[element] = 1;
-        }
-      });
-      addNewSocialMedia(itemMediaSocial, this._hideModal);
+      addNewSocialMedia(payload, this._hideModal);
     } else {
-      editSocialMedia(itemMediaSocial, this._hideModal);
+      editSocialMedia(payload, this._hideModal);
     }
   };
 
@@ -139,20 +142,39 @@ class SocialMedia extends React.Component {
     deleteSocialMedia(itemMediaSocial, this._hideModal);
   };
 
-  _actionDelete = item => {
+  _actionDelete = (item) => {
     this.handeGetById(item.id);
     this.setState({
       openModal: true,
-      titleModal: "Delete Social Media"
+      titleModal: "Delete Social Media",
     });
   };
 
-  _actionEdit = item => {
+  _actionEdit = (item) => {
     this.handeGetById(item.id);
     this.setState({
       openModal: true,
-      titleModal: "Edit Social Media"
+      titleModal: "Edit Social Media",
     });
+  };
+
+  handleFileChanged = (e, isContract) => {
+    this.setState(
+      {
+        fileUpload: e.target.files[0],
+      },
+      () => {
+        this.handleUploadToServer(isContract);
+      }
+    );
+  };
+
+  handleUploadToServer = (isContract) => {
+    const { fileUpload } = this.state;
+    const { uploadImage } = this.props;
+    const formData = new FormData();
+    formData.append("file", fileUpload);
+    uploadImage({ file: formData, isContract });
   };
 
   render() {
@@ -160,16 +182,20 @@ class SocialMedia extends React.Component {
       openModal,
       titleModal,
       isReview,
-      itemMediaSocial = {}
+      itemMediaSocial = {},
     } = this.state;
     const {
       loading,
-      listSocialMedia = [],
+      listByAuthor = [],
       loadingGetById,
       messageError,
       loadingAction,
-      actionSuccessfully
+      actionSuccessfully,
+      loadingUpload,
+      linkThumbnail,
+      messageUpload,
     } = this.props;
+    const imgThumbnail = linkThumbnail || itemMediaSocial.thumbnail;
     const contentModal = (
       <div style={{ height: "auto", width: "100%" }}>
         {loadingGetById ? (
@@ -183,7 +209,7 @@ class SocialMedia extends React.Component {
                 <TextInput
                   id="inputName"
                   labelText="Name"
-                  onChange={event =>
+                  onChange={(event) =>
                     this.onChangeFormData("name", event.target.value)
                   }
                   required
@@ -198,7 +224,7 @@ class SocialMedia extends React.Component {
                 <TextInput
                   id="inputStatus"
                   labelText="Status"
-                  onChange={event =>
+                  onChange={(event) =>
                     this.onChangeFormData("status", event.target.value)
                   }
                   required
@@ -241,49 +267,16 @@ class SocialMedia extends React.Component {
 
             <div className="formData__row">
               <FormGroup legendText="">
-                <TextInput
-                  id="inputStart"
-                  labelText="Start"
-                  onChange={event =>
-                    this.onChangeFormData("start", event.target.value)
-                  }
-                  required
-                  readOnly={isReview}
-                  light={true}
-                  placeholder="Start"
-                  type="text"
-                  value={itemMediaSocial.start || ""}
-                />
-              </FormGroup>
-              <FormGroup legendText="">
-                <TextInput
-                  id="inputend"
-                  labelText="End"
-                  onChange={event =>
-                    this.onChangeFormData("end", event.target.value)
-                  }
-                  required
-                  readOnly={isReview}
-                  light={true}
-                  placeholder="End"
-                  type="text"
-                  value={itemMediaSocial.end || ""}
-                />
-              </FormGroup>
-            </div>
-            <div className="formData__row">
-              <FormGroup legendText="">
                 <NumberInput
                   readOnly={isReview}
                   id="inputNumberPoint"
-                  onChange={event =>
+                  onChange={(event) =>
                     this.onChangeFormData(
                       "point",
                       event.imaginaryTarget.valueAsNumber
                     )
                   }
                   label="Point"
-                  max={100}
                   min={1}
                   step={1}
                   value={itemMediaSocial.point || 0}
@@ -293,14 +286,13 @@ class SocialMedia extends React.Component {
                 <NumberInput
                   readOnly={isReview}
                   id="pointForUser"
-                  onChange={event =>
+                  onChange={(event) =>
                     this.onChangeFormData(
                       "pointForUserView",
                       event.imaginaryTarget.valueAsNumber
                     )
                   }
                   label="Point For User View"
-                  max={100}
                   min={1}
                   step={1}
                   value={itemMediaSocial.pointForUserView || 0}
@@ -310,14 +302,13 @@ class SocialMedia extends React.Component {
                 <NumberInput
                   readOnly={isReview}
                   id="timeForRecvCoin"
-                  onChange={event =>
+                  onChange={(event) =>
                     this.onChangeFormData(
                       "timeForRecvCoin",
                       event.imaginaryTarget.valueAsNumber
                     )
                   }
                   label="Time For Recv Coin"
-                  max={100}
                   min={1}
                   step={1}
                   value={itemMediaSocial.timeForRecvCoin || 0}
@@ -328,7 +319,7 @@ class SocialMedia extends React.Component {
               <TextInput
                 id="inputDescription"
                 labelText="Description"
-                onChange={event =>
+                onChange={(event) =>
                   this.onChangeFormData("description", event.target.value)
                 }
                 required
@@ -343,7 +334,7 @@ class SocialMedia extends React.Component {
               <TextInput
                 id="inputLinkTarget"
                 labelText="Link Target"
-                onChange={event =>
+                onChange={(event) =>
                   this.onChangeFormData("linkTarget", event.target.value)
                 }
                 required
@@ -358,7 +349,7 @@ class SocialMedia extends React.Component {
               <TextInput
                 id="inputVideoURL"
                 labelText="Video URL"
-                onChange={event =>
+                onChange={(event) =>
                   this.onChangeFormData("videoUrl", event.target.value)
                 }
                 required
@@ -369,6 +360,34 @@ class SocialMedia extends React.Component {
                 value={itemMediaSocial.videoUrl || ""}
               />
             </FormGroup>
+            {(titleModal === "Edit Social Media" ||
+              titleModal === "Add New Social Media") && (
+              <div className="buttonUpload">
+                <FileUploader
+                  accept={[".jpg", ".png"]}
+                  buttonKind="primary"
+                  buttonLabel="Upload Thumbnail"
+                  labelTitle=""
+                  onChange={(e) => this.handleFileChanged(e, true)}
+                />
+              </div>
+            )}
+            <div className="viewContract">
+              {loadingUpload ? (
+                <Loading small description="" withOverlay={false} />
+              ) : (
+                imgThumbnail && (
+                  <Fragment>
+                    <div className="titleContract">Image Thumbnail</div>
+                    <img
+                      className="viewContract__img"
+                      src={imgThumbnail}
+                      alt="img-contract"
+                    />
+                  </Fragment>
+                )
+              )}
+            </div>
           </Form>
         )}
       </div>
@@ -388,41 +407,29 @@ class SocialMedia extends React.Component {
     const headerData = [
       {
         header: "Name",
-        key: "name"
-      },
-      {
-        header: "Created",
-        key: "created"
-      },
-      {
-        header: "Start",
-        key: "start"
-      },
-      {
-        header: "End",
-        key: "end"
+        key: "name",
       },
       {
         header: "Description",
-        key: "description"
+        key: "description",
       },
       {
         header: "Point",
-        key: "point"
+        key: "point",
       },
       {
         header: "Poin For User View",
-        key: "pointForUserView"
+        key: "pointForUserView",
       },
       {
         header: "Time For Recv Coin",
-        key: "timeForRecvCoin"
+        key: "timeForRecvCoin",
       },
       {
         header: "Status",
-        key: "status"
+        key: "status",
       },
-      { header: "Action", key: "action" }
+      { header: "Action", key: "action" },
     ];
 
     return (
@@ -449,7 +456,7 @@ class SocialMedia extends React.Component {
           </Accordion>
           <TableCommon
             title="List Social Media"
-            rowData={listSocialMedia}
+            rowData={listByAuthor}
             headerData={headerData}
             loading={loading}
             actionReview={this._actionReview}
@@ -482,6 +489,13 @@ class SocialMedia extends React.Component {
         {actionSuccessfully && (
           <Notification status="success" title={`${titleModal} Successfully`} />
         )}
+        {messageUpload === "Upload Image Failed" && (
+          <Notification
+            status="error"
+            message={messageUpload}
+            title="Upload Image Failed"
+          />
+        )}
       </Fragment>
     );
   }
@@ -490,51 +504,59 @@ class SocialMedia extends React.Component {
 const mapStateToProps = ({
   socialMedia: {
     loading,
-    listSocialMedia,
+    listByAuthor,
     paging,
     loadingGetById,
     itemMediaSocial,
     messageError,
     loadingAction,
-    actionSuccessfully
-  } = {}
+    actionSuccessfully,
+  } = {},
+  upload: { loading: loadingUpload, messageUpload, link: linkThumbnail } = {},
 }) => ({
   loading,
-  listSocialMedia,
+  listByAuthor,
   paging,
   loadingGetById,
   itemMediaSocial,
   messageError,
   loadingAction,
-  actionSuccessfully
+  actionSuccessfully,
+  loadingUpload,
+  messageUpload,
+  linkThumbnail,
 });
 
-const mapDispatchToProps = dispatch => ({
-  getListSocialMedia: data =>
-    dispatch({ type: SOCIAL_MEDIA.GET_LIST_SOCIAL_MEDIA, data }),
-  getById: id => dispatch({ type: SOCIAL_MEDIA.GET_BY_ID, data: { id } }),
+const mapDispatchToProps = (dispatch) => ({
+  uploadImage: (data) =>
+    dispatch({ type: UPLOAD.UPLOAD_IMAGE, data: { data } }),
+  getListSocialMediaByAuthor: (data) =>
+    dispatch({ type: SOCIAL_MEDIA.GET_LIST_BY_AUTHOR, data: { data } }),
+  getById: (id) => dispatch({ type: SOCIAL_MEDIA.GET_BY_ID, data: { id } }),
   editSocialMedia: (data, functionHideModal) =>
     dispatch({
       type: SOCIAL_MEDIA.EDIT_SOCIAL_MEDIA,
-      data: { data, functionHideModal }
+      data: { data, functionHideModal },
     }),
-  updateStateReducer: data =>
-    dispatch({ type: SOCIAL_MEDIA.SET_STATE_REDUCER, data }),
+  updateStateReducer: (data) =>
+    dispatch({ type: SOCIAL_MEDIA.UPDATE_SOCIAL_MEDIA_REDUCER, data }),
   deleteSocialMedia: (data, functionHideModal) =>
     dispatch({
       type: SOCIAL_MEDIA.DELETE_SOCIAL_MEDIA,
-      data: { data, functionHideModal }
+      data: { data, functionHideModal },
     }),
   addNewSocialMedia: (data, functionHideModal) =>
     dispatch({
       type: SOCIAL_MEDIA.ADD_NEW,
-      data: { data, functionHideModal }
+      data: { data, functionHideModal },
     }),
-  searchSocialMedia: data =>
+  searchSocialMedia: (data) =>
     dispatch({
       type: SOCIAL_MEDIA.SEARCH_SOCIAL_MEDIA,
-      data: { data }
-    })
+      data: { data },
+    }),
+  updateUploadReducer: (data) =>
+    dispatch({ type: UPLOAD.UPDATE_STATE_UPLOAD_REDUCER, data }),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(SocialMedia);

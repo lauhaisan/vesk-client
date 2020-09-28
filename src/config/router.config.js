@@ -16,92 +16,99 @@ const Detail = lazy(() => import("../pages/Detail"));
 const HistoryPoint = lazy(() => import("../pages/HistoryPoint"));
 const HistoryExchanges = lazy(() => import("../pages/HistoryExchanges"));
 const ResultSearch = lazy(() => import("../pages/ResultSearch"));
+const SocialMedia = lazy(() => import("../pages/SocialMedia"));
 
 const routes = [
   {
     path: "/",
     exact: true,
     layout: BasicLayout,
-    component: Home
+    component: Home,
   },
   {
     path: "/top-rated",
     exact: true,
     layout: BasicLayout,
-    component: TopRated
+    component: TopRated,
   },
   {
     path: "/result-search",
     exact: true,
     layout: BasicLayout,
-    component: ResultSearch
+    component: ResultSearch,
   },
   {
     path: "/most-popular",
     exact: true,
     layout: BasicLayout,
-    component: MostPopular
+    component: MostPopular,
   },
   {
     path: "/channel/:id",
     exact: true,
     layout: BasicLayout,
-    component: SingleChannel
+    component: SingleChannel,
   },
   {
     path: "/detail/:id",
     exact: true,
     layout: BasicLayout,
-    component: Detail
+    component: Detail,
   },
   {
     path: "/history-exchange",
     exact: true,
     layout: BasicLayout,
-    component: HistoryExchanges
+    component: HistoryExchanges,
   },
   {
     path: "/history-point",
     exact: true,
     layout: BasicLayout,
-    component: HistoryPoint
+    component: HistoryPoint,
+  },
+  {
+    path: "/manage-video",
+    exact: true,
+    layout: BasicLayout,
+    component: SocialMedia,
   },
   {
     path: "/contact",
     exact: true,
     layout: BasicLayout,
-    component: ComingSoon
+    component: ComingSoon,
   },
   {
     path: "/profile",
     exact: true,
     layout: BasicLayout,
-    component: Profile
+    component: Profile,
   },
   {
     path: "/signin",
     exact: true,
     layout: LoginLayout,
-    component: SignIn
+    component: SignIn,
   },
   {
     path: "/signup",
     exact: true,
     layout: LoginLayout,
-    component: SignUp
+    component: SignUp,
   },
   {
     path: "/forgot-password",
     exact: true,
     layout: LoginLayout,
-    component: ForgotPassword
+    component: ForgotPassword,
   },
   {
     path: "",
     exact: false,
     layout: BasicLayout,
-    component: Notfound
-  }
+    component: Notfound,
+  },
 ];
 
 export default routes;
