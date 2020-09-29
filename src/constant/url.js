@@ -18,7 +18,7 @@ const URL = {
 
   //SOCIAL MEDIA
   GET_LIST_SOCIAL_MEDIA: "/v1/vesk/public/e-social-media",
-  ADMIN_CRUD_SOCIAL_MEDIA: "/v1/vesk/admin/e-social-media",
+  EDIT_DELETE_SOCIAL_MEDIA: "/v1/vesk/e-social-media",
   SOCIAL_MEDIA_SEARCH: "/v1/vesk/public/e-social-media/search",
   GET_LIST_MEDIA_BY_ATHOR: "/v1/vesk/public/e-social-media/author",
   ADD_NEW_VIDEO: "/v1/vesk/e-social-media",

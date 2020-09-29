@@ -58,6 +58,8 @@ function* editSocialMedia(obj) {
 function* deleteSocialMedia(obj) {
   const dat = obj.data.data;
   const hideModal = obj.data.functionHideModal;
+  const { data: { userId: id = "" } = {} } = getToken();
+  const data = { id };
   const resp = yield call(deleteSocialMediaAPI, dat);
   if (resp.code !== 200) {
     yield put({
@@ -71,7 +73,7 @@ function* deleteSocialMedia(obj) {
     data: resp.data,
   });
   hideModal();
-  yield put({ type: SOCIAL_MEDIA.GET_LIST_SOCIAL_MEDIA, data: resp.data });
+  yield put({ type: SOCIAL_MEDIA.GET_LIST_BY_AUTHOR, data: { data } });
 }
 
 function* addNewSocialMedia(obj) {

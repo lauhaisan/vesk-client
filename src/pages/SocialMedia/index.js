@@ -5,6 +5,7 @@ import CustomModal from "../../components/CustomModal";
 import ButtonLoading from "../../components/ButtonLoading";
 import Notification from "../../components/Notification";
 import { AddFilled32 } from "@carbon/icons-react";
+import { Redirect } from "react-router-dom";
 import Filter from "./component/Filter";
 import {
   Form,
@@ -195,6 +196,10 @@ class SocialMedia extends React.Component {
       linkThumbnail,
       messageUpload,
     } = this.props;
+    const { token } = getToken();
+    if (!token) {
+      return <Redirect to="/" />;
+    }
     const imgThumbnail = linkThumbnail || itemMediaSocial.thumbnail;
     const contentModal = (
       <div style={{ height: "auto", width: "100%" }}>

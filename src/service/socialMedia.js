@@ -14,12 +14,12 @@ const getByIdAPI = async (payload) => {
 };
 
 const editSocialMediaAPI = async (payload) => {
-  const URL_WITH_PARAMS = `${URL.ADMIN_CRUD_SOCIAL_MEDIA}/${payload.id}`;
+  const URL_WITH_PARAMS = `${URL.EDIT_DELETE_SOCIAL_MEDIA}/${payload.id}`;
   return request(URL_WITH_PARAMS, true, "PUT", payload);
 };
 
 const deleteSocialMediaAPI = async (payload) => {
-  const URL_WITH_PARAMS = `${URL.ADMIN_CRUD_SOCIAL_MEDIA}/${payload.id}`;
+  const URL_WITH_PARAMS = `${URL.EDIT_DELETE_SOCIAL_MEDIA}/${payload.id}`;
   return request(URL_WITH_PARAMS, true, "DELETE");
 };
 
