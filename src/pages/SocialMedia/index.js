@@ -129,7 +129,6 @@ class SocialMedia extends React.Component {
       start: "2020",
       end: "2020",
     };
-    console.log("payload", payload);
     if (titleModal === "Add New Social Media") {
       addNewSocialMedia(payload, this._hideModal);
     } else {

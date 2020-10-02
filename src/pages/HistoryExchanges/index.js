@@ -22,13 +22,13 @@ class HistoryExchanges extends React.Component {
     getListHistory(userId);
   }
 
-  _resetFilter = () => {
-    console.log("reset filter");
-  };
+  // _resetFilter = () => {
+  //   console.log("reset filter");
+  // };
 
-  _search = (value) => {
-    console.log("value search", value);
-  };
+  // _search = (value) => {
+  //   console.log("value search", value);
+  // };
 
   render() {
     const { loading, historyExchanges: { items = [] } = {} } = this.props;
