@@ -1,11 +1,11 @@
 import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
-import { Loading } from "carbon-components-react";
 import Empty from "../../components/Empty";
 import { TOP_RATED } from "../../constant";
 import Notification from "../../components/Notification";
 import ItemVideo from "../../components/ItemVideo";
 import TitlePage from "../../components/TitlePage";
+import Spin from "../../components/Spin";
 import "./index.scss";
 
 class TopRated extends Component {
@@ -31,7 +31,7 @@ class TopRated extends Component {
 
     const _renderLoading = (
       <div className="viewLoading">
-        <Loading withOverlay={false} />
+        <Spin />
       </div>
     );
 

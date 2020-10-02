@@ -17,8 +17,8 @@ const rewardViewApi = async (payload) => {
 };
 
 const getHistoryPointApi = async (payload) => {
-  const URL_WITH_PARAMS = `${URL.GET_HISTORY_POINT}/${payload}`;
-  return request(URL_WITH_PARAMS, true);
+  // const URL_WITH_PARAMS = `${URL.GET_HISTORY_POINT}/${payload}`;
+  return request(URL.GET_HISTORY_POINT, true);
 };
 
 const getHistoryExchangesApi = async (payload) => {

@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
-import { Loading } from "carbon-components-react";
+import Spin from "../../components/Spin";
 import Empty from "../../components/Empty";
 import { MOST_POPULAR } from "../../constant";
 import Notification from "../../components/Notification";
@@ -42,7 +42,7 @@ class MostPopular extends Component {
 
     const _renderLoading = (
       <div className="viewLoading">
-        <Loading withOverlay={false} />
+        <Spin />
       </div>
     );
     return (

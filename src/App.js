@@ -1,6 +1,7 @@
 import React, { Component, Suspense } from "react";
 import { Switch, Route, BrowserRouter as Router } from "react-router-dom";
-import { Loading } from "carbon-components-react";
+// import { Loading } from "carbon-components-react";
+import Spin from "./components/Spin";
 import routes from "./config/router.config";
 import history from "./history";
 
@@ -23,7 +24,7 @@ class App extends Component {
                       alignItems: "center",
                     }}
                   >
-                    <Loading withOverlay={false} />
+                    <Spin />
                   </div>
                 }
               >

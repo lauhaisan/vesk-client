@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
-import { Loading } from "carbon-components-react";
 import Empty from "../../components/Empty";
+import Spin from "../../components/Spin";
 import { SOCIAL_MEDIA } from "../../constant";
 import { Redirect } from "react-router-dom";
 import Notification from "../../components/Notification";
@@ -50,7 +50,7 @@ class ResultSearch extends Component {
 
     const _renderLoading = (
       <div className="viewLoading">
-        <Loading withOverlay={false} />
+        <Spin />
       </div>
     );
 

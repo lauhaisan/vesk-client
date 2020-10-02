@@ -1,15 +1,12 @@
 import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
-import {
-  OverflowMenu,
-  OverflowMenuItem,
-  Loading,
-} from "carbon-components-react";
+// import { OverflowMenu, OverflowMenuItem } from "carbon-components-react";
 import { SOCIAL_MEDIA } from "../../constant";
 import Slider from "./components/Slider";
 import Notification from "../../components/Notification";
 import ItemVideo from "../../components/ItemVideo";
 import TitlePage from "../../components/TitlePage";
+import Spin from "../../components/Spin";
 import "./index.scss";
 
 class Home extends Component {
@@ -53,7 +50,7 @@ class Home extends Component {
     const error = messageErrorListUser !== "" || messageError !== "";
     const _renderLoading = (
       <div className="viewLoading">
-        <Loading withOverlay={false} />
+        <Spin />
       </div>
     );
     const randomAds = this.randomAds(listAds);
@@ -63,7 +60,7 @@ class Home extends Component {
           <TitlePage title="Home" />
           <div className="titleBlock">
             <p className="titleBlock__text">Chanels Categories</p>
-            <div className="titleBlock__btn">
+            {/* <div className="titleBlock__btn">
               <OverflowMenu
                 renderIcon={() => <i className="fas fa-ellipsis-h icon"></i>}
                 flipped
@@ -71,7 +68,7 @@ class Home extends Component {
                 <OverflowMenuItem itemText={<div>Top Rated</div>} />
                 <OverflowMenuItem itemText={<div>Viewed</div>} />
               </OverflowMenu>
-            </div>
+            </div> */}
           </div>
           <div
             className="listChanel"
@@ -108,7 +105,7 @@ class Home extends Component {
           <div className="divider" style={{ marginTop: "1rem" }} />
           <div className="titleBlock">
             <p className="titleBlock__text">Featured Videos</p>
-            <div className="titleBlock__btn">
+            {/* <div className="titleBlock__btn">
               <OverflowMenu
                 renderIcon={() => <i className="fas fa-ellipsis-h icon"></i>}
                 flipped
@@ -116,7 +113,7 @@ class Home extends Component {
                 <OverflowMenuItem itemText={<div>Top Rated</div>} />
                 <OverflowMenuItem itemText={<div>Viewed</div>} />
               </OverflowMenu>
-            </div>
+            </div> */}
           </div>
           {loading ? (
             _renderLoading

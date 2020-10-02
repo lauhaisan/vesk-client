@@ -1,15 +1,12 @@
 import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
-import {
-  OverflowMenu,
-  OverflowMenuItem,
-  Loading,
-} from "carbon-components-react";
+import { OverflowMenu, OverflowMenuItem } from "carbon-components-react";
 import { SOCIAL_MEDIA, LIST_USER } from "../../constant";
 import Notification from "../../components/Notification";
 import Empty from "../../components/Empty";
 import ItemVideo from "../../components/ItemVideo";
 import TitlePage from "../../components/TitlePage";
+import Spin from "../../components/Spin";
 import NotFoundPage from "../404Page";
 import "./index.scss";
 
@@ -53,7 +50,7 @@ class SignleChannel extends Component {
     }
     const _renderLoading = (
       <div className="viewLoading">
-        <Loading withOverlay={false} />
+        <Spin />
       </div>
     );
 

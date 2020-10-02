@@ -1,9 +1,9 @@
 import React, { Fragment } from "react";
-import { Accordion, AccordionItem } from "carbon-components-react";
+// import { Accordion, AccordionItem } from "carbon-components-react";
 import { connect } from "react-redux";
 import TitlePage from "../../components/TitlePage";
 import TableCommon from "../../components/TableCommon";
-import Filter from "./component/Filter";
+// import Filter from "./component/Filter";
 import { WALLET } from "../../constant";
 import { getToken } from "../../utils/token";
 import { Redirect } from "react-router-dom";
@@ -45,14 +45,6 @@ class HistoryPoint extends React.Component {
         header: "Point",
         key: "money",
       },
-      // {
-      //   header: "User Id",
-      //   key: "userId",
-      // },
-      // {
-      //   header: "User Recv",
-      //   key: "userIdRecv",
-      // },
     ];
 
     const { token } = getToken();
@@ -64,7 +56,7 @@ class HistoryPoint extends React.Component {
       <Fragment>
         <TitlePage title="Users" />
         <div className="containerHistoryPoint">
-          <Accordion className="viewFilter">
+          {/* <Accordion className="viewFilter">
             <AccordionItem
               open
               title={
@@ -76,7 +68,7 @@ class HistoryPoint extends React.Component {
             >
               <Filter resetFilter={this._resetFilter} search={this._search} />
             </AccordionItem>
-          </Accordion>
+          </Accordion> */}
           <TableCommon
             title="History Point"
             rowData={items}
