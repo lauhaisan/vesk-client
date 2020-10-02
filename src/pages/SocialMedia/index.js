@@ -117,7 +117,7 @@ class SocialMedia extends React.Component {
     event.preventDefault();
     const { editSocialMedia, addNewSocialMedia, linkThumbnail } = this.props;
     const { itemMediaSocial, titleModal } = this.state;
-    const arrayKey = ["point", "pointForUserView", "timeForRecvCoin"];
+    const arrayKey = ["pointForUserView", "timeForRecvCoin"];
     arrayKey.forEach((element) => {
       if (!itemMediaSocial[element]) {
         itemMediaSocial[element] = 1;
@@ -126,6 +126,7 @@ class SocialMedia extends React.Component {
     const payload = {
       ...itemMediaSocial,
       thumbnail: linkThumbnail || itemMediaSocial.thumbnail,
+      point: itemMediaSocial.pointForUserView,
       start: "2020",
       end: "2020",
     };
@@ -244,22 +245,6 @@ class SocialMedia extends React.Component {
               <FormGroup legendText="">
                 <NumberInput
                   readOnly={isReview}
-                  id="inputNumberPoint"
-                  onChange={(event) =>
-                    this.onChangeFormData(
-                      "point",
-                      event.imaginaryTarget.valueAsNumber
-                    )
-                  }
-                  label="Point"
-                  min={1}
-                  step={1}
-                  value={itemMediaSocial.point || 0}
-                />
-              </FormGroup>
-              <FormGroup legendText="">
-                <NumberInput
-                  readOnly={isReview}
                   id="pointForUser"
                   onChange={(event) =>
                     this.onChangeFormData(
@@ -283,7 +268,7 @@ class SocialMedia extends React.Component {
                       event.imaginaryTarget.valueAsNumber
                     )
                   }
-                  label="Time For Recv Coin"
+                  label="Time For Recv Coin (minute)"
                   min={1}
                   step={1}
                   value={itemMediaSocial.timeForRecvCoin || 0}
@@ -385,15 +370,7 @@ class SocialMedia extends React.Component {
         key: "name",
       },
       {
-        header: "Description",
-        key: "description",
-      },
-      {
-        header: "Point",
-        key: "point",
-      },
-      {
-        header: "Poin For User View",
+        header: "Point For User View",
         key: "pointForUserView",
       },
       {
