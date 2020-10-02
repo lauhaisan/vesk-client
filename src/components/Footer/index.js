@@ -14,7 +14,7 @@ class Footer extends Component {
         </div>
         <div className="viewStore">
           <a
-            href="https://play.google.com"
+            href="https://drive.google.com/file/d/1donXizge39_XXFqRqPSekn0PvYKPQ7vc/"
             target="_blank"
             rel="noopener noreferrer"
             id="google-play-logo"
