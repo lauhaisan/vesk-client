@@ -7,7 +7,6 @@ import Filter from "./component/Filter";
 import { WALLET } from "../../constant";
 import { getToken } from "../../utils/token";
 import { Redirect } from "react-router-dom";
-import moment from "moment";
 import "./index.scss";
 
 class HistoryPoint extends React.Component {
@@ -36,7 +35,7 @@ class HistoryPoint extends React.Component {
     const headerData = [
       {
         header: "Created",
-        key: "createdAt",
+        key: "Created",
       },
       {
         header: "Message",
@@ -46,23 +45,15 @@ class HistoryPoint extends React.Component {
         header: "Point",
         key: "money",
       },
-      {
-        header: "User Id",
-        key: "userId",
-      },
-      {
-        header: "User Recv",
-        key: "userIdRecv",
-      },
+      // {
+      //   header: "User Id",
+      //   key: "userId",
+      // },
+      // {
+      //   header: "User Recv",
+      //   key: "userIdRecv",
+      // },
     ];
-
-    const formatData = items.map((item) => {
-      return {
-        ...item,
-        createdAt: moment(item.createdAt).format("DD MMM YYYY hh:mm a"),
-        // money: money && numeral(money).format("0,0"),
-      };
-    });
 
     const { token } = getToken();
     if (!token) {
@@ -88,7 +79,7 @@ class HistoryPoint extends React.Component {
           </Accordion>
           <TableCommon
             title="History Point"
-            rowData={formatData}
+            rowData={items}
             headerData={headerData}
             loading={loading}
           />
