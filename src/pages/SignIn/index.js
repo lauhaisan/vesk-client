@@ -17,26 +17,26 @@ class Login extends Component {
       password: "",
       check: false,
       validationEmail: false,
-      validationPassword: false
+      validationPassword: false,
     };
   }
 
   componentWillUnmount() {
     const { updateStateReducer } = this.props;
     updateStateReducer({
-      messageSignIn: ""
+      messageSignIn: "",
     });
   }
 
-  handleChangePwd = value => {
+  handleChangePwd = (value) => {
     this.setState({ password: value });
   };
 
-  handleChangeEmail = value => {
+  handleChangeEmail = (value) => {
     this.setState({ email: value.toLowerCase() });
   };
 
-  handleSubmit = event => {
+  handleSubmit = (event) => {
     const { email, password } = this.state;
     const { signIn, history } = this.props;
     event.preventDefault();
@@ -46,29 +46,29 @@ class Login extends Component {
     if (emailRegex.test(email) === false) {
       this.setState({
         validationEmail: true,
-        messageValidationEmail: "The email is not valid"
+        messageValidationEmail: "The email is not valid",
       });
       check = true;
     } else {
       this.setState({
         validationEmail: false,
-        messageValidationEmail: ""
+        messageValidationEmail: "",
       });
     }
     if (password.length < 8) {
       this.setState({
         validationPassword: true,
-        messageValidationPwd: "Password must be at least 8 characters"
+        messageValidationPwd: "Password must be at least 8 characters",
       });
       check = true;
     } else {
       this.setState({
         validationPassword: false,
-        messageValidationPwd: ""
+        messageValidationPwd: "",
       });
     }
     this.setState({
-      check
+      check,
     });
     if (!check) {
       const valueLogin = { name: email, password };
@@ -84,17 +84,13 @@ class Login extends Component {
       messageValidationPwd,
       email,
       password,
-      check
     } = this.state;
     const { loading, isSignInSuccessfully, messageSignIn } = this.props;
 
     return (
       <Fragment>
         <TitlePage title="Sign In" />
-        <div
-          className="content-signIn"
-          style={{ height: check ? "525px" : "490px" }}
-        >
+        <div className="content-signIn">
           <div className="viewTitleSignIn">SIGN IN</div>
           <img
             className="viewImage"
@@ -112,7 +108,9 @@ class Login extends Component {
                   labelText="Email"
                   required
                   light={true}
-                  onChange={event => this.handleChangeEmail(event.target.value)}
+                  onChange={(event) =>
+                    this.handleChangeEmail(event.target.value)
+                  }
                   placeholder="Email"
                   type="text"
                   value={email}
@@ -127,7 +125,7 @@ class Login extends Component {
                   labelText="Password"
                   placeholder="Password"
                   light={true}
-                  onChange={event => this.handleChangePwd(event.target.value)}
+                  onChange={(event) => this.handleChangePwd(event.target.value)}
                   pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}"
                   required
                   type="password"
@@ -140,7 +138,7 @@ class Login extends Component {
                 display: "flex",
                 flexDirection: "column",
                 justifyContent: "center",
-                alignItems: "center"
+                alignItems: "center",
               }}
             >
               <ButtonLoading
@@ -153,15 +151,15 @@ class Login extends Component {
                 style={{
                   margin: "10px 0",
                   width: "140px",
-                  height: "47px"
+                  height: "47px",
                 }}
               />
               <Link to="/signup">Create new account?</Link>
             </div>
           </div>
-          <div className="viewForgotPWD">
+          {/* <div className="viewForgotPWD">
             <Link to="/forgot-password"> Forgot Password?</Link>
-          </div>
+          </div> */}
         </div>
         {!isSignInSuccessfully && messageSignIn !== "" && (
           <Notification
@@ -175,17 +173,17 @@ class Login extends Component {
   }
 }
 const mapStateToProps = ({
-  user: { loading, isSignInSuccessfully = "", messageSignIn = "" } = {}
+  user: { loading, isSignInSuccessfully = "", messageSignIn = "" } = {},
 }) => ({
   loading,
   isSignInSuccessfully,
-  messageSignIn
+  messageSignIn,
 });
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
   signIn: (data, history) =>
     dispatch({ type: USER.SIGNIN, data: { data, history } }),
-  updateStateReducer: data => dispatch({ type: USER.UPDATE_STATE, data })
+  updateStateReducer: (data) => dispatch({ type: USER.UPDATE_STATE, data }),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);
