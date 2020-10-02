@@ -38,6 +38,12 @@ const getListByAuthorAPI = async (payload) => {
   return request(URL_WITH_PARAMS, true);
 };
 
+const searchListByAuthorAPI = async (payload) => {
+  const param = queryString.stringify(payload);
+  const URL_WITH_PARAMS = `${URL.SEARCH_LIST_BY_ATHOR}?${param}`;
+  return request(URL_WITH_PARAMS, true);
+};
+
 export {
   getListSocialMediaAPI,
   getByIdAPI,
@@ -46,4 +52,5 @@ export {
   addNewSocialMediaAPI,
   searchSocialMediaAPI,
   getListByAuthorAPI,
+  searchListByAuthorAPI,
 };

@@ -528,7 +528,7 @@ const mapDispatchToProps = (dispatch) => ({
     }),
   searchSocialMedia: (data) =>
     dispatch({
-      type: SOCIAL_MEDIA.SEARCH_SOCIAL_MEDIA,
+      type: SOCIAL_MEDIA.SEARCH_LIST_BY_AUTHOR,
       data: { data },
     }),
   updateUploadReducer: (data) =>

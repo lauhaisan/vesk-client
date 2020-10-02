@@ -9,7 +9,7 @@ const INITIAL_STATE = {
   loadingGetById: false,
   itemMediaSocial: {},
   loadingAction: false,
-  actionSuccessfully: ""
+  actionSuccessfully: "",
 };
 
 const socialMediaReducer = (state = INITIAL_STATE, action) => {
@@ -18,7 +18,7 @@ const socialMediaReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         loading: true,
-        messageError: ""
+        messageError: "",
       };
     case SOCIAL_MEDIA.GET_LIST_SOCIAL_MEDIA_SUCCESS:
       return {
@@ -26,76 +26,76 @@ const socialMediaReducer = (state = INITIAL_STATE, action) => {
         loading: false,
         listSocialMedia: action.data.items,
         paging: action.data.paging,
-        messageError: ""
+        messageError: "",
       };
     case SOCIAL_MEDIA.GET_LIST_SOCIAL_MEDIA_FAIL:
       return {
         ...state,
         loading: false,
         listSocialMedia: [],
-        messageError: action.data
+        messageError: action.data,
       };
     case SOCIAL_MEDIA.GET_BY_ID:
       return {
         ...state,
         loadingGetById: true,
-        messageError: ""
+        messageError: "",
       };
     case SOCIAL_MEDIA.GET_BY_ID_SUCCESS:
       return {
         ...state,
         loadingGetById: false,
         itemMediaSocial: action.data,
-        messageError: ""
+        messageError: "",
       };
     case SOCIAL_MEDIA.GET_BY_ID_FAIL:
       return {
         ...state,
         loadingGetById: false,
         itemMediaSocial: {},
-        messageError: action.data
+        messageError: action.data,
       };
     case SOCIAL_MEDIA.EDIT_SOCIAL_MEDIA:
       return {
         ...state,
         loadingAction: true,
         actionSuccessfully: "",
-        messageError: ""
+        messageError: "",
       };
     case SOCIAL_MEDIA.EDIT_SOCIAL_MEDIA_SUCCESS:
       return {
         ...state,
         loadingAction: false,
         actionSuccessfully: true,
-        messageError: ""
+        messageError: "",
       };
     case SOCIAL_MEDIA.EDIT_SOCIAL_MEDIA_FAIL:
       return {
         ...state,
         loadingAction: false,
         actionSuccessfully: false,
-        messageError: action.data
+        messageError: action.data,
       };
     case SOCIAL_MEDIA.ADD_NEW:
       return {
         ...state,
         loadingAction: true,
         actionSuccessfully: "",
-        messageError: ""
+        messageError: "",
       };
     case SOCIAL_MEDIA.ADD_NEW_SUCCESS:
       return {
         ...state,
         loadingAction: false,
         actionSuccessfully: true,
-        messageError: ""
+        messageError: "",
       };
     case SOCIAL_MEDIA.ADD_NEW_FAIL:
       return {
         ...state,
         loadingAction: false,
         actionSuccessfully: false,
-        messageError: action.data
+        messageError: action.data,
       };
 
     case SOCIAL_MEDIA.DELETE_SOCIAL_MEDIA:
@@ -103,28 +103,28 @@ const socialMediaReducer = (state = INITIAL_STATE, action) => {
         ...state,
         loadingAction: true,
         actionSuccessfully: "",
-        messageError: ""
+        messageError: "",
       };
     case SOCIAL_MEDIA.DELETE_SOCIAL_MEDIA_SUCCESS:
       return {
         ...state,
         loadingAction: false,
         actionSuccessfully: true,
-        messageError: ""
+        messageError: "",
       };
     case SOCIAL_MEDIA.DELETE_SOCIAL_MEDIA_FAIL:
       return {
         ...state,
         loadingAction: false,
         actionSuccessfully: false,
-        messageError: action.data
+        messageError: action.data,
       };
 
     case SOCIAL_MEDIA.SEARCH_SOCIAL_MEDIA:
       return {
         ...state,
         loading: true,
-        messageError: ""
+        messageError: "",
       };
     case SOCIAL_MEDIA.SEARCH_SOCIAL_MEDIA_SUCCESS:
       return {
@@ -132,41 +132,61 @@ const socialMediaReducer = (state = INITIAL_STATE, action) => {
         loading: false,
         listSocialMedia: action.data.items,
         paging: action.data.paging,
-        messageError: ""
+        messageError: "",
       };
     case SOCIAL_MEDIA.SEARCH_SOCIAL_MEDIA_FAIL:
       return {
         ...state,
         loading: false,
         listSocialMedia: [],
-        messageError: action.data
+        messageError: action.data,
       };
 
     case SOCIAL_MEDIA.UPDATE_SOCIAL_MEDIA_REDUCER:
       return {
         ...state,
-        ...action.data
+        ...action.data,
       };
 
     case SOCIAL_MEDIA.GET_LIST_BY_AUTHOR:
       return {
         ...state,
         loading: true,
-        messageError: ""
+        messageError: "",
       };
     case SOCIAL_MEDIA.GET_LIST_BY_AUTHOR_SUCCESS:
       return {
         ...state,
         loading: false,
         listByAuthor: action.data.items,
-        messageError: ""
+        messageError: "",
       };
     case SOCIAL_MEDIA.GET_LIST_BY_AUTHOR_FAIL:
       return {
         ...state,
         loading: false,
         listByAuthor: [],
-        messageError: action.data
+        messageError: action.data,
+      };
+    case SOCIAL_MEDIA.SEARCH_LIST_BY_AUTHOR:
+      return {
+        ...state,
+        loading: true,
+        messageError: "",
+      };
+    case SOCIAL_MEDIA.SEARCH_LIST_BY_AUTHOR_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        listByAuthor: action.data.items,
+        messageError: "",
+      };
+    case SOCIAL_MEDIA.SEARCH_LIST_BY_AUTHOR_FAIL:
+      return {
+        ...state,
+        loading: false,
+        listByAuthor: [],
+        messageError: action.data,
       };
 
     default:

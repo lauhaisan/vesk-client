@@ -7,6 +7,7 @@ import {
   addNewSocialMediaAPI,
   searchSocialMediaAPI,
   getListByAuthorAPI,
+  searchListByAuthorAPI,
 } from "../service/socialMedia";
 import { SOCIAL_MEDIA } from "../constant";
 import { getToken } from "../utils/token";
@@ -123,6 +124,22 @@ function* getListByAuthor(object) {
   });
 }
 
+function* searchListByAuthor(object) {
+  const dat = object.data.data;
+  const resp = yield call(searchListByAuthorAPI, dat);
+  if (resp.code !== 200) {
+    yield put({
+      type: SOCIAL_MEDIA.SEARCH_LIST_BY_AUTHOR_FAIL,
+      data: resp.message,
+    });
+    return;
+  }
+  yield put({
+    type: SOCIAL_MEDIA.SEARCH_LIST_BY_AUTHOR_SUCCESS,
+    data: resp.data,
+  });
+}
+
 export const socialMediaSaga = [
   takeLatest(SOCIAL_MEDIA.GET_LIST_SOCIAL_MEDIA, getListSocialMedia),
   takeLatest(SOCIAL_MEDIA.GET_BY_ID, getSocialMediaById),
@@ -131,4 +148,5 @@ export const socialMediaSaga = [
   takeLatest(SOCIAL_MEDIA.SEARCH_SOCIAL_MEDIA, searchSocialMedia),
   takeLatest(SOCIAL_MEDIA.DELETE_SOCIAL_MEDIA, deleteSocialMedia),
   takeLatest(SOCIAL_MEDIA.GET_LIST_BY_AUTHOR, getListByAuthor),
+  takeLatest(SOCIAL_MEDIA.SEARCH_LIST_BY_AUTHOR, searchListByAuthor),
 ];
