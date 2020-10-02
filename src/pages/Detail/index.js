@@ -192,7 +192,7 @@ class Detail extends Component {
     } = itemMediaSocial;
     const { id, timerTime, isLogin, idAdvertising } = this.state;
     const checkOwner = userId === authorId;
-    let centiseconds = ("0" + (Math.floor(timerTime / 10) % 100)).slice(-2);
+    // let centiseconds = ("0" + (Math.floor(timerTime / 10) % 100)).slice(-2);
     let seconds = ("0" + (Math.floor(timerTime / 1000) % 60)).slice(-2);
     let minutes = ("0" + (Math.floor(timerTime / 60000) % 60)).slice(-2);
     let hours = ("0" + Math.floor(timerTime / 3600000)).slice(-2);
@@ -236,9 +236,8 @@ class Detail extends Component {
         </div>
         {!checkOwner && isLogin && (
           <div className="Stopwatch-display">
-            You have viewed {hours} : {minutes} : {seconds} : {centiseconds}.
-            You receive {pointForUserView} point for watching {timeForRecvCoin}{" "}
-            minutes.
+            You have viewed {hours} : {minutes} : {seconds}. You receive{" "}
+            {pointForUserView} point for watching {timeForRecvCoin} minutes.
           </div>
         )}
         <ItemAdvertising key={idAdvertising} listAds={listAds} />
