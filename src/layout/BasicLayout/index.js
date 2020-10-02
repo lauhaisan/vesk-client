@@ -18,6 +18,11 @@ class BasicLayout extends Component {
       getMyInfo(userId);
       getWallet();
     }
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      // behavior: "smooth",
+    });
   }
 
   _handleMenu = () => {

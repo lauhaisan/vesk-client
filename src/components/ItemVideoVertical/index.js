@@ -40,7 +40,16 @@ class ItemVideoVertical extends Component {
     const fullName = `${firstName} ${lastName}`;
     return (
       <Link to={`/detail/${item.id}`} className="link">
-        <div className="itemVideoVertical">
+        <div
+          className="itemVideoVertical"
+          onClick={() =>
+            window.scrollTo({
+              top: 0,
+              left: 0,
+              behavior: "smooth",
+            })
+          }
+        >
           <div className="itemVideoVertical__viewIconPlay">
             <i className="far fa-play-circle iconPlay"></i>
           </div>
