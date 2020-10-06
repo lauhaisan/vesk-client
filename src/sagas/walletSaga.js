@@ -5,6 +5,7 @@ import {
   rewardViewApi,
   getHistoryPointApi,
   getHistoryExchangesApi,
+  getExchangeRateAPI,
 } from "../service/wallet";
 import { WALLET } from "../constant";
 
@@ -88,10 +89,20 @@ function* getHistoryExchanges(object) {
   });
 }
 
+function* getExchangeRate() {
+  const resp = yield call(getExchangeRateAPI);
+  if (resp.code !== 200) {
+    yield put({ type: WALLET.GET_EXCHANGE_RATE_FAIL });
+    return;
+  }
+  yield put({ type: WALLET.GET_EXCHANGE_RATE_SUCCESS, data: resp });
+}
+
 export const walletSaga = [
   takeLatest(WALLET.CREATE_WALLET, createWallet),
   takeLatest(WALLET.GET_WALLET, getWallet),
   takeLatest(WALLET.REWARD_VIEW, rewardView),
   takeLatest(WALLET.GET_HISTORY_POINT, getHistoryPoint),
   takeLatest(WALLET.GET_HISTORY_EXCHANGES, getHistoryExchanges),
+  takeLatest(WALLET.GET_EXCHANGE_RATE, getExchangeRate),
 ];

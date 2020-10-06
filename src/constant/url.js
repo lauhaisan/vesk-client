@@ -37,6 +37,7 @@ const URL = {
   REWARD_VIEW: "/v1/vesk/exchange/reward-view",
   GET_HISTORY_POINT: "/v1/vesk/wallet-history/user",
   GET_HISTORY_EXCHANGE: "/v1/vesk/exchanges/user",
+  GET_EXCHANGE_RATE: "/v1/vesk/rate-setting/search",
 };
 
 export default URL;

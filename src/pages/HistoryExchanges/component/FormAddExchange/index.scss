@@ -1,0 +1,49 @@
+.containerAddExchange {
+  .formDataAdd {
+    .bx--label {
+      font : {
+        size: 14px;
+        weight: 600;
+      }
+    }
+    .bx--text-input {
+      background-color: transparent;
+      // width: 47%;
+      &:focus {
+        outline: none;
+      }
+    }
+    input:-webkit-autofill,
+    input:focus:-webkit-autofill {
+      -webkit-box-shadow: 0 0 0 100px #fff inset;
+      box-shadow: 0 0 0 100px #fff inset;
+    }
+    &__row {
+      display: flex;
+      .viewExchangeRate {
+        display: flex;
+        align-items: center;
+        margin: 0 15px;
+      }
+    }
+    .buttonUpload {
+      .bx--file__selected-file {
+        display: none;
+      }
+    }
+    .viewContract {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      &__img {
+        width: 60%;
+        object-fit: contain;
+      }
+    }
+  }
+  .viewBtn {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+  }
+}

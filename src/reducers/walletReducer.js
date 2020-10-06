@@ -7,6 +7,7 @@ const INITIAL_STATE = {
   isRewaredViewSuccessfully: "",
   historyPoint: {},
   historyExchanges: {},
+  exchangeRate: {},
 };
 
 const socialMediaReducer = (state = INITIAL_STATE, action) => {
@@ -111,6 +112,23 @@ const socialMediaReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         ...action.data,
+      };
+    case WALLET.GET_EXCHANGE_RATE:
+      return {
+        ...state,
+        loading: true,
+      };
+    case WALLET.GET_EXCHANGE_RATE_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        exchangeRate: action.data.data,
+      };
+    case WALLET.GET_EXCHANGE_RATE_FAIL:
+      return {
+        ...state,
+        loading: false,
+        exchangeRate: {},
       };
 
     default:

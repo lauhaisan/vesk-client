@@ -26,10 +26,15 @@ const getHistoryExchangesApi = async (payload) => {
   return request(URL_WITH_PARAMS, true);
 };
 
+const getExchangeRateAPI = async () => {
+  return request(URL.GET_EXCHANGE_RATE, true);
+};
+
 export {
   createWalletApi,
   getWalletApi,
   rewardViewApi,
   getHistoryPointApi,
   getHistoryExchangesApi,
+  getExchangeRateAPI,
 };

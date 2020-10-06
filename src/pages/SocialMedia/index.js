@@ -117,7 +117,8 @@ class SocialMedia extends React.Component {
     event.preventDefault();
     const { editSocialMedia, addNewSocialMedia, linkThumbnail } = this.props;
     const { itemMediaSocial, titleModal } = this.state;
-    const arrayKey = ["pointForUserView", "timeForRecvCoin"];
+    console.log("item submit", itemMediaSocial);
+    const arrayKey = ["point", "pointForUserView", "timeForRecvCoin"];
     arrayKey.forEach((element) => {
       if (!itemMediaSocial[element]) {
         itemMediaSocial[element] = 1;
@@ -126,7 +127,6 @@ class SocialMedia extends React.Component {
     const payload = {
       ...itemMediaSocial,
       thumbnail: linkThumbnail || itemMediaSocial.thumbnail,
-      point: itemMediaSocial.pointForUserView,
       start: "2020",
       end: "2020",
     };
@@ -241,6 +241,22 @@ class SocialMedia extends React.Component {
                 />
               </FormGroup>
             </div>
+            <FormGroup legendText="">
+              <NumberInput
+                readOnly={isReview}
+                id="point"
+                onChange={(event) =>
+                  this.onChangeFormData(
+                    "point",
+                    event.imaginaryTarget.valueAsNumber
+                  )
+                }
+                label="Point"
+                min={1}
+                step={1}
+                value={itemMediaSocial.point || 0}
+              />
+            </FormGroup>
             <div className="formData__row">
               <FormGroup legendText="">
                 <NumberInput
@@ -368,6 +384,10 @@ class SocialMedia extends React.Component {
       {
         header: "Name",
         key: "name",
+      },
+      {
+        header: "Point",
+        key: "point",
       },
       {
         header: "Point For User View",

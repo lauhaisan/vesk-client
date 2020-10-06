@@ -1,10 +1,10 @@
 import React, { Fragment } from "react";
-// import { Accordion, AccordionItem } from "carbon-components-react";
+import { Accordion, AccordionItem } from "carbon-components-react";
 import { connect } from "react-redux";
 import numeral from "numeral";
 import TitlePage from "../../components/TitlePage";
 import TableCommon from "../../components/TableCommon";
-// import Filter from "./component/Filter";
+import FormAddExchange from "./component/FormAddExchange";
 import { WALLET } from "../../constant";
 import { getToken } from "../../utils/token";
 import { Redirect } from "react-router-dom";
@@ -21,14 +21,6 @@ class HistoryExchanges extends React.Component {
     const { data: { userId = "" } = {} } = getToken();
     getListHistory(userId);
   }
-
-  // _resetFilter = () => {
-  //   console.log("reset filter");
-  // };
-
-  // _search = (value) => {
-  //   console.log("value search", value);
-  // };
 
   render() {
     const { loading, historyExchanges: { items = [] } = {} } = this.props;
@@ -71,19 +63,18 @@ class HistoryExchanges extends React.Component {
       <Fragment>
         <TitlePage title="Users" />
         <div className="containerHistoryPoint">
-          {/* <Accordion className="viewFilter">
+          <Accordion className="viewFilter">
             <AccordionItem
-              open
+              open={false}
               title={
-                <div className="viewFilter__title">
-                  Filter
-                  <i className="fas fa-filter viewFilter__title--icon"></i>
-                </div>
+                <div className="viewFilter__title">Create New Exchange</div>
               }
             >
-              <Filter resetFilter={this._resetFilter} search={this._search} />
+              {/* <Filter resetFilter={this._resetFilter} search={this._search} /> */}
+              <FormAddExchange />
             </AccordionItem>
-          </Accordion> */}
+          </Accordion>
+
           <TableCommon
             title="History Exchanges"
             rowData={formatData}
