@@ -77,9 +77,9 @@ class NewExchange extends Component {
 
   handleSave = () => {
     const { coin, point, message } = this.state;
-    const { link } = this.props;
+    const { link, createExchange } = this.props;
     const payload = { coin, point, message, contract: link };
-    console.log("Payload", payload);
+    createExchange(payload, this.handleCancel);
   };
 
   render() {
@@ -185,6 +185,11 @@ const mapDispatchToProps = (dispatch) => ({
   uploadImage: (data) =>
     dispatch({ type: UPLOAD.UPLOAD_IMAGE, data: { data } }),
   getExchangeRate: () => dispatch({ type: WALLET.GET_EXCHANGE_RATE }),
+  createExchange: (data, functionCancel) =>
+    dispatch({
+      type: WALLET.CREATE_EXCHANGE,
+      data: { data, functionCancel },
+    }),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(NewExchange);

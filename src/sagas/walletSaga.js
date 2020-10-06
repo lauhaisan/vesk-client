@@ -6,6 +6,7 @@ import {
   getHistoryPointApi,
   getHistoryExchangesApi,
   getExchangeRateAPI,
+  createExchangeApi,
 } from "../service/wallet";
 import { WALLET } from "../constant";
 
@@ -74,7 +75,6 @@ function* getHistoryPoint(object) {
 
 function* getHistoryExchanges(object) {
   const dat = object.data.data;
-
   const resp = yield call(getHistoryExchangesApi, dat);
   if (resp.code !== 200) {
     yield put({
@@ -98,6 +98,25 @@ function* getExchangeRate() {
   yield put({ type: WALLET.GET_EXCHANGE_RATE_SUCCESS, data: resp });
 }
 
+function* createExchange(object) {
+  const dat = object.data.data;
+  const functionCancel = object.data.functionCancel;
+  const resp = yield call(createExchangeApi, dat);
+  console.log("resp", resp);
+  functionCancel();
+  // if (resp.code !== 200) {
+  //   yield put({
+  //     type: WALLET.CREATE_EXCHANGE_FAIL,
+  //     data: resp.message,
+  //   });
+  //   return;
+  // }
+  // yield put({
+  //   type: WALLET.CREATE_EXCHANGE_SUCCESS,
+  //   data: resp.data,
+  // });
+}
+
 export const walletSaga = [
   takeLatest(WALLET.CREATE_WALLET, createWallet),
   takeLatest(WALLET.GET_WALLET, getWallet),
@@ -105,4 +124,5 @@ export const walletSaga = [
   takeLatest(WALLET.GET_HISTORY_POINT, getHistoryPoint),
   takeLatest(WALLET.GET_HISTORY_EXCHANGES, getHistoryExchanges),
   takeLatest(WALLET.GET_EXCHANGE_RATE, getExchangeRate),
+  takeLatest(WALLET.CREATE_EXCHANGE, createExchange),
 ];

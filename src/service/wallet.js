@@ -30,6 +30,10 @@ const getExchangeRateAPI = async () => {
   return request(URL.GET_EXCHANGE_RATE, true);
 };
 
+const createExchangeApi = async (payload) => {
+  return request(URL.CREATE_EXCHANGE, true, "POST", payload);
+};
+
 export {
   createWalletApi,
   getWalletApi,
@@ -37,4 +41,5 @@ export {
   getHistoryPointApi,
   getHistoryExchangesApi,
   getExchangeRateAPI,
+  createExchangeApi,
 };
