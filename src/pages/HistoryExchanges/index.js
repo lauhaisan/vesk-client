@@ -43,8 +43,12 @@ class HistoryExchanges extends React.Component {
         key: "message",
       },
       {
-        header: "Money",
-        key: "money",
+        header: "Coin",
+        key: "coin",
+      },
+      {
+        header: "Point",
+        key: "point",
       },
     ];
 
