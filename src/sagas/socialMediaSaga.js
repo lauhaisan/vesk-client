@@ -8,8 +8,9 @@ import {
   searchSocialMediaAPI,
   getListByAuthorAPI,
   searchListByAuthorAPI,
+  addPointVideoAPI,
 } from "../service/socialMedia";
-import { SOCIAL_MEDIA } from "../constant";
+import { SOCIAL_MEDIA, WALLET } from "../constant";
 import { getToken } from "../utils/token";
 
 function* getListSocialMedia(object) {
@@ -90,6 +91,7 @@ function* addNewSocialMedia(obj) {
   yield put({ type: SOCIAL_MEDIA.ADD_NEW_SUCCESS, data: resp.data });
   hideModal();
   yield put({ type: SOCIAL_MEDIA.GET_LIST_BY_AUTHOR, data: { data } });
+  yield put({ type: WALLET.GET_WALLET });
 }
 
 function* searchSocialMedia(obj) {
@@ -140,6 +142,25 @@ function* searchListByAuthor(object) {
   });
 }
 
+function* addPointVideo(obj) {
+  const dat = obj.data.data;
+  const hideModal = obj.data.functionHideModal;
+  const { data: { userId: id = "" } = {} } = getToken();
+  const data = { id };
+  const resp = yield call(addPointVideoAPI, dat);
+  if (resp.code !== 200) {
+    yield put({
+      type: SOCIAL_MEDIA.ADD_POINT_VIDEO_FAIL,
+      data: resp.message,
+    });
+    return;
+  }
+  yield put({ type: SOCIAL_MEDIA.ADD_POINT_VIDEO_SUCCESS, data: resp.data });
+  hideModal();
+  yield put({ type: SOCIAL_MEDIA.GET_LIST_BY_AUTHOR, data: { data } });
+  yield put({ type: WALLET.GET_WALLET });
+}
+
 export const socialMediaSaga = [
   takeLatest(SOCIAL_MEDIA.GET_LIST_SOCIAL_MEDIA, getListSocialMedia),
   takeLatest(SOCIAL_MEDIA.GET_BY_ID, getSocialMediaById),
@@ -149,4 +170,5 @@ export const socialMediaSaga = [
   takeLatest(SOCIAL_MEDIA.DELETE_SOCIAL_MEDIA, deleteSocialMedia),
   takeLatest(SOCIAL_MEDIA.GET_LIST_BY_AUTHOR, getListByAuthor),
   takeLatest(SOCIAL_MEDIA.SEARCH_LIST_BY_AUTHOR, searchListByAuthor),
+  takeLatest(SOCIAL_MEDIA.ADD_POINT_VIDEO, addPointVideo),
 ];

@@ -44,6 +44,10 @@ const searchListByAuthorAPI = async (payload) => {
   return request(URL_WITH_PARAMS, true);
 };
 
+const addPointVideoAPI = async (payload) => {
+  return request(URL.ADD_POINT_VIDEO, true, "POST", payload);
+};
+
 export {
   getListSocialMediaAPI,
   getByIdAPI,
@@ -53,4 +57,5 @@ export {
   searchSocialMediaAPI,
   getListByAuthorAPI,
   searchListByAuthorAPI,
+  addPointVideoAPI,
 };

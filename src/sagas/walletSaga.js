@@ -104,7 +104,6 @@ function* createExchange(object) {
   const functionCancel = object.data.functionCancel;
   const { data: { userId = "" } = {} } = getToken();
   const resp = yield call(createExchangeApi, dat);
-  console.log("resp", resp);
   if (resp.code !== 200) {
     yield put({
       type: WALLET.CREATE_EXCHANGE_FAIL,

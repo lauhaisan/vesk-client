@@ -188,6 +188,27 @@ const socialMediaReducer = (state = INITIAL_STATE, action) => {
         listByAuthor: [],
         messageError: action.data,
       };
+    case SOCIAL_MEDIA.ADD_POINT_VIDEO:
+      return {
+        ...state,
+        loadingAction: true,
+        actionSuccessfully: "",
+        messageError: "",
+      };
+    case SOCIAL_MEDIA.ADD_POINT_VIDEO_SUCCESS:
+      return {
+        ...state,
+        loadingAction: false,
+        actionSuccessfully: true,
+        messageError: "",
+      };
+    case SOCIAL_MEDIA.ADD_POINT_VIDEO_FAIL:
+      return {
+        ...state,
+        loadingAction: false,
+        actionSuccessfully: false,
+        messageError: action.data,
+      };
 
     default:
       return state;

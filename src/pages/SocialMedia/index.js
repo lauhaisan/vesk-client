@@ -30,6 +30,7 @@ class SocialMedia extends React.Component {
       titleModal: "",
       isReview: false,
       fileUpload: null,
+      addPoint: 0,
     };
   }
 
@@ -102,6 +103,7 @@ class SocialMedia extends React.Component {
     this.setState({
       openModal: false,
       isReview: false,
+      addPoint: 0,
     });
     updateStateReducer({
       itemMediaSocial: {},
@@ -187,7 +189,16 @@ class SocialMedia extends React.Component {
   };
 
   handleSaveAddPoint = () => {
-    alert(123);
+    const { addPoint, itemMediaSocial: { id } = {} } = this.state;
+    const { addPointVideo } = this.props;
+    const payload = { id, point: addPoint };
+    addPointVideo(payload, this._hideModal);
+  };
+
+  onChangeAddPoint = (value) => {
+    this.setState({
+      addPoint: value,
+    });
   };
 
   render() {
@@ -196,6 +207,7 @@ class SocialMedia extends React.Component {
       titleModal,
       isReview,
       itemMediaSocial = {},
+      addPoint,
     } = this.state;
     const {
       loading,
@@ -279,7 +291,7 @@ class SocialMedia extends React.Component {
                     itemMediaSocial.pointForUserView >
                     (itemMediaSocial.point || 100)
                   }
-                  invalidText="ABC"
+                  invalidText="Point For User View must be less than Point"
                   id="pointForUser"
                   onChange={(event) =>
                     this.onChangeFormData(
@@ -401,7 +413,23 @@ class SocialMedia extends React.Component {
         {loadingGetById ? (
           "Loading..."
         ) : (
-          <div>Add point to {itemMediaSocial.name}?</div>
+          <Form>
+            <p style={{ marginBottom: "15px" }}>
+              Add point to {itemMediaSocial.name}?
+            </p>
+            <FormGroup legendText="">
+              <NumberInput
+                id="addPoint"
+                onChange={(event) =>
+                  this.onChangeAddPoint(event.imaginaryTarget.valueAsNumber)
+                }
+                label=""
+                min={0}
+                step={1}
+                value={addPoint || 0}
+              />
+            </FormGroup>
+          </Form>
         )}
       </div>
     );
@@ -568,6 +596,11 @@ const mapDispatchToProps = (dispatch) => ({
     }),
   updateUploadReducer: (data) =>
     dispatch({ type: UPLOAD.UPDATE_STATE_UPLOAD_REDUCER, data }),
+  addPointVideo: (data, functionHideModal) =>
+    dispatch({
+      type: SOCIAL_MEDIA.ADD_POINT_VIDEO,
+      data: { data, functionHideModal },
+    }),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(SocialMedia);

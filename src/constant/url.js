@@ -23,6 +23,7 @@ const URL = {
   GET_LIST_MEDIA_BY_ATHOR: "/v1/vesk/public/e-social-media/author",
   ADD_NEW_VIDEO: "/v1/vesk/e-social-media",
   SEARCH_LIST_BY_ATHOR: "/v1/vesk/e-social-media/search",
+  ADD_POINT_VIDEO: "/v1/vesk/e-social-media/add-point",
 
   //TOP RATED, MOST POPULAR
   GET_LIST_TOP_RATED: "/v1/vesk/public/e-social-media/top/search",
