@@ -151,6 +151,14 @@ class SocialMedia extends React.Component {
     });
   };
 
+  _actionAddPoint = (item) => {
+    this.handeGetById(item.id);
+    this.setState({
+      openModal: true,
+      titleModal: "Add Point",
+    });
+  };
+
   _actionEdit = (item) => {
     this.handeGetById(item.id);
     this.setState({
@@ -176,6 +184,10 @@ class SocialMedia extends React.Component {
     const formData = new FormData();
     formData.append("file", fileUpload);
     uploadImage({ file: formData, isContract });
+  };
+
+  handleSaveAddPoint = () => {
+    alert(123);
   };
 
   render() {
@@ -262,7 +274,12 @@ class SocialMedia extends React.Component {
             <div className="formData__row">
               <FormGroup legendText="">
                 <NumberInput
-                  readOnly={isReview}
+                  readOnly={isReview || titleModal === "Edit Social Media"}
+                  invalid={
+                    itemMediaSocial.pointForUserView >
+                    (itemMediaSocial.point || 100)
+                  }
+                  invalidText="ABC"
                   id="pointForUser"
                   onChange={(event) =>
                     this.onChangeFormData(
@@ -379,6 +396,16 @@ class SocialMedia extends React.Component {
       </div>
     );
 
+    const contentAddPointModal = (
+      <div style={{ height: "auto", width: "100%" }}>
+        {loadingGetById ? (
+          "Loading..."
+        ) : (
+          <div>Add point to {itemMediaSocial.name}?</div>
+        )}
+      </div>
+    );
+
     const renderContentModal =
       titleModal === "Delete Social Media" ? contentDeleteModal : contentModal;
 
@@ -405,6 +432,11 @@ class SocialMedia extends React.Component {
       },
       { header: "Action", key: "action" },
     ];
+
+    const renderOnSubmit =
+      titleModal !== "Delete Social Media"
+        ? this._handleSubmit
+        : this._handleDelete;
 
     return (
       <Fragment>
@@ -436,19 +468,24 @@ class SocialMedia extends React.Component {
             actionReview={this._actionReview}
             actionEdit={this._actionEdit}
             actionDelete={this._actionDelete}
+            actionAddPoint={this._actionAddPoint}
           />
         </div>
         <CustomModal
           isReview={isReview}
           open={openModal}
           loading={loadingAction}
-          contentModal={renderContentModal}
+          contentModal={
+            titleModal === "Add Point"
+              ? contentAddPointModal
+              : renderContentModal
+          }
           hideModal={this._hideModal}
           textSubmit={titleModal === "Delete Social Media" ? "Delete" : "Save"}
           onSubmit={
-            titleModal !== "Delete Social Media"
-              ? this._handleSubmit
-              : this._handleDelete
+            titleModal === "Add Point"
+              ? this.handleSaveAddPoint
+              : renderOnSubmit
           }
           title={titleModal}
         />

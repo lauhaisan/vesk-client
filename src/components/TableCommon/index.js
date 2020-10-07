@@ -30,13 +30,28 @@ class TableCommon extends React.Component {
   };
 
   renderAction = (item) => {
-    const { actionReview, actionEdit, actionDelete } = this.props;
+    const {
+      actionReview = () => {},
+      actionEdit = () => {},
+      actionDelete = () => {},
+      actionAddPoint = () => {},
+      title = "",
+    } = this.props;
     return (
       <div className="viewAction">
-        <i
-          className="fas fa-eye viewAction__icon viewAction__icon--review"
-          onClick={() => actionReview(item)}
-        ></i>
+        {title === "List Social Media" && (
+          <i
+            className="fas fa-plus-circle viewAction__icon viewAction__icon--add"
+            onClick={() => actionAddPoint(item)}
+          ></i>
+        )}
+        {title !== "List Social Media" && (
+          <i
+            className="fas fa-eye viewAction__icon viewAction__icon--review"
+            onClick={() => actionReview(item)}
+          ></i>
+        )}
+
         <i
           className="fas fa-edit viewAction__icon viewAction__icon--edit"
           onClick={() => actionEdit(item)}
@@ -52,7 +67,7 @@ class TableCommon extends React.Component {
   renderValue = (nameHeader, value) => {
     return nameHeader === "contract" && value ? (
       <a target="_blank" rel="noopener noreferrer" href={value}>
-        View Contract
+        View
       </a>
     ) : (
       value
