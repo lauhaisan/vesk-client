@@ -214,7 +214,7 @@ class Detail extends Component {
       };
     });
     const filterListVideoMostPopular = formatListVideoMostPopular.filter(
-      (item) => item.id !== id
+      (item) => item.id !== id && item.status !== "INACTIVE"
     );
 
     return (

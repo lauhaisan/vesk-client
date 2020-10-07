@@ -47,6 +47,10 @@ class Home extends Component {
       };
     });
 
+    const filterListActive = formatListVideo.filter(
+      (element) => element.status !== "INACTIVE"
+    );
+
     const error = messageErrorListUser !== "" || messageError !== "";
     const _renderLoading = (
       <div className="viewLoading">
@@ -119,7 +123,7 @@ class Home extends Component {
             _renderLoading
           ) : (
             <div className="bx--row">
-              {formatListVideo.map((item) => (
+              {filterListActive.map((item) => (
                 <div key={item.id} className="bx--col-md-2 bx--col-sm-4">
                   <ItemVideo item={item} />
                 </div>

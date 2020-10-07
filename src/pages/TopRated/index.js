@@ -45,6 +45,9 @@ class TopRated extends Component {
     });
 
     const sortListTopRank = this.sortByTopRank(formatListVideo) || [];
+    const filterListActive = sortListTopRank.filter(
+      (element) => element.status !== "INACTIVE"
+    );
 
     return (
       <Fragment>
@@ -57,10 +60,10 @@ class TopRated extends Component {
             _renderLoading
           ) : (
             <div className="bx--row">
-              {sortListTopRank.length === 0 ? (
+              {filterListActive.length === 0 ? (
                 <Empty text="No Video" />
               ) : (
-                sortListTopRank.map((item) => (
+                filterListActive.map((item) => (
                   <div key={item.id} className="bx--col-md-2 bx--col-sm-4">
                     <ItemVideo item={item} />
                   </div>

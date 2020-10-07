@@ -63,6 +63,10 @@ class SignleChannel extends Component {
       };
     });
 
+    const filterListActive = formatListVideo.filter(
+      (element) => element.status !== "INACTIVE"
+    );
+
     return (
       <Fragment>
         <TitlePage title={`${firstName} ${lastName}`} />
@@ -100,10 +104,10 @@ class SignleChannel extends Component {
             _renderLoading
           ) : (
             <div className="bx--row">
-              {formatListVideo.length === 0 ? (
+              {filterListActive.length === 0 ? (
                 <Empty text="No Video" />
               ) : (
-                formatListVideo.map((item) => (
+                filterListActive.map((item) => (
                   <div key={item.id} className="bx--col-md-2 bx--col-sm-4">
                     <ItemVideo item={item} />
                   </div>

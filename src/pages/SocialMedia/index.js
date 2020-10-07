@@ -505,7 +505,9 @@ class SocialMedia extends React.Component {
           />
         </div>
         <CustomModal
-          isReview={isReview || check}
+          isReview={
+            isReview || check || (titleModal === "Add Point" && addPoint === 0)
+          }
           open={openModal}
           loading={loadingAction}
           contentModal={

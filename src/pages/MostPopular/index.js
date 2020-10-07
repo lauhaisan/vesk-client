@@ -39,6 +39,9 @@ class MostPopular extends Component {
     });
 
     const sortListByCountView = this.sortByCountView(formatListVideo) || [];
+    const filterListActive = sortListByCountView.filter(
+      (element) => element.status !== "INACTIVE"
+    );
 
     const _renderLoading = (
       <div className="viewLoading">
@@ -56,10 +59,10 @@ class MostPopular extends Component {
             _renderLoading
           ) : (
             <div className="bx--row">
-              {sortListByCountView.length === 0 ? (
+              {filterListActive.length === 0 ? (
                 <Empty text="No Video" />
               ) : (
-                sortListByCountView.map((item) => (
+                filterListActive.map((item) => (
                   <div key={item.id} className="bx--col-md-2 bx--col-sm-4">
                     <ItemVideo item={item} />
                   </div>
