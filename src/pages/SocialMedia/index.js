@@ -466,6 +466,11 @@ class SocialMedia extends React.Component {
         ? this._handleSubmit
         : this._handleDelete;
 
+    const defaultPoint = itemMediaSocial.point || 100;
+    const check =
+      titleModal === "Add New Social Media" &&
+      itemMediaSocial.pointForUserView > defaultPoint;
+
     return (
       <Fragment>
         <TitlePage title="Social Media" />
@@ -500,7 +505,7 @@ class SocialMedia extends React.Component {
           />
         </div>
         <CustomModal
-          isReview={isReview}
+          isReview={isReview || check}
           open={openModal}
           loading={loadingAction}
           contentModal={
