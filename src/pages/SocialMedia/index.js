@@ -116,9 +116,8 @@ class SocialMedia extends React.Component {
   _handleSubmit = (event) => {
     event.preventDefault();
     const { editSocialMedia, addNewSocialMedia, linkThumbnail } = this.props;
-    const { itemMediaSocial, titleModal } = this.state;
-    console.log("item submit", itemMediaSocial);
-    const arrayKey = ["point", "pointForUserView", "timeForRecvCoin"];
+    const { itemMediaSocial = {}, titleModal } = this.state;
+    const arrayKey = ["pointForUserView", "timeForRecvCoin"];
     arrayKey.forEach((element) => {
       if (!itemMediaSocial[element]) {
         itemMediaSocial[element] = 1;
@@ -127,6 +126,7 @@ class SocialMedia extends React.Component {
     const payload = {
       ...itemMediaSocial,
       thumbnail: linkThumbnail || itemMediaSocial.thumbnail,
+      point: itemMediaSocial.point || 100,
       start: "2020",
       end: "2020",
     };
@@ -225,7 +225,7 @@ class SocialMedia extends React.Component {
                   value={itemMediaSocial.name || ""}
                 />
               </FormGroup>
-              <FormGroup legendText="">
+              {/* <FormGroup legendText="">
                 <TextInput
                   id="inputStatus"
                   labelText="Status"
@@ -239,24 +239,26 @@ class SocialMedia extends React.Component {
                   type="text"
                   value={itemMediaSocial.status || ""}
                 />
+              </FormGroup> */}
+
+              <FormGroup legendText="">
+                <NumberInput
+                  readOnly={isReview || titleModal === "Edit Social Media"}
+                  id="point"
+                  onChange={(event) =>
+                    this.onChangeFormData(
+                      "point",
+                      event.imaginaryTarget.valueAsNumber
+                    )
+                  }
+                  label="Point"
+                  min={titleModal === "Add New Social Media" ? 100 : 0}
+                  step={1}
+                  value={itemMediaSocial.point || 100}
+                />
               </FormGroup>
             </div>
-            <FormGroup legendText="">
-              <NumberInput
-                readOnly={isReview}
-                id="point"
-                onChange={(event) =>
-                  this.onChangeFormData(
-                    "point",
-                    event.imaginaryTarget.valueAsNumber
-                  )
-                }
-                label="Point"
-                min={1}
-                step={1}
-                value={itemMediaSocial.point || 0}
-              />
-            </FormGroup>
+
             <div className="formData__row">
               <FormGroup legendText="">
                 <NumberInput

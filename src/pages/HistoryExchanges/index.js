@@ -63,7 +63,6 @@ class HistoryExchanges extends React.Component {
       return {
         ...item,
         date,
-        // createdAt: moment(createdAt).format("DD MMM YYYY hh:mm a"),
         money: money && numeral(money).format("0,0"),
       };
     });
