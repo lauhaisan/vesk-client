@@ -84,7 +84,7 @@ class NewExchange extends Component {
 
   render() {
     const { coin = "", point = "", message = "" } = this.state;
-    const { loadingUpload, link, rate } = this.props;
+    const { loadingUpload, link, rate, loadingCreate } = this.props;
     const formatRate = numeral(rate).format("0.[00]");
     return (
       <div className="containerAddExchange">
@@ -162,7 +162,8 @@ class NewExchange extends Component {
             disabled={!link}
             text="Save"
             onClick={this.handleSave}
-            style={{ marginLeft: "1rem" }}
+            loading={loadingCreate}
+            style={{ marginLeft: "1rem", height: "42px" }}
           />
         </div>
       </div>
@@ -171,12 +172,13 @@ class NewExchange extends Component {
 }
 const mapStateToProps = ({
   upload: { loading: loadingUpload, messageUpload, link } = {},
-  wallet: { exchangeRate: { rate = 0 } = {} } = {},
+  wallet: { exchangeRate: { rate = 0 } = {}, loadingCreate } = {},
 }) => ({
   loadingUpload,
   messageUpload,
   link,
   rate,
+  loadingCreate,
 });
 
 const mapDispatchToProps = (dispatch) => ({

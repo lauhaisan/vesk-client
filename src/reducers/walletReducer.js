@@ -8,6 +8,8 @@ const INITIAL_STATE = {
   historyPoint: {},
   historyExchanges: {},
   exchangeRate: {},
+  isCreateExchangeSuccessfully: "",
+  loadingCreate: false,
 };
 
 const socialMediaReducer = (state = INITIAL_STATE, action) => {
@@ -129,6 +131,24 @@ const socialMediaReducer = (state = INITIAL_STATE, action) => {
         ...state,
         loading: false,
         exchangeRate: {},
+      };
+    case WALLET.CREATE_EXCHANGE:
+      return {
+        ...state,
+        loadingCreate: true,
+        isCreateExchangeSuccessfully: "",
+      };
+    case WALLET.CREATE_EXCHANGE_SUCCESS:
+      return {
+        ...state,
+        loadingCreate: false,
+        isCreateExchangeSuccessfully: true,
+      };
+    case WALLET.CREATE_EXCHANGE_FAIL:
+      return {
+        ...state,
+        loadingCreate: false,
+        isCreateExchangeSuccessfully: false,
       };
 
     default:

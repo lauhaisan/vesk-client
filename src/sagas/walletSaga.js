@@ -8,6 +8,7 @@ import {
   getExchangeRateAPI,
   createExchangeApi,
 } from "../service/wallet";
+import { getToken } from "../utils/token";
 import { WALLET } from "../constant";
 
 function* createWallet(object) {
@@ -101,20 +102,22 @@ function* getExchangeRate() {
 function* createExchange(object) {
   const dat = object.data.data;
   const functionCancel = object.data.functionCancel;
+  const { data: { userId = "" } = {} } = getToken();
   const resp = yield call(createExchangeApi, dat);
   console.log("resp", resp);
+  if (resp.code !== 200) {
+    yield put({
+      type: WALLET.CREATE_EXCHANGE_FAIL,
+      data: resp.message,
+    });
+    return;
+  }
+  yield put({
+    type: WALLET.CREATE_EXCHANGE_SUCCESS,
+    data: resp.data,
+  });
+  yield put({ type: WALLET.GET_HISTORY_EXCHANGES, data: { data: userId } });
   functionCancel();
-  // if (resp.code !== 200) {
-  //   yield put({
-  //     type: WALLET.CREATE_EXCHANGE_FAIL,
-  //     data: resp.message,
-  //   });
-  //   return;
-  // }
-  // yield put({
-  //   type: WALLET.CREATE_EXCHANGE_SUCCESS,
-  //   data: resp.data,
-  // });
 }
 
 export const walletSaga = [

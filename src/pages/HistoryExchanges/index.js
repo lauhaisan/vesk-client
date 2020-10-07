@@ -5,6 +5,7 @@ import numeral from "numeral";
 import TitlePage from "../../components/TitlePage";
 import TableCommon from "../../components/TableCommon";
 import FormAddExchange from "./component/FormAddExchange";
+import Notification from "../../components/Notification";
 import { WALLET } from "../../constant";
 import { getToken } from "../../utils/token";
 import { Redirect } from "react-router-dom";
@@ -23,7 +24,12 @@ class HistoryExchanges extends React.Component {
   }
 
   render() {
-    const { loading, historyExchanges: { items = [] } = {} } = this.props;
+    const {
+      loading,
+      historyExchanges: { items = [] } = {},
+      messageUpload,
+      isCreateExchangeSuccessfully,
+    } = this.props;
 
     const headerData = [
       {
@@ -41,6 +47,14 @@ class HistoryExchanges extends React.Component {
       {
         header: "Point",
         key: "point",
+      },
+      {
+        header: "Contract",
+        key: "contract",
+      },
+      {
+        header: "Status",
+        key: "status",
       },
     ];
 
@@ -82,16 +96,32 @@ class HistoryExchanges extends React.Component {
             loading={loading}
           />
         </div>
+        {messageUpload === "Upload Image Failed" && (
+          <Notification
+            status="error"
+            message={messageUpload}
+            title="Upload Image Failed"
+          />
+        )}
+        {isCreateExchangeSuccessfully && (
+          <Notification
+            status="success"
+            title={"Create Exchange Successfully"}
+          />
+        )}
       </Fragment>
     );
   }
 }
 
 const mapStateToProps = ({
-  wallet: { loading, historyExchanges = {} } = {},
+  wallet: { loading, historyExchanges = {}, isCreateExchangeSuccessfully } = {},
+  upload: { messageUpload } = {},
 }) => ({
   loading,
   historyExchanges,
+  messageUpload,
+  isCreateExchangeSuccessfully,
 });
 
 const mapDispatchToProps = (dispatch) => ({
