@@ -86,8 +86,29 @@ class NewExchange extends Component {
     const { coin = "", point = "", message = "" } = this.state;
     const { loadingUpload, link, rate, loadingCreate } = this.props;
     const formatRate = numeral(rate).format("0.[00]");
+    const linkQR =
+      "https://statics.veskhub.co/98c69eb1-0931-11eb-bd57-5600023ed650.jpeg";
     return (
       <div className="containerAddExchange">
+        <div className="containerAddExchange__viewTop">
+          <img
+            className="containerAddExchange__viewTop__img"
+            src={linkQR}
+            alt="QRcode"
+          />
+          <div className="containerAddExchange__viewTop__text">
+            <p>
+              Create a CXC Transfer order into our Wallet address and take a
+              screenshot. Then send the voucher (screenshot) to us. The
+              inspection process will last 24 hours - 36 hours. Please check
+              your account later. Thanks for using our service.
+            </p>
+            <p>
+              Note: Rates will change according to the rates currently in the
+              system.
+            </p>
+          </div>
+        </div>
         <Form className="formDataAdd">
           <div className="formDataAdd__row">
             <FormGroup legendText="">

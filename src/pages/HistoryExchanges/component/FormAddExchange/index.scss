@@ -46,4 +46,39 @@
     flex-direction: row;
     justify-content: center;
   }
+  &__viewTop {
+    display: flex;
+    align-items: center;
+    // flex-direction: column;
+    &__img {
+      width: 170px;
+      height: 170px;
+      object-fit: contain;
+    }
+    &__text {
+      margin-left: 20px;
+      color: #acacac;
+      text-align: justify;
+    }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .containerAddExchange {
+    &__viewTop {
+      display: flex;
+      flex-direction: column;
+      &__text {
+        margin: 0;
+      }
+    }
+    .formDataAdd {
+      &__row {
+        flex-direction: column;
+        .viewExchangeRate {
+          display: none;
+        }
+      }
+    }
+  }
 }
