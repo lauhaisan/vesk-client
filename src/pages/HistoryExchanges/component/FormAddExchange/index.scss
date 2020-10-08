@@ -1,4 +1,7 @@
 .containerAddExchange {
+  .exchangeRateCreateExchange {
+    display: none;
+  }
   .formDataAdd {
     .bx--label {
       font : {
@@ -7,8 +10,10 @@
       }
     }
     .bx--text-input {
-      background-color: transparent;
-      // width: 47%;
+      color: #000;
+      background-color: #fff;
+      border-radius: 5px;
+      border: 1px solid rgba(0, 0, 0, 0.5);
       &:focus {
         outline: none;
       }
@@ -30,6 +35,16 @@
       .bx--file__selected-file {
         display: none;
       }
+      .bx--btn--primary {
+        background: linear-gradient(135deg, #0f62fe 0%, #826cfd 100%);
+        border-radius: 5px;
+        // border: 1px solid rgba(15, 98, 254, 0.6);
+        font-weight: 600;
+        &:focus {
+          outline: none;
+          border: none;
+        }
+      }
     }
     .viewContract {
       display: flex;
@@ -40,6 +55,15 @@
         object-fit: contain;
       }
     }
+    .bx--number input[type="number"] {
+      color: #000;
+      background-color: #fff;
+      border-radius: 5px;
+      border: 1px solid rgba(0, 0, 0, 0.5);
+      &:focus {
+        outline: none;
+      }
+    }
   }
   .viewBtn {
     display: flex;
@@ -47,18 +71,25 @@
     justify-content: center;
   }
   &__viewTop {
-    display: flex;
-    align-items: center;
+    // display: flex;
+    // align-items: center;
     // flex-direction: column;
     &__img {
-      width: 170px;
-      height: 170px;
+      width: 160px;
+      height: 160px;
       object-fit: contain;
+      border-radius: 15px;
+      border: 1px solid #ff516b;
     }
     &__text {
-      margin-left: 20px;
+      margin-top: 20px;
+      width: 55%;
       color: #acacac;
       text-align: justify;
+      .addExchangeText {
+        font-size: 14px;
+        line-height: 18px;
+      }
     }
   }
 }
@@ -66,18 +97,32 @@
 @media screen and (max-width: 768px) {
   .containerAddExchange {
     &__viewTop {
-      display: flex;
-      flex-direction: column;
       &__text {
-        margin: 0;
+        width: 100%;
       }
+    }
+    .exchangeRateCreateExchange {
+      display: block;
+      font : {
+        size: 14px;
+        weight: 600;
+      }
+      opacity: 0.7;
     }
     .formDataAdd {
       &__row {
-        flex-direction: column;
+        display: flex;
+        // flex-direction: column;
+        justify-content: space-between;
         .viewExchangeRate {
           display: none;
         }
+      }
+      .bx--number input[type="number"] {
+        width: 95%;
+      }
+      .bx--number__control-btn {
+        display: none;
       }
     }
   }

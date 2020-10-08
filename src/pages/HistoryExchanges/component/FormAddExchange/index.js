@@ -97,17 +97,20 @@ class NewExchange extends Component {
             alt="QRcode"
           />
           <div className="containerAddExchange__viewTop__text">
-            <p>
+            <p className="addExchangeText">
               Create a CXC Transfer order into our Wallet address and take a
               screenshot. Then send the voucher (screenshot) to us. The
               inspection process will last 24 hours - 36 hours. Please check
               your account later. Thanks for using our service.
             </p>
-            <p>
+            <p className="addExchangeText" style={{ margin: "20px 0 25px" }}>
               Note: Rates will change according to the rates currently in the
               system.
             </p>
           </div>
+        </div>
+        <div className="exchangeRateCreateExchange">
+          Exchange Rate: {formatRate} (Coin*Exchange Rate = Point)
         </div>
         <Form className="formDataAdd">
           <div className="formDataAdd__row">
