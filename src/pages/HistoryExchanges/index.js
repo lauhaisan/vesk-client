@@ -78,7 +78,7 @@ class HistoryExchanges extends React.Component {
         <div className="containerHistoryPoint">
           <Accordion className="viewFilter">
             <AccordionItem
-              open={false}
+              open
               title={
                 <div className="viewFilter__title">Create New Exchange</div>
               }
