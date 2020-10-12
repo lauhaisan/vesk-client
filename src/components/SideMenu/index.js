@@ -124,6 +124,15 @@ class SideMenu extends PureComponent {
           <NavLink
             activeClassName={`${classNameMenu}__menu__itemMenu--active`}
             onClick={isMobile && handleMenuMobile}
+            to="/create-website"
+            className={`${classNameMenu}__menu__itemMenu`}
+          >
+            <i className="far fa-window-maximize itemMenu__icon"></i>
+            <span className="itemMenu__text">Create Website</span>
+          </NavLink>
+          <NavLink
+            activeClassName={`${classNameMenu}__menu__itemMenu--active`}
+            onClick={isMobile && handleMenuMobile}
             to="/contact"
             className={`${classNameMenu}__menu__itemMenu`}
           >

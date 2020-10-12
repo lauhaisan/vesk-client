@@ -17,6 +17,7 @@ const HistoryPoint = lazy(() => import("../pages/HistoryPoint"));
 const HistoryExchanges = lazy(() => import("../pages/HistoryExchanges"));
 const ResultSearch = lazy(() => import("../pages/ResultSearch"));
 const SocialMedia = lazy(() => import("../pages/SocialMedia"));
+const CreateWebsite = lazy(() => import("../pages/CreateWebsite"));
 
 const routes = [
   {
@@ -78,6 +79,12 @@ const routes = [
     exact: true,
     layout: BasicLayout,
     component: ComingSoon,
+  },
+  {
+    path: "/create-website",
+    exact: true,
+    layout: BasicLayout,
+    component: CreateWebsite,
   },
   {
     path: "/profile",
