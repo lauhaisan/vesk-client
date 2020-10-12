@@ -118,7 +118,6 @@ class CreateWebsite extends Component {
               </FormGroup>
               <FormGroup legendText="">
                 <TextArea
-                  cols={0}
                   id="inputDemand"
                   labelText="Demand"
                   value={demand}
@@ -126,12 +125,10 @@ class CreateWebsite extends Component {
                     this.handleChange("demand", event.target.value)
                   }
                   placeholder="Demand"
-                  rows={0}
                 />
               </FormGroup>
               <FormGroup legendText="">
                 <TextArea
-                  cols={0}
                   id="inputContent"
                   labelText="Content"
                   value={content}
@@ -139,7 +136,6 @@ class CreateWebsite extends Component {
                     this.handleChange("content", event.target.value)
                   }
                   placeholder="Content"
-                  rows={0}
                 />
               </FormGroup>
 
