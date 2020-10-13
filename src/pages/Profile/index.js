@@ -134,11 +134,11 @@ class Profile extends Component {
     const linkAvatar = link || avatar || require("../../images/testAvatar.jpg");
     const renderContentModal = (
       <div style={{ height: "auto", width: "100%" }}>
-        <Form className="formData">
-          <div className="formData__avt">
+        <Form className="formUpdateProfile">
+          <div className="formUpdateProfile__avt">
             {loadingUpload ? (
               <div
-                className="formData__avt--img"
+                className="formUpdateProfile__avt--img"
                 style={{
                   display: "flex",
                   justifyContent: "center",
@@ -149,7 +149,7 @@ class Profile extends Component {
               </div>
             ) : (
               <img
-                className="formData__avt--img"
+                className="formUpdateProfile__avt--img"
                 src={linkAvatar}
                 alt="img-avatar"
               />
@@ -165,7 +165,7 @@ class Profile extends Component {
               />
             </div>
           </div>
-          <div className="formData__row">
+          <div className="formUpdateProfile__row">
             <FormGroup legendText="">
               <TextInput
                 id="inputEmail"
@@ -197,10 +197,10 @@ class Profile extends Component {
               </DatePicker>
             </FormGroup>
           </div>
-          <div className="formData__row">
+          <div className="formUpdateProfile__row">
             <FormGroup legendText="">
               <TextInput
-                className="formData__row__input"
+                className="formUpdateProfile__row__input"
                 id="inputFirstName"
                 labelText="First Name"
                 onChange={(event) =>
@@ -215,7 +215,7 @@ class Profile extends Component {
             </FormGroup>
             <FormGroup legendText="">
               <TextInput
-                className="formData__row__input"
+                className="formUpdateProfile__row__input"
                 id="inputLastName"
                 labelText="Last Name"
                 onChange={(event) =>
@@ -229,11 +229,11 @@ class Profile extends Component {
               />
             </FormGroup>
           </div>
-          <div className="formData__row">
+          <div className="formUpdateProfile__row">
             <FormGroup legendText="">
               <TextInput
                 disabled={true}
-                className="formData__row__input"
+                className="formUpdateProfile__row__input"
                 id="inputUserName"
                 labelText="User Name"
                 onChange={(event) =>
@@ -248,7 +248,7 @@ class Profile extends Component {
             </FormGroup>
             <FormGroup legendText="">
               <TextInput
-                className="formData__row__input"
+                className="formUpdateProfile__row__input"
                 id="inputGender"
                 labelText="Gender"
                 onChange={(event) =>
@@ -262,10 +262,10 @@ class Profile extends Component {
               />
             </FormGroup>
           </div>
-          <div className="formData__row">
+          <div className="formUpdateProfile__row">
             <FormGroup legendText="">
               <TextInput
-                className="formData__row__input"
+                className="formUpdateProfile__row__input"
                 id="inputRegion"
                 labelText="Region"
                 onChange={(event) =>
@@ -280,7 +280,7 @@ class Profile extends Component {
             </FormGroup>
             <FormGroup legendText="">
               <TextInput
-                className="formData__row__input"
+                className="formUpdateProfile__row__input"
                 id="inputCity"
                 labelText="City"
                 onChange={(event) =>
@@ -294,10 +294,10 @@ class Profile extends Component {
               />
             </FormGroup>
           </div>
-          <div className="formData__row">
+          <div className="formUpdateProfile__row">
             <FormGroup legendText="">
               <TextInput
-                className="formData__row__input"
+                className="formUpdateProfile__row__input"
                 id="inputAddress"
                 labelText="Address"
                 onChange={(event) =>
@@ -312,7 +312,7 @@ class Profile extends Component {
             </FormGroup>
             <FormGroup legendText="">
               <TextInput
-                className="formData__row__input"
+                className="formUpdateProfile__row__input"
                 id="inputPhone"
                 labelText="Phone"
                 onChange={(event) =>

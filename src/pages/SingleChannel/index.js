@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
-import { OverflowMenu, OverflowMenuItem } from "carbon-components-react";
+// import { OverflowMenu, OverflowMenuItem } from "carbon-components-react";
 import { SOCIAL_MEDIA, LIST_USER } from "../../constant";
 import Notification from "../../components/Notification";
 import Empty from "../../components/Empty";
@@ -90,7 +90,7 @@ class SignleChannel extends Component {
         <div className="container_page_singleChanel">
           <div className="titleBlock">
             <p className="titleBlock__text">Videos</p>
-            <div className="titleBlock__btn">
+            {/* <div className="titleBlock__btn">
               <OverflowMenu
                 renderIcon={() => <i className="fas fa-ellipsis-h icon"></i>}
                 flipped
@@ -98,7 +98,7 @@ class SignleChannel extends Component {
                 <OverflowMenuItem itemText={<div>Top Rated</div>} />
                 <OverflowMenuItem itemText={<div>Viewed</div>} />
               </OverflowMenu>
-            </div>
+            </div> */}
           </div>
           {loading ? (
             _renderLoading

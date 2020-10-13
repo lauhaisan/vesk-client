@@ -103,7 +103,7 @@
   }
 }
 
-.formData {
+.formUpdateProfile {
   padding: 0rem 1rem;
   .bx--number__control-btn:focus {
     outline: none;
@@ -176,7 +176,7 @@
 }
 
 @media screen and (min-width: 500px) {
-  .formData {
+  .formUpdateProfile {
     .bx--fieldset {
       width: 48% !important;
     }
