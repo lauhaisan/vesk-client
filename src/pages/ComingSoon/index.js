@@ -11,7 +11,8 @@ class ComingSoon extends Component {
           display: "flex",
           flexDirection: "column",
           justifyContent: "center",
-          alignItems: "center"
+          alignItems: "center",
+          height: "100%",
         }}
       >
         <TitlePage title="Coming Soon..." />

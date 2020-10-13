@@ -11,11 +11,10 @@ class NotFoundPage extends Component {
           display: "flex",
           flexDirection: "column",
           justifyContent: "center",
-          alignItems: "center"
+          alignItems: "center",
         }}
       >
         <TitlePage title="404 Page Not Found" />
-        <h1>Not Found</h1>
         <img
           src="https://static.mediacdn.vn/images/4041.gif"
           alt="404"
