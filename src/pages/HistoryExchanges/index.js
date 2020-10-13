@@ -76,11 +76,13 @@ class HistoryExchanges extends React.Component {
       <Fragment>
         <TitlePage title="Users" />
         <div className="containerHistoryPoint">
-          <Accordion className="viewFilter">
+          <Accordion className="viewFilterExchange">
             <AccordionItem
               open
               title={
-                <div className="viewFilter__title">Create New Exchange</div>
+                <div className="viewFilterExchange__title">
+                  Create New Exchange
+                </div>
               }
             >
               {/* <Filter resetFilter={this._resetFilter} search={this._search} /> */}

@@ -5,6 +5,27 @@
   min-height: 100vh;
   z-index: 400;
   position: fixed;
+  .scrollSideMenu {
+    height: 95vh;
+    overflow-y: scroll;
+    border-radius: 0 0 0 6px;
+  }
+  .scrollSideMenu::-webkit-scrollbar {
+    width: 6px;
+    background-color: transparent;
+  }
+
+  .scrollSideMenu::-webkit-scrollbar-track {
+    margin: 0 30px;
+  }
+
+  .scrollSideMenu::-webkit-scrollbar-track-piece {
+    background-color: transparent;
+  }
+  .scrollSideMenu::-webkit-scrollbar-thumb:vertical {
+    border-radius: 10px;
+    background-color: rgba(255, 255, 255, 0.2);
+  }
   &__menu {
     &__itemMenu {
       display: flex;
@@ -73,6 +94,27 @@
   min-height: 100vh;
   z-index: 400;
   position: fixed;
+  .scrollSideMenu {
+    height: 95vh;
+    overflow-y: scroll;
+    border-radius: 0 0 0 6px;
+  }
+  .scrollSideMenu::-webkit-scrollbar {
+    width: 6px;
+    background-color: transparent;
+  }
+
+  .scrollSideMenu::-webkit-scrollbar-track {
+    margin: 0 30px;
+  }
+
+  .scrollSideMenu::-webkit-scrollbar-track-piece {
+    background-color: transparent;
+  }
+  .scrollSideMenu::-webkit-scrollbar-thumb:vertical {
+    border-radius: 10px;
+    background-color: rgba(255, 255, 255, 0.2);
+  }
   &__menu {
     &__itemMenu {
       display: flex;
