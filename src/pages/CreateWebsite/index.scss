@@ -17,11 +17,9 @@
     padding: 0 2rem;
     .heading-secondary {
       font-size: 1.5rem;
-      text-transform: uppercase;
       font-weight: 700;
       display: inline-block;
       letter-spacing: 0.2rem;
-      cursor: pointer;
       background-image: linear-gradient(to right, #ff516b, #826cfd);
       color: transparent;
       -webkit-background-clip: text;
@@ -30,10 +28,10 @@
       line-height: 20px;
       margin-top: 1.5rem;
       margin-bottom: 5px;
-      &:hover {
-        transform: skewY(3deg) scale(1);
-        text-shadow: 0.5rem 1rem 2rem rgba(0, 0, 0, 0.2);
-      }
+      // &:hover {
+      //   transform: skewY(3deg) scale(1);
+      //   text-shadow: 0.5rem 1rem 2rem rgba(0, 0, 0, 0.2);
+      // }
     }
     .formGroup {
       input:-webkit-autofill,
@@ -69,7 +67,7 @@
   }
 }
 
-@media screen and (max-width: 900px) {
+@media screen and (max-width: 1024px) {
   .containerCreateWebsite {
     &__form {
       background-image: radial-gradient(
