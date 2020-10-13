@@ -38,7 +38,7 @@ class Advertising extends React.Component {
       titleModal: "",
       isReview: false,
       fileUpload: null,
-      addPoint: 0,
+      chargePoint: 450,
       itemAds: {},
     };
   }
@@ -51,7 +51,7 @@ class Advertising extends React.Component {
   // }
 
   componentDidMount() {
-    const { getListAdsByAuthor } = this.props;
+    // const { getListAdsByAuthor } = this.props;
     // getListAdsByAuthor();
   }
 
@@ -65,7 +65,7 @@ class Advertising extends React.Component {
   // }
 
   _resetFilter = () => {
-    const { getListAdsByAuthor } = this.props;
+    // const { getListAdsByAuthor } = this.props;
     // getListAdsByAuthor();
   };
 
@@ -102,6 +102,34 @@ class Advertising extends React.Component {
     this.setState({
       itemAds,
     });
+    if (key === "position") {
+      this.renderPointByPosition(value);
+    }
+  };
+
+  renderPointByPosition = (value) => {
+    switch (value) {
+      case "HOME":
+        this.setChargePoint(450);
+        break;
+      case "TOP_RATED":
+        this.setChargePoint(350);
+        break;
+      case "MOST_POPULAR":
+        this.setChargePoint(450);
+        break;
+      case "FIX_BOTTOM":
+        this.setChargePoint(1200);
+        break;
+      default:
+        this.setChargePoint(450);
+    }
+  };
+
+  setChargePoint = (chargePoint) => {
+    this.setState({
+      chargePoint,
+    });
   };
 
   _hideModal = () => {
@@ -121,9 +149,10 @@ class Advertising extends React.Component {
   _handleSubmit = (event) => {
     event.preventDefault();
     const { linkImagesAds = "" } = this.props;
-    const { itemAds = {}, titleModal } = this.state;
+    const { itemAds = {}, titleModal, chargePoint: point } = this.state;
     const payload = {
       ...itemAds,
+      point,
       imageUrl: linkImagesAds || itemAds.imageUrl,
       position: itemAds.position || "HOME",
       order: 0,
@@ -179,7 +208,13 @@ class Advertising extends React.Component {
   };
 
   render() {
-    const { openModal, titleModal, isReview, itemAds = {} } = this.state;
+    const {
+      openModal,
+      titleModal,
+      isReview,
+      itemAds = {},
+      chargePoint,
+    } = this.state;
     const {
       loadingGetById,
       // messageError,
@@ -239,6 +274,8 @@ class Advertising extends React.Component {
                 </Select>
               </FormGroup>
             </div>
+
+            <div>Charge Point: {chargePoint}</div>
 
             <FormGroup legendText="">
               <TextInput
