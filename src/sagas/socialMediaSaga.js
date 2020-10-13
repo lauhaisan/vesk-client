@@ -1,4 +1,4 @@
-import { takeLatest, call, put, select } from "redux-saga/effects";
+import { takeLatest, call, put } from "redux-saga/effects";
 import {
   getListSocialMediaAPI,
   getByIdAPI,
@@ -13,16 +13,10 @@ import {
 import { SOCIAL_MEDIA, WALLET } from "../constant";
 import { getToken } from "../utils/token";
 
-const getItems = (state) => state.socialMedia.listSocialMedia;
-
 function* getListSocialMedia(object) {
   const dat = object.data;
   const resp = yield call(getListSocialMediaAPI, dat);
-  const list = yield select(getItems);
-  const { code, message, data: newData = {} } = resp;
-  const data = { ...newData, items: [...list, ...newData.items] };
-  console.log("data", data);
-
+  const { code, message, data } = resp;
   if (code !== 200) {
     yield put({
       type: SOCIAL_MEDIA.GET_LIST_SOCIAL_MEDIA_FAIL,

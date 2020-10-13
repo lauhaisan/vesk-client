@@ -1,44 +1,26 @@
 import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
-// import { OverflowMenu, OverflowMenuItem } from "carbon-components-react";
 import { SOCIAL_MEDIA } from "../../constant";
 import Slider from "./components/Slider";
 import Notification from "../../components/Notification";
 import ItemVideo from "../../components/ItemVideo";
 import TitlePage from "../../components/TitlePage";
 import Spin from "../../components/Spin";
-import InfiniteScroll from "react-infinite-scroll-component";
 import "./index.scss";
 
 class Home extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      page: 1,
-      limit: 10,
-      hasMore: true,
-    };
+    this.state = {};
   }
 
   componentDidMount() {
-    const { page, limit } = this.state;
-    this.handleGetListSocialMedia({ page, limit });
+    this.handleGetListSocialMedia({});
   }
 
   handleGetListSocialMedia = (payload) => {
     const { getListSocialMedia } = this.props;
     getListSocialMedia(payload);
-  };
-
-  fetchMoreData = () => {
-    const { total, listSocialMedia = [] } = this.props;
-    const { page, limit } = this.state;
-    if (listSocialMedia.length >= 29) {
-      this.setState({ hasMore: false });
-      return;
-    }
-    this.setState({ page: page + 1 });
-    this.handleGetListSocialMedia({ page: page + 1, limit });
   };
 
   randomAds = (list) => {
@@ -59,9 +41,8 @@ class Home extends Component {
       messageErrorListUser,
       listAds = [],
       history,
-      total,
+      // total,
     } = this.props;
-    const { hasMore } = this.state;
     const formatListVideo = listSocialMedia.map((item) => {
       return {
         ...item,
@@ -127,13 +108,9 @@ class Home extends Component {
             <p className="titleBlock__text">Featured Videos</p>
           </div>
 
-          <InfiniteScroll
-            dataLength={total}
-            next={this.fetchMoreData}
-            hasMore={hasMore}
-            loader={<h4>Loading...</h4>}
-            style={{ overflow: "hidden" }}
-          >
+          {loading ? (
+            _renderLoading
+          ) : (
             <div className="bx--row">
               {filterListActive.map((item) => (
                 <div key={item.id} className="bx--col-md-2 bx--col-sm-4">
@@ -141,7 +118,7 @@ class Home extends Component {
                 </div>
               ))}
             </div>
-          </InfiniteScroll>
+          )}
         </div>
         {error && (
           <Notification
