@@ -5,6 +5,7 @@ import {
   editAdsAPI,
   deleteAdsByIdAPI,
   addNewAdsAPI,
+  getListAdsByAuthorAPI,
 } from "../service/advertising";
 import { ADVERTISING } from "../constant";
 
@@ -67,10 +68,21 @@ function* addNewAds(obj) {
   yield put({ type: ADVERTISING.GET_LIST_ADS, data: resp.data });
 }
 
+function* getListAdsByAuthor() {
+  const resp = yield call(getListAdsByAuthorAPI);
+  console.log("resp", resp);
+  if (resp.code !== 200) {
+    yield put({ type: ADVERTISING.GET_ADS_BY_AUTHOR_FAIL, data: resp.message });
+    return;
+  }
+  yield put({ type: ADVERTISING.GET_ADS_BY_AUTHOR_SUCCESS, data: resp.data });
+}
+
 export const advertisingSaga = [
   takeLatest(ADVERTISING.GET_LIST_ADS, getListAds),
   takeLatest(ADVERTISING.GET_ADS_BY_ID, getAdsById),
   takeLatest(ADVERTISING.EDIT_ADS, editAds),
   takeLatest(ADVERTISING.DELETE_ADS, deleteAdsById),
   takeLatest(ADVERTISING.ADD_NEW_ADS, addNewAds),
+  takeLatest(ADVERTISING.GET_ADS_BY_AUTHOR, getListAdsByAuthor),
 ];

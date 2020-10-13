@@ -1,0 +1,139 @@
+.containerUserPage {
+  // background-color: #fff;
+  min-height: 100vh;
+  padding: 24px;
+}
+
+.viewFilter {
+  margin: 2rem 0px 0px;
+  .bx--accordion__title {
+    margin: 0px;
+    z-index: 0;
+  }
+  .bx--accordion__heading {
+    background-color: transparent;
+    padding: 0.5rem 0px;
+    &:focus::before {
+      border: none;
+    }
+  }
+  .bx--accordion__content {
+    padding-right: 0px;
+  }
+  &__title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    line-height: 1.75rem;
+    letter-spacing: 0;
+    color: #2a3f54;
+    display: flex;
+    align-items: center;
+    &--icon {
+      font-size: 1.25rem;
+      margin-left: 0.5em;
+    }
+  }
+}
+
+.formData {
+  padding: 0rem 1rem;
+  .buttonUpload {
+    .bx--file__selected-file {
+      display: none;
+    }
+    .bx--btn--primary {
+      background: linear-gradient(135deg, #0f62fe 0%, #826cfd 100%);
+      border-radius: 5px;
+      font-weight: 600;
+      &:focus {
+        outline: none;
+        border: none;
+      }
+    }
+  }
+
+  .bx--number__control-btn:focus {
+    outline: none;
+  }
+
+  .bx--number input[type="number"] {
+    width: 11rem;
+    &:focus {
+      outline: none;
+    }
+  }
+  .bx--fieldset {
+    margin-bottom: 0.5rem;
+  }
+  .bx--text-input {
+    &:focus {
+      outline: none;
+    }
+  }
+
+  .bx--date-picker.bx--date-picker--single .bx--date-picker__input {
+    width: 12rem;
+    &:focus {
+      outline: none;
+    }
+  }
+
+  .bx--label {
+    // font-size: 1rem;
+    // font-weight: 600;
+  }
+  &__avt {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 5rem;
+    margin-bottom: 1rem;
+    &--img {
+      width: 6rem;
+      height: 6rem;
+      border-radius: 50%;
+      position: relative;
+    }
+  }
+  &__row {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    &__input {
+      // width: 90%;
+    }
+  }
+  .viewContract {
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    .titleContract {
+      width: 100%;
+      font-size: 0.75rem;
+      font-weight: 400;
+      line-height: 1rem;
+      letter-spacing: 0.32px;
+      margin-bottom: 0.5rem;
+      color: #525252;
+      font-weight: 400;
+      line-height: 1rem;
+      vertical-align: baseline;
+    }
+    &__img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+  }
+}
+
+.modalLoading {
+  width: 100%;
+  height: 50vh;
+  display: grid;
+  place-items: center;
+}

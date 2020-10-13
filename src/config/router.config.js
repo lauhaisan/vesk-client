@@ -18,6 +18,7 @@ const HistoryExchanges = lazy(() => import("../pages/HistoryExchanges"));
 const ResultSearch = lazy(() => import("../pages/ResultSearch"));
 const SocialMedia = lazy(() => import("../pages/SocialMedia"));
 const CreateWebsite = lazy(() => import("../pages/CreateWebsite"));
+const Advertising = lazy(() => import("../pages/Advertising"));
 
 const routes = [
   {
@@ -73,6 +74,12 @@ const routes = [
     exact: true,
     layout: BasicLayout,
     component: SocialMedia,
+  },
+  {
+    path: "/manage-advertising",
+    exact: true,
+    layout: BasicLayout,
+    component: Advertising,
   },
   {
     path: "/contact",

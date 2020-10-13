@@ -15,6 +15,7 @@ const URL = {
   //ADVERTISING
   GET_LIST_ADVERTISING: "/v1/vesk/public/ads",
   ADMIN_CRUD_ADVERTISING: "/v1/vesk/admin/ads",
+  GET_LIST_ADS_BY_AUTHOR: "/v1/vesk/ads/author",
 
   //SOCIAL MEDIA
   GET_LIST_SOCIAL_MEDIA: "/v1/vesk/public/e-social-media",
