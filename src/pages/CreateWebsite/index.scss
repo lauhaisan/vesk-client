@@ -14,7 +14,7 @@
     background-size: cover;
     box-shadow: 0 1.5rem 4rem rgba(0, 0, 0, 0.2);
     height: 100%;
-    padding: 2rem;
+    padding: 0 2rem;
     .heading-secondary {
       font-size: 1.5rem;
       text-transform: uppercase;
@@ -27,7 +27,9 @@
       -webkit-background-clip: text;
       background-clip: text;
       transition: all 0.2s;
-      margin-bottom: 1rem;
+      line-height: 20px;
+      margin-top: 1.5rem;
+      margin-bottom: 5px;
       &:hover {
         transform: skewY(3deg) scale(1);
         text-shadow: 0.5rem 1rem 2rem rgba(0, 0, 0, 0.2);
@@ -40,7 +42,7 @@
         box-shadow: 0 0 0 100px #faf2f2 inset;
       }
       .bx--fieldset {
-        margin-bottom: 10px;
+        margin-bottom: 5px;
       }
       .bx--label {
         font : {
