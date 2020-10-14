@@ -274,9 +274,17 @@ class Advertising extends React.Component {
                 </Select>
               </FormGroup>
             </div>
-
-            <div>Charge Point: {chargePoint}</div>
-
+            {titleModal === "Add New Advertising" && (
+              <div
+                style={{
+                  fontSize: "0.75rem",
+                  color: "#0f62fe",
+                  fontWeight: "600",
+                }}
+              >
+                Charge Point: {chargePoint}
+              </div>
+            )}
             <FormGroup legendText="">
               <TextInput
                 id="inputLinkTarget"
