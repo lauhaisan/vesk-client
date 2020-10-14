@@ -44,13 +44,15 @@ class SideMenu extends PureComponent {
     const iconChevron = "fas fa-chevron-down";
     const { token } = getToken();
 
+    const renderOnClick = isMobile ? handleMenuMobile : () => {};
+
     return (
       <div className={classNameMenu} style={{ display: checkMenuMobileOpen }}>
         <div className={`${classNameMenu}__menu`}>
           <div className="scrollSideMenu">
             <NavLink
               exact
-              onClick={isMobile && handleMenuMobile}
+              onClick={renderOnClick}
               activeClassName={`${classNameMenu}__menu__itemMenu--active`}
               to="/"
               className={`${classNameMenu}__menu__itemMenu`}
@@ -60,7 +62,7 @@ class SideMenu extends PureComponent {
             </NavLink>
             <NavLink
               exact
-              onClick={isMobile && handleMenuMobile}
+              onClick={renderOnClick}
               activeClassName={`${classNameMenu}__menu__itemMenu--active`}
               to="/top-rated"
               className={`${classNameMenu}__menu__itemMenu`}
@@ -70,7 +72,7 @@ class SideMenu extends PureComponent {
             </NavLink>
             <NavLink
               exact
-              onClick={isMobile && handleMenuMobile}
+              onClick={renderOnClick}
               activeClassName={`${classNameMenu}__menu__itemMenu--active`}
               to="/most-popular"
               className={`${classNameMenu}__menu__itemMenu`}
@@ -91,7 +93,7 @@ class SideMenu extends PureComponent {
                   <Fragment>
                     <NavLink
                       exact
-                      onClick={isMobile && handleMenuMobile}
+                      onClick={renderOnClick}
                       activeClassName={`${classNameMenu}__menu__itemMenu--active`}
                       to="/history-point"
                       className={`${classNameMenu}__menu__itemMenu `}
@@ -101,7 +103,7 @@ class SideMenu extends PureComponent {
                     </NavLink>
                     <NavLink
                       exact
-                      onClick={isMobile && handleMenuMobile}
+                      onClick={renderOnClick}
                       activeClassName={`${classNameMenu}__menu__itemMenu--active`}
                       to="/history-exchange"
                       className={`${classNameMenu}__menu__itemMenu `}
@@ -113,7 +115,7 @@ class SideMenu extends PureComponent {
                 )}
                 <NavLink
                   activeClassName={`${classNameMenu}__menu__itemMenu--active`}
-                  onClick={isMobile && handleMenuMobile}
+                  onClick={renderOnClick}
                   to="/manage-video"
                   className={`${classNameMenu}__menu__itemMenu`}
                 >
@@ -122,7 +124,7 @@ class SideMenu extends PureComponent {
                 </NavLink>
                 <NavLink
                   activeClassName={`${classNameMenu}__menu__itemMenu--active`}
-                  onClick={isMobile && handleMenuMobile}
+                  onClick={renderOnClick}
                   to="/manage-advertising"
                   className={`${classNameMenu}__menu__itemMenu`}
                 >
@@ -133,7 +135,7 @@ class SideMenu extends PureComponent {
             )}
             <NavLink
               activeClassName={`${classNameMenu}__menu__itemMenu--active`}
-              onClick={isMobile && handleMenuMobile}
+              onClick={renderOnClick}
               to="/create-website"
               className={`${classNameMenu}__menu__itemMenu`}
             >
@@ -142,7 +144,7 @@ class SideMenu extends PureComponent {
             </NavLink>
             <NavLink
               activeClassName={`${classNameMenu}__menu__itemMenu--active`}
-              onClick={isMobile && handleMenuMobile}
+              onClick={renderOnClick}
               to="/contact"
               className={`${classNameMenu}__menu__itemMenu`}
             >

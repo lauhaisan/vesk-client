@@ -22,7 +22,7 @@ class ItemAdvertising extends PureComponent {
   render() {
     const { listAds = [], key = "" } = this.props;
     const randomAds = (listAds.length > 0 && this.randomAds(listAds)) || {};
-    const { ImageUrl = "", LinkTarget = "" } = randomAds;
+    const { imageUrl: ImageUrl = "", LinkTarget = "" } = randomAds;
     return (
       <Fragment>
         {ImageUrl && (

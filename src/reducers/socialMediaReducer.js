@@ -210,6 +210,30 @@ const socialMediaReducer = (state = INITIAL_STATE, action) => {
         messageError: action.data,
       };
 
+    case SOCIAL_MEDIA.LOAD_MORE_LIST_VIDEO:
+      return {
+        ...state,
+        loading: true,
+        messageError: "",
+      };
+    case SOCIAL_MEDIA.LOAD_MORE_LIST_VIDEO_SUCCESS:
+      const newList = action.data.items;
+      const { listSocialMedia } = state;
+      return {
+        ...state,
+        loading: false,
+        listSocialMedia: [...listSocialMedia, ...newList],
+        paging: action.data.paging,
+        messageError: "",
+      };
+    case SOCIAL_MEDIA.LOAD_MORE_LIST_VIDEO_FAIL:
+      return {
+        ...state,
+        loading: false,
+        listSocialMedia: [],
+        messageError: action.data,
+      };
+
     default:
       return state;
   }

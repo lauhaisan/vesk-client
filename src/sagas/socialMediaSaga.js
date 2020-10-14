@@ -1,4 +1,4 @@
-import { takeLatest, call, put } from "redux-saga/effects";
+import { takeLatest, call, put, delay } from "redux-saga/effects";
 import {
   getListSocialMediaAPI,
   getByIdAPI,
@@ -162,6 +162,24 @@ function* addPointVideo(obj) {
   yield put({ type: WALLET.GET_WALLET });
 }
 
+function* getMoreListSocialMedia(object) {
+  const dat = object.data;
+  const resp = yield call(getListSocialMediaAPI, dat);
+  const { code, message, data } = resp;
+  if (code !== 200) {
+    yield put({
+      type: SOCIAL_MEDIA.LOAD_MORE_LIST_VIDEO_FAIL,
+      data: message,
+    });
+    return;
+  }
+  yield delay(700);
+  yield put({
+    type: SOCIAL_MEDIA.LOAD_MORE_LIST_VIDEO_SUCCESS,
+    data: data,
+  });
+}
+
 export const socialMediaSaga = [
   takeLatest(SOCIAL_MEDIA.GET_LIST_SOCIAL_MEDIA, getListSocialMedia),
   takeLatest(SOCIAL_MEDIA.GET_BY_ID, getSocialMediaById),
@@ -172,4 +190,5 @@ export const socialMediaSaga = [
   takeLatest(SOCIAL_MEDIA.GET_LIST_BY_AUTHOR, getListByAuthor),
   takeLatest(SOCIAL_MEDIA.SEARCH_LIST_BY_AUTHOR, searchListByAuthor),
   takeLatest(SOCIAL_MEDIA.ADD_POINT_VIDEO, addPointVideo),
+  takeLatest(SOCIAL_MEDIA.LOAD_MORE_LIST_VIDEO, getMoreListSocialMedia),
 ];

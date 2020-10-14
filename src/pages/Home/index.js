@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
+import InfiniteScroll from "react-infinite-scroll-component";
 import { SOCIAL_MEDIA } from "../../constant";
 import Slider from "./components/Slider";
 import Notification from "../../components/Notification";
@@ -11,16 +12,31 @@ import "./index.scss";
 class Home extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      page: 2,
+      hasMore: true,
+    };
   }
 
   componentDidMount() {
-    this.handleGetListSocialMedia({});
+    this.handleGetListSocialMedia({ page: 1, limit: 10 });
   }
 
   handleGetListSocialMedia = (payload) => {
     const { getListSocialMedia } = this.props;
     getListSocialMedia(payload);
+  };
+
+  fetchMoreData = () => {
+    const { page } = this.state;
+    const { listSocialMedia = [], loadMore = () => {} } = this.props;
+    const total = 29;
+    if (listSocialMedia.length >= total) {
+      this.setState({ hasMore: false });
+      return;
+    }
+    loadMore({ page, limit: 10 });
+    this.setState({ page: page + 1 });
   };
 
   randomAds = (list) => {
@@ -33,7 +49,6 @@ class Home extends Component {
 
   render() {
     const {
-      loading,
       listSocialMedia = [],
       messageError,
       loadingListUserName,
@@ -41,8 +56,8 @@ class Home extends Component {
       messageErrorListUser,
       listAds = [],
       history,
-      // total,
     } = this.props;
+    const { hasMore } = this.state;
     const formatListVideo = listSocialMedia.map((item) => {
       return {
         ...item,
@@ -86,7 +101,7 @@ class Home extends Component {
           </div>
 
           <div className="divider" />
-          {randomAds.ImageUrl && (
+          {randomAds.imageUrl && (
             <div className="viewAds">
               <a
                 href={randomAds.LinkTarget}
@@ -96,7 +111,7 @@ class Home extends Component {
               >
                 <img
                   className="viewAds__img"
-                  src={randomAds.ImageUrl}
+                  src={randomAds.imageUrl}
                   alt="img-avatar"
                 />
               </a>
@@ -107,10 +122,18 @@ class Home extends Component {
           <div className="titleBlock">
             <p className="titleBlock__text">Featured Videos</p>
           </div>
-
-          {loading ? (
-            _renderLoading
-          ) : (
+          <InfiniteScroll
+            dataLength={filterListActive.length}
+            next={this.fetchMoreData}
+            hasMore={hasMore}
+            loader={_renderLoading}
+            endMessage={
+              <p style={{ textAlign: "center" }}>
+                <b>Yay! You have seen it all</b>
+              </p>
+            }
+            style={{ overflow: "hidden" }}
+          >
             <div className="bx--row">
               {filterListActive.map((item) => (
                 <div key={item.id} className="bx--col-md-2 bx--col-sm-4">
@@ -118,7 +141,7 @@ class Home extends Component {
                 </div>
               ))}
             </div>
-          )}
+          </InfiniteScroll>
         </div>
         {error && (
           <Notification
@@ -159,6 +182,10 @@ const mapStateToProps = ({
 const mapDispatchToProps = (dispatch) => ({
   getListSocialMedia: (data) =>
     dispatch({ type: SOCIAL_MEDIA.GET_LIST_SOCIAL_MEDIA, data }),
+  loadMore: (data) =>
+    dispatch({ type: SOCIAL_MEDIA.LOAD_MORE_LIST_VIDEO, data }),
+  updateStore: (data) =>
+    dispatch({ type: SOCIAL_MEDIA.UPDATE_SOCIAL_MEDIA_REDUCER, data }),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home);
