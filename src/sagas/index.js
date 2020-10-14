@@ -9,6 +9,7 @@ import { mostPopularSaga } from "./mostPopularSaga";
 import { commentSaga } from "./commentSaga";
 import { walletSaga } from "./walletSaga";
 import { uploadSaga } from "./uploadSaga";
+import { createWebSiteSaga } from "./createWebSiteSaga";
 
 export default function* rootSaga() {
   yield all([
@@ -22,5 +23,6 @@ export default function* rootSaga() {
     ...commentSaga,
     ...walletSaga,
     ...uploadSaga,
+    ...createWebSiteSaga,
   ]);
 }

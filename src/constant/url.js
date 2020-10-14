@@ -41,6 +41,9 @@ const URL = {
   GET_HISTORY_EXCHANGE: "/v1/vesk/exchanges/user",
   GET_EXCHANGE_RATE: "/v1/vesk/rate-setting/search",
   CREATE_EXCHANGE: "/v1/vesk/exchange",
+
+  //CREATE WEBSITE:
+  CREATE_WEB: "/v1/vesk/public/website",
 };
 
 export default URL;

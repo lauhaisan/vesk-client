@@ -9,6 +9,7 @@ import mostPopularReducer from "./mostPopularReducer";
 import commentReducer from "./commentReducer";
 import walletReducer from "./walletReducer";
 import uploadReducer from "./uploadReducer";
+import createWebSiteReducer from "./createWebSiteReducer";
 
 const rootReducer = combineReducers({
   // products: productReducer,
@@ -21,6 +22,7 @@ const rootReducer = combineReducers({
   comment: commentReducer,
   wallet: walletReducer,
   upload: uploadReducer,
+  createWebSite: createWebSiteReducer,
 });
 
 export default rootReducer;

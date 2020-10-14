@@ -1,7 +1,10 @@
 import React, { Component, Fragment } from "react";
 import { Form, FormGroup, TextInput, TextArea } from "carbon-components-react";
 import TitlePage from "../../components/TitlePage";
+import Notification from "../../components/Notification";
+import { connect } from "react-redux";
 import ButtonLoading from "../../components/ButtonLoading";
+import { CREATE_WEBSITE } from "../../constant";
 import "./index.scss";
 
 class CreateWebsite extends Component {
@@ -10,12 +13,32 @@ class CreateWebsite extends Component {
     this.state = {
       validationEmail: "",
       messageValidationEmail: "",
+      validationPhone: "",
+      messageValidationPhone: "",
+      validationDemand: "",
+      messageValidationDemand: "",
+      validationContent: "",
+      messageValidationContent: "",
       email: "",
       phone: "",
       demand: "",
       content: "",
     };
   }
+
+  componentWillUnmount() {
+    const { updateStoreCreateWebSite } = this.props;
+    updateStoreCreateWebSite({ messageError: "", actionSuccessfully: "" });
+  }
+
+  resetForm = () => {
+    this.setState({
+      email: "",
+      phone: "",
+      demand: "",
+      content: "",
+    });
+  };
 
   handleChange = (name, value) => {
     this.setState({
@@ -25,6 +48,7 @@ class CreateWebsite extends Component {
 
   handleSubmit = (event) => {
     const { email, phone, content, demand } = this.state;
+    const { sendFormCreateWebSite } = this.props;
     event.preventDefault();
     let check = false;
     // eslint-disable-next-line no-useless-escape
@@ -58,13 +82,38 @@ class CreateWebsite extends Component {
         messageValidationPhone: "",
       });
     }
+    if (!demand) {
+      this.setState({
+        validationDemand: true,
+        messageValidationDemand: "Demand is required",
+      });
+      check = true;
+    } else {
+      this.setState({
+        validationDemand: false,
+        messageValidationDemand: "",
+      });
+    }
+    if (!content) {
+      this.setState({
+        validationContent: true,
+        messageValidationContent: "Content is required",
+      });
+      check = true;
+    } else {
+      this.setState({
+        validationContent: false,
+        messageValidationContent: "",
+      });
+    }
     if (!check) {
       const payload = { email, phone, content, demand };
-      console.log("payload", payload);
+      sendFormCreateWebSite(payload, this.resetForm);
     }
   };
 
   render() {
+    const { loading, actionSuccessfully, messageError } = this.props;
     const {
       validationEmail = "",
       messageValidationEmail = "",
@@ -74,6 +123,10 @@ class CreateWebsite extends Component {
       phone = "",
       demand = "",
       content = "",
+      validationDemand = "",
+      messageValidationDemand = "",
+      validationContent = "",
+      messageValidationContent = "",
     } = this.state;
     return (
       <Fragment>
@@ -120,32 +173,37 @@ class CreateWebsite extends Component {
                 <TextArea
                   id="inputDemand"
                   labelText="Demand"
+                  invalid={validationDemand}
+                  invalidText={messageValidationDemand}
                   value={demand}
                   onChange={(event) =>
                     this.handleChange("demand", event.target.value)
                   }
                   placeholder="Demand"
+                  rows={0}
                 />
               </FormGroup>
               <FormGroup legendText="">
                 <TextArea
                   id="inputContent"
                   labelText="Content"
+                  invalid={validationContent}
+                  invalidText={messageValidationContent}
                   value={content}
                   onChange={(event) =>
                     this.handleChange("content", event.target.value)
                   }
                   placeholder="Content"
+                  rows={0}
                 />
               </FormGroup>
 
               <ButtonLoading
                 onClick={this.handleSubmit}
-                // disabled={loading}
-                // loading={loading ? "yes" : undefined}
+                disabled={loading}
+                loading={loading ? "yes" : undefined}
                 type="submit"
                 text="Send"
-                // renderIcon={Login32}
                 style={{
                   margin: "20px 0",
                   width: "140px",
@@ -155,9 +213,37 @@ class CreateWebsite extends Component {
             </Form>
           </div>
         </div>
+        {actionSuccessfully && (
+          <Notification
+            status="success"
+            title="Successfully"
+            message="Your information has successfully added"
+          />
+        )}
+        {messageError && (
+          <Notification
+            status="error"
+            message={messageError}
+            title="Process Failed"
+          />
+        )}
       </Fragment>
     );
   }
 }
 
-export default CreateWebsite;
+const mapStateToProps = ({
+  createWebSite: { loading, messageError, actionSuccessfully } = {},
+}) => ({ loading, messageError, actionSuccessfully });
+
+const mapDispatchToProps = (dispatch) => ({
+  sendFormCreateWebSite: (data, resetForm) =>
+    dispatch({
+      type: CREATE_WEBSITE.CREATE_WEBSITE,
+      data: { data, resetForm },
+    }),
+  updateStoreCreateWebSite: (data) =>
+    dispatch({ type: CREATE_WEBSITE.UPDATE_CREATE_WEBSITE_REDUCER, data }),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(CreateWebsite);

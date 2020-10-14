@@ -22,9 +22,14 @@ const getMyInfoAPI = async (payload) => {
   return request(URL_WITH_PARAMS, true);
 };
 
+const sendFormCreateWebSiteAPI = async (payload) => {
+  return request(URL.CREATE_WEB, true, "POST", payload);
+};
+
 export {
   signUpAPI,
   signInAPI,
   // logoutAPI
   getMyInfoAPI,
+  sendFormCreateWebSiteAPI,
 };

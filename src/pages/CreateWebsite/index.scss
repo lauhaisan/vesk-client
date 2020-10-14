@@ -3,7 +3,6 @@
 }
 .containerCreateWebsite {
   width: 100%;
-  height: 100vh;
   &__form {
     background-image: radial-gradient(
         150% 200% ellipse at -15%,
@@ -13,7 +12,7 @@
       url("../../images/background2.jpg");
     background-size: cover;
     box-shadow: 0 1.5rem 4rem rgba(0, 0, 0, 0.2);
-    height: 100%;
+    height: 100vh;
     padding: 0 2rem;
     .heading-secondary {
       font-size: 1.5rem;
@@ -26,8 +25,7 @@
       background-clip: text;
       transition: all 0.2s;
       line-height: 20px;
-      margin-top: 1.5rem;
-      margin-bottom: 5px;
+      margin: 1.5rem 0;
       // &:hover {
       //   transform: skewY(3deg) scale(1);
       //   text-shadow: 0.5rem 1rem 2rem rgba(0, 0, 0, 0.2);
@@ -36,11 +34,11 @@
     .formGroup {
       input:-webkit-autofill,
       input:focus:-webkit-autofill {
-        -webkit-box-shadow: 0 0 0 100px #faf2f2 inset;
-        box-shadow: 0 0 0 100px #faf2f2 inset;
+        -webkit-box-shadow: 0 0 0 100px #fff inset;
+        box-shadow: 0 0 0 100px #fff inset;
       }
       .bx--fieldset {
-        margin-bottom: 5px;
+        margin-bottom: 0.75rem;
       }
       .bx--label {
         font : {
@@ -52,13 +50,16 @@
       .bx--text-area {
         width: 50%;
         color: #000;
-        background-color: #faf2f2;
+        background-color: #fff;
         border-radius: 5px;
         border: 1px solid rgba(0, 0, 0, 0.5);
         resize: none;
         &:focus {
           outline: none;
         }
+      }
+      .bx--text-area__invalid-icon {
+        display: none;
       }
       .bx--text-input__field-wrapper .bx--text-input__invalid-icon {
         display: none;
