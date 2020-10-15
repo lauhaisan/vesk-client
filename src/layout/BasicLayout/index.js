@@ -32,8 +32,31 @@ class BasicLayout extends Component {
     });
   };
 
+  handleClose = () => {
+    const { setDataUserReducer } = this.props;
+    setDataUserReducer({
+      hideAds: true,
+    });
+  };
+
+  randomAds = (list) => {
+    let itemAds = {};
+    if (list.length > 0) {
+      itemAds = list[Math.floor(Math.random() * list.length)];
+    }
+    return itemAds;
+  };
+
   render() {
-    const { children, history, openMenu, windowWidth } = this.props;
+    const {
+      children,
+      history,
+      openMenu,
+      windowWidth,
+      hideAds,
+      listAds,
+      loadingAds,
+    } = this.props;
     const isMobile = windowWidth < 768;
     const padding = openMenu ? "225px" : "90px";
     const renderSiderMobile = (
@@ -46,6 +69,11 @@ class BasicLayout extends Component {
         <div className="backgroundSideMenuMobile" onClick={this._handleMenu} />
       </Fragment>
     );
+
+    const listAdsBottom = listAds.filter(
+      (item) => item.position === "FIX_BOTTOM"
+    );
+    const randomAds = this.randomAds(listAdsBottom);
     return (
       <Fragment>
         <div className="container_basic_layout">
@@ -56,7 +84,6 @@ class BasicLayout extends Component {
             ) : (
               <SideMenu history={history} openMenu={openMenu} />
             )}
-
             <div
               style={{
                 display: "flex",
@@ -65,7 +92,56 @@ class BasicLayout extends Component {
                 width: "100%",
               }}
             >
-              <div className="content">{children}</div>
+              <div className="content">
+                <Fragment>
+                  {children}
+                  {!hideAds && (
+                    <div className="viewAdsFixBottom">
+                      <div style={{ width: "70%", position: "relative" }}>
+                        {randomAds.imageUrl && (
+                          <Fragment>
+                            <a
+                              href={randomAds.linkTarget}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="contentAds"
+                            >
+                              <img
+                                className="viewAdsFixBottom__img"
+                                src={randomAds.imageUrl}
+                                alt="img-avatar"
+                              />
+                            </a>
+                          </Fragment>
+                        )}
+                        {listAdsBottom.length === 0 && !loadingAds && (
+                          <Fragment>
+                            <a
+                              href="https://kingofsolutions.global"
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="contentAds"
+                            >
+                              <img
+                                className="viewAdsFixBottom__img"
+                                src="https://statics.veskhub.co/98569664-fd45-11ea-bd57-5600023ed650.jpg"
+                                alt="img-avatar"
+                              />
+                            </a>
+                          </Fragment>
+                        )}
+
+                        <div
+                          className="contentAds__close"
+                          onClick={this.handleClose}
+                        >
+                          [X]
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                </Fragment>
+              </div>
               <Footer />
             </div>
           </div>
@@ -75,8 +151,14 @@ class BasicLayout extends Component {
   }
 }
 
-const mapStateToProps = ({ user: { openMenu } = {} }) => ({
+const mapStateToProps = ({
+  user: { openMenu, hideAds } = {},
+  advertising: { listAds = [], loading: loadingAds } = {},
+}) => ({
   openMenu,
+  hideAds,
+  listAds,
+  loadingAds,
 });
 
 const mapDispatchToProps = (dispatch) => ({

@@ -97,6 +97,9 @@ class NewExchange extends Component {
             alt="QRcode"
           />
           <div className="containerAddExchange__viewTop__text">
+            <p className="addExchangeText" style={{ margin: "20px 0 25px" }}>
+              KATrhdQ5tw4uVdWKYr4sQB45edEkkSHL4w
+            </p>
             <p className="addExchangeText">
               Create a CXC Transfer order into our Wallet address and take a
               screenshot. Then send the voucher (screenshot) to us. The
