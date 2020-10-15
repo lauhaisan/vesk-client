@@ -84,7 +84,7 @@ class ComponentHeader extends Component {
             style={{ marginRight: "0.5rem", color: "#FFCF40" }}
           ></i>
           <span className="point__number">
-            {money && numeral(money).format("0.[00]")}
+            {money && numeral(money).format("0,0.[00]")}
           </span>
         </div>
         <div className="rightMenu">
