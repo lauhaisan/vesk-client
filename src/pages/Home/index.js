@@ -56,6 +56,7 @@ class Home extends Component {
       messageErrorListUser,
       listAds = [],
       history,
+      loadingAds,
     } = this.props;
     const { hasMore } = this.state;
     const formatListVideo = listSocialMedia.map((item) => {
@@ -77,7 +78,9 @@ class Home extends Component {
         <Spin />
       </div>
     );
-    const randomAds = this.randomAds(listAds);
+
+    const listAdsHome = listAds.filter((item) => item.position === "HOME");
+    const randomAds = this.randomAds(listAdsHome);
 
     return (
       <Fragment>
@@ -101,6 +104,22 @@ class Home extends Component {
           </div>
 
           <div className="divider" />
+          {listAdsHome.length === 0 && !loadingAds && (
+            <div className="viewAds">
+              <a
+                href="https://kingofsolutions.global"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="contentAds"
+              >
+                <img
+                  className="viewAds__img"
+                  src="https://statics.veskhub.co/8cbba4ba-fd45-11ea-bd57-5600023ed650.jpg"
+                  alt="img-avatar"
+                />
+              </a>
+            </div>
+          )}
           {randomAds.imageUrl && (
             <div className="viewAds">
               <a
@@ -167,7 +186,7 @@ const mapStateToProps = ({
     listUserData = [],
     messageError: messageErrorListUser = "",
   } = {},
-  advertising: { listAds = [] } = {},
+  advertising: { listAds = [], loading: loadingAds } = {},
 }) => ({
   loading,
   listSocialMedia,
@@ -177,6 +196,7 @@ const mapStateToProps = ({
   listUserData,
   messageErrorListUser,
   listAds,
+  loadingAds,
 });
 
 const mapDispatchToProps = (dispatch) => ({

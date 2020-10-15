@@ -21,13 +21,28 @@ class MostPopular extends Component {
     return listSort.reverse();
   };
 
+  randomAds = (list) => {
+    let itemAds = {};
+    if (list.length > 0) {
+      itemAds = list[Math.floor(Math.random() * list.length)];
+    }
+    return itemAds;
+  };
+
   render() {
     const {
       loading,
       listMostPopular = [],
       listUserData = [],
       messageErrorMostPopular = "",
+      listAds,
+      loadingAds,
     } = this.props;
+
+    const listAdsMostPopular = listAds.filter(
+      (item) => item.position === "MOST_POPULAR"
+    );
+    const randomAds = this.randomAds(listAdsMostPopular);
 
     const formatListVideo = listMostPopular.map((item) => {
       return {
@@ -51,6 +66,38 @@ class MostPopular extends Component {
     return (
       <Fragment>
         <div className="container_page_topRated">
+          {listAdsMostPopular.length === 0 && !loadingAds && (
+            <div className="viewAdsMostPopular">
+              <a
+                href="https://kingofsolutions.global"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="contentAds"
+              >
+                <img
+                  className="viewAdsMostPopular__img"
+                  src="https://statics.veskhub.co/8cbba4ba-fd45-11ea-bd57-5600023ed650.jpg"
+                  alt="img-avatar"
+                />
+              </a>
+            </div>
+          )}
+          {randomAds.imageUrl && (
+            <div className="viewAdsMostPopular">
+              <a
+                href={randomAds.linkTarget}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="contentAds"
+              >
+                <img
+                  className="viewAdsMostPopular__img"
+                  src={randomAds.imageUrl}
+                  alt="img-avatar"
+                />
+              </a>
+            </div>
+          )}
           <TitlePage title="Top Rated" />
           <div className="titleBlock">
             <p className="titleBlock__text">Most Popular Videos</p>
@@ -90,11 +137,14 @@ const mapStateToProps = ({
     messageErrorMostPopular = "",
   } = {},
   listUser: { listUserData = [] } = {},
+  advertising: { listAds = [], loading: loadingAds } = {},
 }) => ({
   loading,
   listMostPopular,
   messageErrorMostPopular,
   listUserData,
+  listAds,
+  loadingAds,
 });
 
 const mapDispatchToProps = (dispatch) => ({

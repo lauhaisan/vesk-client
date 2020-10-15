@@ -20,12 +20,29 @@ class ItemAdvertising extends PureComponent {
     return itemAds;
   };
   render() {
-    const { listAds = [], key = "" } = this.props;
-    const randomAds = (listAds.length > 0 && this.randomAds(listAds)) || {};
-    const { imageUrl: ImageUrl = "", linkTarget = "" } = randomAds;
+    const { listAds = [], key = "", loadingAds } = this.props;
+    const listAdsDetail = listAds.filter((item) => item.position === "HOME");
+    const randomAds = this.randomAds(listAdsDetail);
+    const { imageUrl = "", linkTarget = "" } = randomAds;
     return (
       <Fragment>
-        {ImageUrl && (
+        {listAdsDetail.length === 0 && !loadingAds && (
+          <div className="viewAds">
+            <a
+              href="https://kingofsolutions.global"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="contentAds"
+            >
+              <img
+                className="viewAds__img"
+                src="https://statics.veskhub.co/98569664-fd45-11ea-bd57-5600023ed650.jpg"
+                alt="img-avatar"
+              />
+            </a>
+          </div>
+        )}
+        {imageUrl && (
           <div className="viewAds" key={key}>
             <a
               href={linkTarget}
@@ -33,7 +50,7 @@ class ItemAdvertising extends PureComponent {
               rel="noopener noreferrer"
               className="contentAds"
             >
-              <img className="viewAds__img" src={ImageUrl} alt="img-avatar" />
+              <img className="viewAds__img" src={imageUrl} alt="img-avatar" />
             </a>
           </div>
         )}
@@ -181,6 +198,7 @@ class Detail extends Component {
       isRewaredViewSuccessfully = "",
       listAds = [],
       myInfo,
+      loadingAds,
     } = this.props;
     const {
       name = "",
@@ -240,7 +258,11 @@ class Detail extends Component {
             {pointForUserView} point for watching {timeForRecvCoin} minutes.
           </div>
         )}
-        <ItemAdvertising key={idAdvertising} listAds={listAds} />
+        <ItemAdvertising
+          key={idAdvertising}
+          listAds={listAds}
+          loadingAds={loadingAds}
+        />
         <div className="detail__viewRow" style={{ marginTop: "2rem" }}>
           <div className="viewLeft">
             <div className="box boxName">
@@ -310,7 +332,7 @@ const mapStateToProps = ({
   listUser: { listUserData = [] } = {},
   mostPopular: { loading: loadingMostPopular, listMostPopular = [] } = {},
   wallet: { isRewaredViewSuccessfully = "" },
-  advertising: { listAds = [] } = {},
+  advertising: { listAds = [], loading: loadingAds } = {},
 }) => ({
   myInfo,
   itemMediaSocial,
@@ -326,6 +348,7 @@ const mapStateToProps = ({
   listMostPopular,
   isRewaredViewSuccessfully,
   listAds,
+  loadingAds,
 });
 
 const mapDispatchToProps = (dispatch) => ({

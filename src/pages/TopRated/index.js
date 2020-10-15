@@ -21,13 +21,28 @@ class TopRated extends Component {
     return listSort;
   };
 
+  randomAds = (list) => {
+    let itemAds = {};
+    if (list.length > 0) {
+      itemAds = list[Math.floor(Math.random() * list.length)];
+    }
+    return itemAds;
+  };
+
   render() {
     const {
       loading,
       listTopRated = [],
       listUserData = [],
       messageErrorTopRated = "",
+      listAds = [],
+      loadingAds,
     } = this.props;
+
+    const listAdsTopRate = listAds.filter(
+      (item) => item.position === "TOP_RATED"
+    );
+    const randomAds = this.randomAds(listAdsTopRate);
 
     const _renderLoading = (
       <div className="viewLoading">
@@ -53,6 +68,38 @@ class TopRated extends Component {
       <Fragment>
         <div className="container_page_topRated">
           <TitlePage title="Top Rated" />
+          {listAdsTopRate.length === 0 && !loadingAds && (
+            <div className="viewAdsTopRated">
+              <a
+                href="https://kingofsolutions.global"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="contentAds"
+              >
+                <img
+                  className="viewAdsTopRated__img"
+                  src="https://statics.veskhub.co/98569664-fd45-11ea-bd57-5600023ed650.jpg"
+                  alt="img-avatar"
+                />
+              </a>
+            </div>
+          )}
+          {randomAds.imageUrl && (
+            <div className="viewAdsTopRated">
+              <a
+                href={randomAds.linkTarget}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="contentAds"
+              >
+                <img
+                  className="viewAdsTopRated__img"
+                  src={randomAds.imageUrl}
+                  alt="img-avatar"
+                />
+              </a>
+            </div>
+          )}
           <div className="titleBlock">
             <p className="titleBlock__text">Top Rated Videos</p>
           </div>
@@ -87,11 +134,14 @@ class TopRated extends Component {
 const mapStateToProps = ({
   topRated: { loading, listTopRated = [], messageErrorTopRated = "" } = {},
   listUser: { listUserData = [] } = {},
+  advertising: { listAds = [], loading: loadingAds } = {},
 }) => ({
   loading,
   listTopRated,
   messageErrorTopRated,
   listUserData,
+  listAds,
+  loadingAds,
 });
 
 const mapDispatchToProps = (dispatch) => ({

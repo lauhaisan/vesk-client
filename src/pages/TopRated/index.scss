@@ -2,6 +2,27 @@
   min-height: 100vh;
   height: auto;
   padding: 2rem;
+  .viewAdsTopRated {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: auto;
+    margin-bottom: 1rem;
+    .contentAds {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+    }
+    &__img {
+      width: 100%;
+      height: auto;
+      max-height: 180px;
+      object-fit: contain;
+      cursor: pointer;
+    }
+  }
   .titleBlock {
     display: flex;
     justify-content: space-between;
