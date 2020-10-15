@@ -5,7 +5,8 @@ import queryString from "query-string";
 // request( param1: url, param2: isAuth, param3: method = "GET", param4: payload)
 
 const getListAdsAPI = async (payload) => {
-  return request(URL.GET_LIST_ADVERTISING, true);
+  const URL_WITH_PARAMS = `${URL.GET_LIST_ADVERTISING}/search?status=ACTIVE`;
+  return request(URL_WITH_PARAMS, true);
 };
 
 const getAdsByIdAPI = async (payload) => {
@@ -28,9 +29,6 @@ const addNewAdsAPI = async (payload) => {
 };
 
 const getListAdsByAuthorAPI = async (payload) => {
-  // const { data: { userId = "" } = {} } = getToken();
-  // const URL_WITH_PARAMS = `${URL.GET_LIST_ADS_BY_AUTHOR}/${userId}/search`;
-  // console.log("URL_WITH_PARAMS", URL_WITH_PARAMS);
   const param = queryString.stringify(payload);
   const URL_WITH_PARAMS = `${URL.GET_LIST_ADS_BY_AUTHOR}?${param}`;
   return request(URL_WITH_PARAMS, true);

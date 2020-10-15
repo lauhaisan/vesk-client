@@ -39,7 +39,7 @@ function* editAds(obj) {
   }
   yield put({ type: ADVERTISING.EDIT_ADS_SUCCESS, data: resp.data });
   hideModal();
-  yield put({ type: ADVERTISING.GET_ADS_BY_AUTHOR, data: resp.data });
+  yield put({ type: ADVERTISING.GET_ADS_BY_AUTHOR, data: {} });
 }
 
 function* deleteAdsById(obj) {

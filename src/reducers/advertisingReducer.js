@@ -24,7 +24,7 @@ const advertisingReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         loading: false,
-        listAds: action.data.items,
+        listAds: action.data.items || [],
         paging: action.data.paging,
         messageError: "",
       };
