@@ -76,7 +76,7 @@ const advertisingReducer = (state = INITIAL_STATE, action) => {
         actionAdsSuccessfully: false,
         messageError: action.data,
       };
-    case ADVERTISING.SET_STATE_REDUCER:
+    case ADVERTISING.SET_STATE_ADS_REDUCER:
       return {
         ...state,
         ...action.data,

@@ -104,7 +104,7 @@ class Home extends Component {
           {randomAds.imageUrl && (
             <div className="viewAds">
               <a
-                href={randomAds.LinkTarget}
+                href={randomAds.linkTarget}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="contentAds"

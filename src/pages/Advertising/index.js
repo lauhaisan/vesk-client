@@ -43,36 +43,35 @@ class Advertising extends React.Component {
     };
   }
 
-  // static getDerivedStateFromProps(props) {
-  //   if ("itemMediaSocial" in props) {
-  //     return { itemMediaSocial: props.itemMediaSocial };
-  //   }
-  //   return null;
-  // }
-
-  componentDidMount() {
-    // const { getListAdsByAuthor } = this.props;
-    // getListAdsByAuthor();
+  static getDerivedStateFromProps(props) {
+    if ("itemAds" in props) {
+      return { itemAds: props.itemAds };
+    }
+    return null;
   }
 
-  // componentWillUnmount() {
-  //   const { updateStateReducer } = this.props;
-  //   updateStateReducer({
-  //     itemMediaSocial: {},
-  //     actionSuccessfully: "",
-  //     messageError: "",
-  //   });
-  // }
+  componentDidMount() {
+    const { getListAdsByAuthor } = this.props;
+    getListAdsByAuthor({});
+  }
+
+  componentWillUnmount() {
+    const { updateAdsReducer } = this.props;
+    updateAdsReducer({
+      itemAds: {},
+      actionAdsSuccessfully: "",
+      messageError: "",
+    });
+  }
 
   _resetFilter = () => {
-    // const { getListAdsByAuthor } = this.props;
-    // getListAdsByAuthor();
+    const { getListAdsByAuthor } = this.props;
+    getListAdsByAuthor({});
   };
 
-  _search = (value) => {
-    // const { searchSocialMedia } = this.props;
-    // searchSocialMedia(value);
-    console.log("value search", value);
+  _search = ({ name }) => {
+    const { getListAdsByAuthor } = this.props;
+    getListAdsByAuthor({ name });
   };
 
   openModalAddNewAdvertising = () => {
@@ -133,43 +132,47 @@ class Advertising extends React.Component {
   };
 
   _hideModal = () => {
-    const { updateUploadReducer } = this.props;
+    const { updateUploadReducer, updateAdsReducer } = this.props;
     this.setState({
       openModal: false,
       isReview: false,
-      itemAds: {},
     });
     updateUploadReducer({
       link: "",
       messageUpload: "",
       linkContract: "",
     });
+    updateAdsReducer({
+      itemAds: {},
+    });
   };
 
   _handleSubmit = (event) => {
     event.preventDefault();
-    const { linkImagesAds = "" } = this.props;
+    const {
+      linkImagesAds = "",
+      addNewAdvertising = () => {},
+      editAds = () => {},
+    } = this.props;
     const { itemAds = {}, titleModal, chargePoint: point } = this.state;
     const payload = {
       ...itemAds,
-      point,
+      point: titleModal === "Add New Advertising" ? point : itemAds.point,
       imageUrl: linkImagesAds || itemAds.imageUrl,
       position: itemAds.position || "HOME",
       order: 0,
     };
     if (titleModal === "Add New Advertising") {
-      // addNewSocialMedia(payload, this._hideModal);
-      console.log("Add new ads", payload);
+      addNewAdvertising(payload, this._hideModal);
     } else {
-      // editSocialMedia(payload, this._hideModal);
-      console.log("Edit ads", payload);
+      editAds(payload, this._hideModal);
     }
   };
 
   _handleDelete = () => {
-    const { itemMediaSocial } = this.state;
-    const { deleteSocialMedia } = this.props;
-    deleteSocialMedia(itemMediaSocial, this._hideModal);
+    const { itemAds } = this.state;
+    const { deleteAds = () => {} } = this.props;
+    deleteAds(itemAds, this._hideModal);
   };
 
   _actionDelete = (item) => {
@@ -216,21 +219,23 @@ class Advertising extends React.Component {
       chargePoint,
     } = this.state;
     const {
-      loadingGetById,
-      // messageError,
-      loadingAction,
-      // actionSuccessfully,
+      loadingGetAdsById: loadingGetById,
       loadingUpload,
       linkImagesAds,
       messageUpload,
       loading,
       listAdsByAuthor = [],
+      actionAdsSuccessfully,
+      loadingActionAds,
+      messageError,
     } = this.props;
     const { token } = getToken();
     if (!token) {
       return <Redirect to="/" />;
     }
     const imgAds = linkImagesAds || itemAds.imageUrl;
+    const { name, linkTarget } = itemAds;
+    const checkDisableBtn = !name || !linkTarget || !imgAds;
     const contentModal = (
       <div style={{ height: "auto", width: "100%" }}>
         {loadingGetById ? (
@@ -257,15 +262,15 @@ class Advertising extends React.Component {
               </FormGroup>
               <FormGroup legendText="">
                 <Select
-                  readOnly={isReview}
+                  disabled={titleModal !== "Add New Advertising"}
                   style={{ width: "11rem" }}
-                  defaultValue="placeholder-item"
                   id="select-1"
                   invalidText="A valid value is required"
                   labelText="Select Position"
                   onChange={(event) =>
                     this.onChangeFormData("position", event.target.value)
                   }
+                  value={itemAds.position || "HOME"}
                 >
                   {listPosition.map((item) => {
                     const { name = "", value = "" } = item;
@@ -335,7 +340,7 @@ class Advertising extends React.Component {
 
     const contentDeleteModal = (
       <div style={{ height: "auto", width: "100%" }}>
-        {loadingGetById ? "Loading..." : `Are you sure delete ?`}
+        {loadingGetById ? "Loading..." : `Are you sure delete ${itemAds.name}?`}
       </div>
     );
 
@@ -348,16 +353,12 @@ class Advertising extends React.Component {
         key: "name",
       },
       {
-        header: "Point",
-        key: "point",
+        header: "Link Target",
+        key: "linkTarget",
       },
       {
-        header: "Point For User View",
-        key: "pointForUserView",
-      },
-      {
-        header: "Time For Recv Coin",
-        key: "timeForRecvCoin",
+        header: "Position",
+        key: "position",
       },
       {
         header: "Status",
@@ -404,9 +405,9 @@ class Advertising extends React.Component {
           />
         </div>
         <CustomModal
-          isReview={isReview}
+          isReview={isReview || checkDisableBtn}
           open={openModal}
-          loading={loadingAction}
+          loading={loadingActionAds}
           contentModal={renderContentModal}
           hideModal={this._hideModal}
           textSubmit={titleModal === "Delete Advertising" ? "Delete" : "Save"}
@@ -414,16 +415,16 @@ class Advertising extends React.Component {
           title={titleModal}
         />
 
-        {/* {!actionSuccessfully && messageError !== "" && (
+        {!actionAdsSuccessfully && messageError !== "" && (
           <Notification
             status="error"
             message={messageError}
             title={`${titleModal} Failed`}
           />
         )}
-        {actionSuccessfully && (
+        {actionAdsSuccessfully && (
           <Notification status="success" title={`${titleModal} Successfully`} />
-        )} */}
+        )}
         {messageUpload === "Upload Image Failed" && (
           <Notification
             status="error"
@@ -438,7 +439,15 @@ class Advertising extends React.Component {
 
 const mapStateToProps = ({
   upload: { loading: loadingUpload, messageUpload, link: linkImagesAds } = {},
-  advertising: { loading, listAdsByAuthor = [] } = {},
+  advertising: {
+    loading,
+    listAdsByAuthor = [],
+    actionAdsSuccessfully,
+    loadingActionAds,
+    messageError,
+    itemAds = {},
+    loadingGetAdsById,
+  } = {},
 }) => ({
   loadingUpload,
   messageUpload,
@@ -446,29 +455,19 @@ const mapStateToProps = ({
   //Ads:
   loading,
   listAdsByAuthor,
+  actionAdsSuccessfully,
+  loadingActionAds,
+  messageError,
+  itemAds,
+  loadingGetAdsById,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   uploadImage: (data) =>
     dispatch({ type: UPLOAD.UPLOAD_IMAGE, data: { data } }),
-  getListSocialMediaByAuthor: (data) =>
-    dispatch({ type: SOCIAL_MEDIA.GET_LIST_BY_AUTHOR, data: { data } }),
-  getById: (id) => dispatch({ type: SOCIAL_MEDIA.GET_BY_ID, data: { id } }),
-  editSocialMedia: (data, functionHideModal) =>
-    dispatch({
-      type: SOCIAL_MEDIA.EDIT_SOCIAL_MEDIA,
-      data: { data, functionHideModal },
-    }),
-  updateStateReducer: (data) =>
-    dispatch({ type: SOCIAL_MEDIA.UPDATE_SOCIAL_MEDIA_REDUCER, data }),
   deleteSocialMedia: (data, functionHideModal) =>
     dispatch({
       type: SOCIAL_MEDIA.DELETE_SOCIAL_MEDIA,
-      data: { data, functionHideModal },
-    }),
-  addNewSocialMedia: (data, functionHideModal) =>
-    dispatch({
-      type: SOCIAL_MEDIA.ADD_NEW,
       data: { data, functionHideModal },
     }),
   searchSocialMedia: (data) =>
@@ -478,12 +477,26 @@ const mapDispatchToProps = (dispatch) => ({
     }),
   updateUploadReducer: (data) =>
     dispatch({ type: UPLOAD.UPDATE_STATE_UPLOAD_REDUCER, data }),
-  addPointVideo: (data, functionHideModal) =>
+  getListAdsByAuthor: (data) =>
+    dispatch({ type: ADVERTISING.GET_ADS_BY_AUTHOR, data }),
+  addNewAdvertising: (data, functionHideModal) =>
     dispatch({
-      type: SOCIAL_MEDIA.ADD_POINT_VIDEO,
+      type: ADVERTISING.ADD_NEW_ADS,
       data: { data, functionHideModal },
     }),
-  getListAdsByAuthor: () => dispatch({ type: ADVERTISING.GET_ADS_BY_AUTHOR }),
+  getById: (id) => dispatch({ type: ADVERTISING.GET_ADS_BY_ID, data: { id } }),
+  updateAdsReducer: (data) =>
+    dispatch({ type: ADVERTISING.SET_STATE_ADS_REDUCER, data }),
+  editAds: (data, functionHideModal) =>
+    dispatch({
+      type: ADVERTISING.EDIT_ADS,
+      data: { data, functionHideModal },
+    }),
+  deleteAds: (data, functionHideModal) =>
+    dispatch({
+      type: ADVERTISING.DELETE_ADS,
+      data: { data, functionHideModal },
+    }),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Advertising);

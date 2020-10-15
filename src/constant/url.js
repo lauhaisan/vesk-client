@@ -7,15 +7,14 @@ const URL = {
   GET_MY_INFO: "/v1/vesk/users/my-info",
   // GET_USER_INFO: "/v1/vesk/users/my-info",
   PRODUCT: "/products",
-
   GET_LIST_USER: "/v1/vesk/public/users/search",
   GET_USER_BY_ID: "/v1/vesk/public/users/userId",
   EDIT_USER: "/v1/vesk/users",
 
   //ADVERTISING
   GET_LIST_ADVERTISING: "/v1/vesk/public/ads",
-  ADMIN_CRUD_ADVERTISING: "/v1/vesk/admin/ads",
-  GET_LIST_ADS_BY_AUTHOR: "/v1/vesk/ads/author",
+  ADD_NEW_ADVERTISING: "/v1/vesk/ads",
+  GET_LIST_ADS_BY_AUTHOR: "/v1/vesk/ads/search",
 
   //SOCIAL MEDIA
   GET_LIST_SOCIAL_MEDIA: "/v1/vesk/public/e-social-media",

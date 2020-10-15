@@ -7,7 +7,7 @@ import {
   addNewAdsAPI,
   getListAdsByAuthorAPI,
 } from "../service/advertising";
-import { ADVERTISING } from "../constant";
+import { ADVERTISING, WALLET } from "../constant";
 
 function* getListAds(object) {
   const dat = object.data;
@@ -39,7 +39,7 @@ function* editAds(obj) {
   }
   yield put({ type: ADVERTISING.EDIT_ADS_SUCCESS, data: resp.data });
   hideModal();
-  yield put({ type: ADVERTISING.GET_LIST_ADS, data: resp.data });
+  yield put({ type: ADVERTISING.GET_ADS_BY_AUTHOR, data: resp.data });
 }
 
 function* deleteAdsById(obj) {
@@ -52,7 +52,7 @@ function* deleteAdsById(obj) {
   }
   yield put({ type: ADVERTISING.DELETE_ADS_SUCCESS, data: resp.data });
   hideModal();
-  yield put({ type: ADVERTISING.GET_LIST_ADS, data: resp.data });
+  yield put({ type: ADVERTISING.GET_ADS_BY_AUTHOR, data: {} });
 }
 
 function* addNewAds(obj) {
@@ -65,12 +65,13 @@ function* addNewAds(obj) {
   }
   yield put({ type: ADVERTISING.ADD_NEW_ADS_SUCCESS, data: resp.data });
   hideModal();
-  yield put({ type: ADVERTISING.GET_LIST_ADS, data: resp.data });
+  yield put({ type: WALLET.GET_WALLET });
+  yield put({ type: ADVERTISING.GET_ADS_BY_AUTHOR, data: {} });
 }
 
-function* getListAdsByAuthor() {
-  const resp = yield call(getListAdsByAuthorAPI);
-  console.log("resp", resp);
+function* getListAdsByAuthor(obj) {
+  const dat = obj.data;
+  const resp = yield call(getListAdsByAuthorAPI, dat);
   if (resp.code !== 200) {
     yield put({ type: ADVERTISING.GET_ADS_BY_AUTHOR_FAIL, data: resp.message });
     return;
