@@ -6,7 +6,7 @@ import {
   getMyInfoAPI,
 } from "../service/user";
 import { setToken } from "../utils/token";
-import { USER, WALLET } from "../constant";
+import { USER } from "../constant";
 
 function* handleSignUp(object) {
   const dat = object.data.data;
@@ -23,8 +23,6 @@ function* handleSignUp(object) {
     data,
   });
   yield put({ type: USER.SIGNUP_SUCCESS });
-  const dataCreateWallet = { money: 10 };
-  yield put({ type: WALLET.CREATE_WALLET, data: { data: dataCreateWallet } });
   yield delay(3000);
   yield call(history.push, "/");
 }
@@ -47,21 +45,6 @@ function* handleSignIn(object) {
   yield call(history.push, "/");
 }
 
-// function* handleLogout(object) {
-//   const history = object.data;
-//   yield delay(500);
-//   const resp = yield call(logoutAPI);
-//   if (resp.statusCode !== 200) {
-//     yield put({ type: "USER_LOGOUT_FAIL", data: resp });
-//     return;
-//   }
-//   setToken(undefined);
-//   yield put({ type: "USER_LOGOUT_SUCCESS" });
-//   if (history) {
-//     yield call(history.push, "/");
-//   }
-// }
-
 function* getMyInfo(obj) {
   const dat = obj.data.data;
   const resp = yield call(getMyInfoAPI, dat);
@@ -75,6 +58,5 @@ function* getMyInfo(obj) {
 export const userSaga = [
   takeLatest(USER.SIGNUP, handleSignUp),
   takeLatest(USER.SIGNIN, handleSignIn),
-  // takeLatest(USER.LOGOUT, handleLogout)
   takeLatest(USER.GET_MY_INFO, getMyInfo),
 ];

@@ -3,15 +3,24 @@ import { connect } from "react-redux";
 import Spin from "../../components/Spin";
 import Empty from "../../components/Empty";
 import { MOST_POPULAR } from "../../constant";
+import InfiniteScroll from "react-infinite-scroll-component";
 import Notification from "../../components/Notification";
 import ItemVideo from "../../components/ItemVideo";
 import TitlePage from "../../components/TitlePage";
 import "./index.scss";
 
 class MostPopular extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      page: 2,
+      hasMore: true,
+    };
+  }
+
   componentDidMount() {
     const { getListMostPopular } = this.props;
-    getListMostPopular({});
+    getListMostPopular({ page: 1, limit: 10 });
   }
 
   sortByCountView = (list) => {
@@ -29,15 +38,27 @@ class MostPopular extends Component {
     return itemAds;
   };
 
+  fetchMoreData = () => {
+    const { page } = this.state;
+    const { listMostPopular = [], loadMore = () => {}, total } = this.props;
+    if (listMostPopular.length >= total) {
+      this.setState({ hasMore: false });
+      return;
+    }
+    loadMore({ page, limit: 10 });
+    this.setState({ page: page + 1 });
+  };
+
   render() {
     const {
-      loading,
       listMostPopular = [],
       listUserData = [],
       messageErrorMostPopular = "",
       listAds,
       loadingAds,
     } = this.props;
+
+    const { hasMore } = this.state;
 
     const listAdsMostPopular = listAds.filter(
       (item) => item.position === "MOST_POPULAR"
@@ -65,7 +86,7 @@ class MostPopular extends Component {
     );
     return (
       <Fragment>
-        <div className="container_page_topRated">
+        <div className="container_page_popular">
           {listAdsMostPopular.length === 0 && !loadingAds && (
             <div className="viewAdsMostPopular">
               <a
@@ -102,20 +123,29 @@ class MostPopular extends Component {
           <div className="titleBlock">
             <p className="titleBlock__text">Most Popular Videos</p>
           </div>
-          {loading ? (
-            _renderLoading
+          {filterListActive.length === 0 ? (
+            <Empty text="No Video" />
           ) : (
-            <div className="bx--row">
-              {filterListActive.length === 0 ? (
-                <Empty text="No Video" />
-              ) : (
-                filterListActive.map((item) => (
+            <InfiniteScroll
+              dataLength={filterListActive.length}
+              next={this.fetchMoreData}
+              hasMore={hasMore}
+              loader={_renderLoading}
+              endMessage={
+                <p style={{ textAlign: "center" }}>
+                  <b>Yay! You have seen it all</b>
+                </p>
+              }
+              style={{ overflow: "hidden" }}
+            >
+              <div className="bx--row">
+                {filterListActive.map((item) => (
                   <div key={item.id} className="bx--col-md-2 bx--col-sm-4">
                     <ItemVideo item={item} />
                   </div>
-                ))
-              )}
-            </div>
+                ))}
+              </div>
+            </InfiniteScroll>
           )}
         </div>
         {messageErrorMostPopular !== "" && (
@@ -135,6 +165,7 @@ const mapStateToProps = ({
     loading,
     listMostPopular = [],
     messageErrorMostPopular = "",
+    paging: { total } = {},
   } = {},
   listUser: { listUserData = [] } = {},
   advertising: { listAds = [], loading: loadingAds } = {},
@@ -145,11 +176,14 @@ const mapStateToProps = ({
   listUserData,
   listAds,
   loadingAds,
+  total,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   getListMostPopular: (data) =>
     dispatch({ type: MOST_POPULAR.GET_LIST_POPULAR, data }),
+  loadMore: (data) =>
+    dispatch({ type: MOST_POPULAR.LOAD_MORE_LIST_POPULAR, data }),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(MostPopular);

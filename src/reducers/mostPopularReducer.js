@@ -4,7 +4,7 @@ const INITIAL_STATE = {
   loading: false,
   listMostPopular: [],
   paging: {},
-  messageErrorMostPopular: ""
+  messageErrorMostPopular: "",
 };
 
 const mostPopularReducer = (state = INITIAL_STATE, action) => {
@@ -13,7 +13,7 @@ const mostPopularReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         loading: true,
-        messageErrorMostPopular: ""
+        messageErrorMostPopular: "",
       };
     case MOST_POPULAR.GET_LIST_POPULAR_SUCCESS:
       return {
@@ -21,14 +21,37 @@ const mostPopularReducer = (state = INITIAL_STATE, action) => {
         loading: false,
         listMostPopular: action.data.items,
         paging: action.data.paging,
-        messageErrorMostPopular: ""
+        messageErrorMostPopular: "",
       };
     case MOST_POPULAR.GET_LIST_POPULAR_FAIL:
       return {
         ...state,
         loading: false,
         listMostPopular: [],
-        messageErrorMostPopular: action.data
+        messageErrorMostPopular: action.data,
+      };
+    case MOST_POPULAR.LOAD_MORE_LIST_POPULAR:
+      return {
+        ...state,
+        loading: true,
+        messageErrorMostPopular: "",
+      };
+    case MOST_POPULAR.LOAD_MORE_LIST_POPULAR_SUCCESS:
+      const newList = action.data.items;
+      const { listMostPopular } = state;
+      return {
+        ...state,
+        loading: false,
+        listMostPopular: [...listMostPopular, ...newList],
+        paging: action.data.paging,
+        messageErrorMostPopular: "",
+      };
+    case MOST_POPULAR.LOAD_MORE_LIST_POPULAR_FAIL:
+      return {
+        ...state,
+        loading: false,
+        listMostPopular: [],
+        messageErrorMostPopular: action.data,
       };
 
     default:
