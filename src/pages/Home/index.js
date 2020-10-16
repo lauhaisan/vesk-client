@@ -29,8 +29,7 @@ class Home extends Component {
 
   fetchMoreData = () => {
     const { page } = this.state;
-    const { listSocialMedia = [], loadMore = () => {} } = this.props;
-    const total = 29;
+    const { listSocialMedia = [], loadMore = () => {}, total } = this.props;
     if (listSocialMedia.length >= total) {
       this.setState({ hasMore: false });
       return;

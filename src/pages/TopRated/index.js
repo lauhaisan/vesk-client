@@ -3,15 +3,23 @@ import { connect } from "react-redux";
 import Empty from "../../components/Empty";
 import { TOP_RATED } from "../../constant";
 import Notification from "../../components/Notification";
+import InfiniteScroll from "react-infinite-scroll-component";
 import ItemVideo from "../../components/ItemVideo";
 import TitlePage from "../../components/TitlePage";
 import Spin from "../../components/Spin";
 import "./index.scss";
 
 class TopRated extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      page: 2,
+      hasMore: true,
+    };
+  }
   componentDidMount() {
     const { getListTopRated } = this.props;
-    getListTopRated({});
+    getListTopRated({ page: 1, limit: 10 });
   }
 
   sortByTopRank = (list) => {
@@ -29,15 +37,27 @@ class TopRated extends Component {
     return itemAds;
   };
 
+  fetchMoreData = () => {
+    const { page } = this.state;
+    const { listTopRated = [], loadMore = () => {}, total } = this.props;
+    if (listTopRated.length >= total) {
+      this.setState({ hasMore: false });
+      return;
+    }
+    loadMore({ page, limit: 10 });
+    this.setState({ page: page + 1 });
+  };
+
   render() {
     const {
-      loading,
       listTopRated = [],
       listUserData = [],
       messageErrorTopRated = "",
       listAds = [],
       loadingAds,
     } = this.props;
+
+    const { hasMore } = this.state;
 
     const listAdsTopRate = listAds.filter(
       (item) => item.position === "TOP_RATED"
@@ -103,22 +123,33 @@ class TopRated extends Component {
           <div className="titleBlock">
             <p className="titleBlock__text">Top Rated Videos</p>
           </div>
-          {loading ? (
-            _renderLoading
+
+          {filterListActive.length === 0 ? (
+            <Empty text="No Video" />
           ) : (
-            <div className="bx--row">
-              {filterListActive.length === 0 ? (
-                <Empty text="No Video" />
-              ) : (
-                filterListActive.map((item) => (
+            <InfiniteScroll
+              dataLength={filterListActive.length}
+              next={this.fetchMoreData}
+              hasMore={hasMore}
+              loader={_renderLoading}
+              endMessage={
+                <p style={{ textAlign: "center" }}>
+                  <b>Yay! You have seen it all</b>
+                </p>
+              }
+              style={{ overflow: "hidden" }}
+            >
+              <div className="bx--row">
+                {filterListActive.map((item) => (
                   <div key={item.id} className="bx--col-md-2 bx--col-sm-4">
                     <ItemVideo item={item} />
                   </div>
-                ))
-              )}
-            </div>
+                ))}
+              </div>
+            </InfiniteScroll>
           )}
         </div>
+
         {messageErrorTopRated !== "" && (
           <Notification
             status="error"
@@ -132,13 +163,19 @@ class TopRated extends Component {
 }
 
 const mapStateToProps = ({
-  topRated: { loading, listTopRated = [], messageErrorTopRated = "" } = {},
+  topRated: {
+    loading,
+    listTopRated = [],
+    messageErrorTopRated = "",
+    paging: { total } = {},
+  } = {},
   listUser: { listUserData = [] } = {},
   advertising: { listAds = [], loading: loadingAds } = {},
 }) => ({
   loading,
   listTopRated,
   messageErrorTopRated,
+  total,
   listUserData,
   listAds,
   loadingAds,
@@ -147,6 +184,7 @@ const mapStateToProps = ({
 const mapDispatchToProps = (dispatch) => ({
   getListTopRated: (data) =>
     dispatch({ type: TOP_RATED.GET_LIST_TOP_RATED, data }),
+  loadMore: (data) => dispatch({ type: TOP_RATED.LOAD_MORE_TOP_RATED, data }),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(TopRated);
