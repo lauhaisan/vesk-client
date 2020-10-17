@@ -21,12 +21,11 @@ class TableCommon extends React.Component {
   }
 
   onChangePage = (value) => {
-    // const function pagination from prop:
-    // ex: const { handlePagination} = this.props
+    const { handlePagination = () => {} } = this.props;
     this.setState({
       currentPage: value,
     });
-    // Dispatch to handlePagination with param: value +1 because default value = 0
+    handlePagination(value + 1);
   };
 
   renderAction = (item) => {
@@ -144,7 +143,7 @@ class TableCommon extends React.Component {
             </TableContainer>
           )}
         />
-        {totalPage > 1 && (
+        {total > limit && (
           <PaginationNav
             className=""
             itemsShown={5}

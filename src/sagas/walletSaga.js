@@ -75,7 +75,7 @@ function* getHistoryPoint(object) {
 }
 
 function* getHistoryExchanges(object) {
-  const dat = object.data.data;
+  const dat = object.data;
   const resp = yield call(getHistoryExchangesApi, dat);
   if (resp.code !== 200) {
     yield put({
