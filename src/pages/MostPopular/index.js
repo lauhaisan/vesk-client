@@ -23,13 +23,6 @@ class MostPopular extends Component {
     getListMostPopular({ page: 1, limit: 10 });
   }
 
-  sortByCountView = (list) => {
-    const listSort = list.sort((item, nextItem) => {
-      return item.countView - nextItem.countView;
-    });
-    return listSort.reverse();
-  };
-
   randomAds = (list) => {
     let itemAds = {};
     if (list.length > 0) {
@@ -74,8 +67,7 @@ class MostPopular extends Component {
       };
     });
 
-    const sortListByCountView = this.sortByCountView(formatListVideo) || [];
-    const filterListActive = sortListByCountView.filter(
+    const filterListActive = formatListVideo.filter(
       (element) => element.status !== "INACTIVE"
     );
 
@@ -87,6 +79,7 @@ class MostPopular extends Component {
     return (
       <Fragment>
         <div className="container_page_popular">
+          <TitlePage title="Most Popular" />
           {listAdsMostPopular.length === 0 && !loadingAds && (
             <div className="viewAdsMostPopular">
               <a
@@ -119,7 +112,6 @@ class MostPopular extends Component {
               </a>
             </div>
           )}
-          <TitlePage title="Top Rated" />
           <div className="titleBlock">
             <p className="titleBlock__text">Most Popular Videos</p>
           </div>
