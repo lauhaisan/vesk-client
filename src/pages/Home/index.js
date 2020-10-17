@@ -14,7 +14,6 @@ class Home extends Component {
     super(props);
     this.state = {
       page: 2,
-      hasMore: true,
     };
   }
 
@@ -30,10 +29,7 @@ class Home extends Component {
   fetchMoreData = () => {
     const { page } = this.state;
     const { listSocialMedia = [], loadMore = () => {}, total } = this.props;
-    if (listSocialMedia.length >= total) {
-      this.setState({ hasMore: false });
-      return;
-    }
+    if (listSocialMedia.length >= total) return;
     loadMore({ page, limit: 10 });
     this.setState({ page: page + 1 });
   };
@@ -56,8 +52,9 @@ class Home extends Component {
       listAds = [],
       history,
       loadingAds,
+      total,
     } = this.props;
-    const { hasMore } = this.state;
+    const check = listSocialMedia.length >= total;
     const formatListVideo = listSocialMedia.map((item) => {
       return {
         ...item,
@@ -143,7 +140,7 @@ class Home extends Component {
           <InfiniteScroll
             dataLength={filterListActive.length}
             next={this.fetchMoreData}
-            hasMore={hasMore}
+            hasMore={!check}
             loader={_renderLoading}
             endMessage={
               <p style={{ textAlign: "center" }}>
@@ -178,7 +175,7 @@ const mapStateToProps = ({
     loading,
     listSocialMedia = [],
     messageError = "",
-    paging: { total = 0 } = {},
+    paging: { total } = {},
   } = {},
   listUser: {
     loading: loadingListUserName,

@@ -14,7 +14,6 @@ class MostPopular extends Component {
     super(props);
     this.state = {
       page: 2,
-      hasMore: true,
     };
   }
 
@@ -34,10 +33,7 @@ class MostPopular extends Component {
   fetchMoreData = () => {
     const { page } = this.state;
     const { listMostPopular = [], loadMore = () => {}, total } = this.props;
-    if (listMostPopular.length >= total) {
-      this.setState({ hasMore: false });
-      return;
-    }
+    if (listMostPopular.length >= total) return;
     loadMore({ page, limit: 10 });
     this.setState({ page: page + 1 });
   };
@@ -49,10 +45,9 @@ class MostPopular extends Component {
       messageErrorMostPopular = "",
       listAds,
       loadingAds,
+      total,
     } = this.props;
-
-    const { hasMore } = this.state;
-
+    const check = listMostPopular.length >= total;
     const listAdsMostPopular = listAds.filter(
       (item) => item.position === "MOST_POPULAR"
     );
@@ -121,7 +116,7 @@ class MostPopular extends Component {
             <InfiniteScroll
               dataLength={filterListActive.length}
               next={this.fetchMoreData}
-              hasMore={hasMore}
+              hasMore={!check}
               loader={_renderLoading}
               endMessage={
                 <p style={{ textAlign: "center" }}>
