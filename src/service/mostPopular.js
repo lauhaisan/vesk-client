@@ -7,7 +7,6 @@ import queryString from "query-string";
 const getListPopularAPI = async (payload) => {
   const param = queryString.stringify(payload);
   const URL_WITH_PARAMS = `${URL.GET_LIST_MOST_POPULAR}?${param}`;
-  console.log(URL_WITH_PARAMS);
   return request(URL_WITH_PARAMS, true);
 };
 

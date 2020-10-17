@@ -175,7 +175,7 @@ const mapStateToProps = ({
     loading,
     listSocialMedia = [],
     messageError = "",
-    paging: { total } = {},
+    paging: { total = 0 } = {},
   } = {},
   listUser: {
     loading: loadingListUserName,
