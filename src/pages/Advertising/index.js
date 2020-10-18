@@ -320,7 +320,7 @@ class Advertising extends React.Component {
                 >
                   {listPosition.map((item) => {
                     const { name = "", value = "" } = item;
-                    return <SelectItem text={name} value={value} />;
+                    return <SelectItem key={value} text={name} value={value} />;
                   })}
                 </Select>
               </FormGroup>
