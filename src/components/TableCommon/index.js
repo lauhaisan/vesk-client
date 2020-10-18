@@ -20,6 +20,14 @@ class TableCommon extends React.Component {
     };
   }
 
+  componentDidUpdate(nextProps) {
+    const { resetFirstPage } = this.props;
+    const { resetFirstPage: resetFirstPageNextProps } = nextProps;
+    if (resetFirstPage !== resetFirstPageNextProps) {
+      this.setState({ currentPage: 0 });
+    }
+  }
+
   onChangePage = (value) => {
     const { handlePagination = () => {} } = this.props;
     this.setState({

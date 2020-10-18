@@ -31,6 +31,8 @@ class SocialMedia extends React.Component {
       isReview: false,
       fileUpload: null,
       addPoint: 0,
+      isModeSearch: false,
+      keywordSearch: "",
     };
   }
 
@@ -42,7 +44,7 @@ class SocialMedia extends React.Component {
   }
 
   componentDidMount() {
-    this.handleGetListSocialMedia();
+    this.handleGetListSocialMedia(1);
   }
 
   componentWillUnmount() {
@@ -54,19 +56,31 @@ class SocialMedia extends React.Component {
     });
   }
 
-  handleGetListSocialMedia = () => {
+  handleGetListSocialMedia = (page) => {
     const { getListSocialMediaByAuthor } = this.props;
     const { data: { userId: id = "" } = {} } = getToken();
-    getListSocialMediaByAuthor({ id });
+    getListSocialMediaByAuthor({ id, page, limit: 10 });
   };
 
   _resetFilter = () => {
-    this.handleGetListSocialMedia();
+    this.handleGetListSocialMedia(1);
+    this.setState({
+      isModeSearch: false,
+      keywordSearch: "",
+    });
   };
 
-  _search = (value) => {
-    const { searchSocialMedia } = this.props;
-    searchSocialMedia(value);
+  _search = ({ name }) => {
+    this.setState({ keywordSearch: name, isModeSearch: true }, () => {
+      this.handleGetValueSearch(1);
+    });
+  };
+
+  handleGetValueSearch = (page) => {
+    const { keywordSearch } = this.state;
+    const { searchSocialMedia = () => {} } = this.props;
+    const payload = { name: keywordSearch, page, limit: 10 };
+    searchSocialMedia(payload);
   };
 
   openModalAddNewAdvertising = () => {
@@ -208,6 +222,7 @@ class SocialMedia extends React.Component {
       isReview,
       itemMediaSocial = {},
       addPoint,
+      isModeSearch,
     } = this.state;
     const {
       loading,
@@ -219,6 +234,7 @@ class SocialMedia extends React.Component {
       loadingUpload,
       linkThumbnail,
       messageUpload,
+      total,
     } = this.props;
     const { token } = getToken();
     if (!token) {
@@ -490,7 +506,10 @@ class SocialMedia extends React.Component {
                 </div>
               }
             >
-              <Filter resetFilter={this._resetFilter} search={this._search} />
+              <Filter
+                resetFilter={isModeSearch ? this._resetFilter : () => {}}
+                search={this._search}
+              />
             </AccordionItem>
           </Accordion>
           <TableCommon
@@ -502,6 +521,13 @@ class SocialMedia extends React.Component {
             actionEdit={this._actionEdit}
             actionDelete={this._actionDelete}
             actionAddPoint={this._actionAddPoint}
+            total={total}
+            handlePagination={
+              !isModeSearch
+                ? this.handleGetListSocialMedia
+                : this.handleGetValueSearch
+            }
+            resetFirstPage={isModeSearch}
           />
         </div>
         <CustomModal
@@ -557,6 +583,7 @@ const mapStateToProps = ({
     messageError,
     loadingAction,
     actionSuccessfully,
+    pagingListByAuthor: { total } = {},
   } = {},
   upload: { loading: loadingUpload, messageUpload, link: linkThumbnail } = {},
 }) => ({
@@ -571,6 +598,7 @@ const mapStateToProps = ({
   loadingUpload,
   messageUpload,
   linkThumbnail,
+  total,
 });
 
 const mapDispatchToProps = (dispatch) => ({
