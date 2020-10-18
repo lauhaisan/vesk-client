@@ -20,11 +20,22 @@ class TableCommon extends React.Component {
     };
   }
 
-  componentDidUpdate(nextProps) {
-    const { resetFirstPage } = this.props;
-    const { resetFirstPage: resetFirstPageNextProps } = nextProps;
+  componentDidUpdate(prevProps) {
+    const { resetFirstPage, total } = this.props;
+    const { currentPage } = this.state;
+    const {
+      resetFirstPage: resetFirstPageNextProps,
+      total: nextTotal,
+    } = prevProps;
     if (resetFirstPage !== resetFirstPageNextProps) {
       this.setState({ currentPage: 0 });
+    }
+    if (total !== nextTotal) {
+      const totalPage = Math.ceil(total / 10);
+      const page = totalPage === currentPage ? currentPage - 1 : currentPage;
+      this.setState({
+        currentPage: page,
+      });
     }
   }
 

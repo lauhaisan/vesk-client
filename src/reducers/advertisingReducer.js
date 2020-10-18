@@ -10,6 +10,7 @@ const INITIAL_STATE = {
   loadingActionAds: false,
   actionAdsSuccessfully: "",
   listAdsByAuthor: [],
+  pagingListAdsByAuthor: {},
 };
 
 const advertisingReducer = (state = INITIAL_STATE, action) => {
@@ -134,6 +135,7 @@ const advertisingReducer = (state = INITIAL_STATE, action) => {
         ...state,
         loading: false,
         listAdsByAuthor: action.data.items,
+        pagingListAdsByAuthor: action.data.paging,
         messageError: "",
       };
     case ADVERTISING.GET_ADS_BY_AUTHOR_FAIL:
