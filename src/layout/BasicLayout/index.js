@@ -73,7 +73,7 @@ class BasicLayout extends Component {
     const listAdsBottom = listAds.filter(
       (item) => item.position === "FIX_BOTTOM"
     );
-    const randomAds = this.randomAds(listAdsBottom);
+    const random = this.randomAds(listAdsBottom);
     return (
       <Fragment>
         <div className="container_basic_layout">
@@ -96,19 +96,19 @@ class BasicLayout extends Component {
                 <Fragment>
                   {children}
                   {!hideAds && (
-                    <div className="viewAdsFixBottom">
+                    <div className="view1FixBottom">
                       <div style={{ width: "70%", position: "relative" }}>
-                        {randomAds.imageUrl && (
+                        {random.imageUrl && (
                           <Fragment>
                             <a
-                              href={randomAds.linkTarget}
+                              href={random.linkTarget}
                               target="_blank"
                               rel="noopener noreferrer"
-                              className="contentAds"
+                              className="content1"
                             >
                               <img
-                                className="viewAdsFixBottom__img"
-                                src={randomAds.imageUrl}
+                                className="view1FixBottom__img"
+                                src={random.imageUrl}
                                 alt="img-avatar"
                               />
                             </a>
@@ -120,10 +120,10 @@ class BasicLayout extends Component {
                               href="https://kingofsolutions.global"
                               target="_blank"
                               rel="noopener noreferrer"
-                              className="contentAds"
+                              className="content1"
                             >
                               <img
-                                className="viewAdsFixBottom__img"
+                                className="view1FixBottom__img"
                                 src="https://statics.veskhub.co/98569664-fd45-11ea-bd57-5600023ed650.jpg"
                                 alt="img-avatar"
                               />
@@ -132,7 +132,7 @@ class BasicLayout extends Component {
                         )}
 
                         <div
-                          className="contentAds__close"
+                          className="content1__close"
                           onClick={this.handleClose}
                         >
                           [X]

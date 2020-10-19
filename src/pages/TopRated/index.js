@@ -62,7 +62,7 @@ class TopRated extends Component {
     const listAdsTopRate = listAds.filter(
       (item) => item.position === "TOP_RATED"
     );
-    const randomAds = this.randomAds(listAdsTopRate);
+    const random = this.randomAds(listAdsTopRate);
 
     const _renderLoading = (
       <div className="viewLoading">
@@ -89,32 +89,32 @@ class TopRated extends Component {
         <div className="container_page_topRated">
           <TitlePage title="Top Rated" />
           {listAdsTopRate.length === 0 && !loadingAds && (
-            <div className="viewAdsTopRated">
+            <div className="view1TopRated">
               <a
                 href="https://kingofsolutions.global"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="contentAds"
+                className="content1"
               >
                 <img
-                  className="viewAdsTopRated__img"
+                  className="view1TopRated__img"
                   src="https://statics.veskhub.co/98569664-fd45-11ea-bd57-5600023ed650.jpg"
                   alt="img-avatar"
                 />
               </a>
             </div>
           )}
-          {randomAds.imageUrl && (
-            <div className="viewAdsTopRated">
+          {random.imageUrl && (
+            <div className="view1TopRated">
               <a
-                href={randomAds.linkTarget}
+                href={random.linkTarget}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="contentAds"
+                className="content1"
               >
                 <img
-                  className="viewAdsTopRated__img"
-                  src={randomAds.imageUrl}
+                  className="view1TopRated__img"
+                  src={random.imageUrl}
                   alt="img-avatar"
                 />
               </a>

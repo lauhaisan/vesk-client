@@ -63,7 +63,7 @@ class MostPopular extends Component {
     const listAdsMostPopular = listAds.filter(
       (item) => item.position === "MOST_POPULAR"
     );
-    const randomAds = this.randomAds(listAdsMostPopular);
+    const random = this.randomAds(listAdsMostPopular);
 
     const formatListVideo = listMostPopular.map((item) => {
       return {
@@ -88,32 +88,32 @@ class MostPopular extends Component {
       <Fragment>
         <div className="container_page_popular">
           {listAdsMostPopular.length === 0 && !loadingAds && (
-            <div className="viewAdsMostPopular">
+            <div className="view1MostPopular">
               <a
                 href="https://kingofsolutions.global"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="contentAds"
+                className="content1"
               >
                 <img
-                  className="viewAdsMostPopular__img"
+                  className="view1MostPopular__img"
                   src="https://statics.veskhub.co/8cbba4ba-fd45-11ea-bd57-5600023ed650.jpg"
                   alt="img-avatar"
                 />
               </a>
             </div>
           )}
-          {randomAds.imageUrl && (
-            <div className="viewAdsMostPopular">
+          {random.imageUrl && (
+            <div className="view1MostPopular">
               <a
-                href={randomAds.linkTarget}
+                href={random.linkTarget}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="contentAds"
+                className="content1"
               >
                 <img
-                  className="viewAdsMostPopular__img"
-                  src={randomAds.imageUrl}
+                  className="view1MostPopular__img"
+                  src={random.imageUrl}
                   alt="img-avatar"
                 />
               </a>

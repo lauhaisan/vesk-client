@@ -10,13 +10,14 @@ import {
 import { ADVERTISING, WALLET } from "../constant";
 
 function* getListAds(object) {
-  const dat = object.data;
-  const resp = yield call(getListAdsAPI, dat);
-  if (resp.code !== 200) {
-    yield put({ type: ADVERTISING.GET_LIST_ADS_FAIL, data: resp.message });
-    return;
+  try {
+    const dat = object.data;
+    const resp = yield call(getListAdsAPI, dat);
+    if (resp.code !== 200) throw resp;
+    yield put({ type: ADVERTISING.GET_LIST_ADS_SUCCESS, data: resp.data });
+  } catch (error) {
+    yield put({ type: ADVERTISING.GET_LIST_ADS_FAIL, data: error.message });
   }
-  yield put({ type: ADVERTISING.GET_LIST_ADS_SUCCESS, data: resp.data });
 }
 
 function* getAdsById(obj) {

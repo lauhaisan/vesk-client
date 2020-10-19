@@ -12,9 +12,9 @@ const URL = {
   EDIT_USER: "/v1/vesk/users",
 
   //ADVERTISING
-  GET_LIST_ADVERTISING: "/v1/vesk/public/ads",
-  ADD_NEW_ADVERTISING: "/v1/vesk/ads",
-  GET_LIST_ADS_BY_AUTHOR: "/v1/vesk/ads/search",
+  GET_LIST_ADVERTISING: "/v1/vesk/public/qac",
+  ADD_NEW_ADVERTISING: "/v1/vesk/qac",
+  GET_LIST_ADS_BY_AUTHOR: "/v1/vesk/qac/search",
 
   //SOCIAL MEDIA
   GET_LIST_SOCIAL_MEDIA: "/v1/vesk/public/e-social-media",

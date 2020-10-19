@@ -79,7 +79,7 @@ class Home extends Component {
     );
 
     const listAdsHome = listAds.filter((item) => item.position === "HOME");
-    const randomAds = this.randomAds(listAdsHome);
+    const random = this.randomAds(listAdsHome);
 
     return (
       <Fragment>
@@ -104,32 +104,32 @@ class Home extends Component {
 
           <div className="divider" />
           {listAdsHome.length === 0 && !loadingAds && (
-            <div className="viewAds">
+            <div className="view1">
               <a
                 href="https://kingofsolutions.global"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="contentAds"
+                className="content1"
               >
                 <img
-                  className="viewAds__img"
+                  className="view1__img"
                   src="https://statics.veskhub.co/8cbba4ba-fd45-11ea-bd57-5600023ed650.jpg"
                   alt="img-avatar"
                 />
               </a>
             </div>
           )}
-          {randomAds.imageUrl && (
-            <div className="viewAds">
+          {random.imageUrl && (
+            <div className="view1">
               <a
-                href={randomAds.linkTarget}
+                href={random.linkTarget}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="contentAds"
+                className="content1"
               >
                 <img
-                  className="viewAds__img"
-                  src={randomAds.imageUrl}
+                  className="view1__img"
+                  src={random.imageUrl}
                   alt="img-avatar"
                 />
               </a>
