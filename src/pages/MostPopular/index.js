@@ -14,7 +14,6 @@ class MostPopular extends Component {
     super(props);
     this.state = {
       page: 2,
-      hasMore: true,
     };
   }
 
@@ -22,13 +21,6 @@ class MostPopular extends Component {
     const { getListMostPopular } = this.props;
     getListMostPopular({ page: 1, limit: 10 });
   }
-
-  sortByCountView = (list) => {
-    const listSort = list.sort((item, nextItem) => {
-      return item.countView - nextItem.countView;
-    });
-    return listSort.reverse();
-  };
 
   randomAds = (list) => {
     let itemAds = {};
@@ -41,10 +33,7 @@ class MostPopular extends Component {
   fetchMoreData = () => {
     const { page } = this.state;
     const { listMostPopular = [], loadMore = () => {}, total } = this.props;
-    if (listMostPopular.length >= total) {
-      this.setState({ hasMore: false });
-      return;
-    }
+    if (listMostPopular.length >= total) return;
     loadMore({ page, limit: 10 });
     this.setState({ page: page + 1 });
   };
@@ -56,10 +45,9 @@ class MostPopular extends Component {
       messageErrorMostPopular = "",
       listAds,
       loadingAds,
+      total,
     } = this.props;
-
-    const { hasMore } = this.state;
-
+    const check = listMostPopular.length >= total;
     const listAdsMostPopular = listAds.filter(
       (item) => item.position === "MOST_POPULAR"
     );
@@ -74,8 +62,7 @@ class MostPopular extends Component {
       };
     });
 
-    const sortListByCountView = this.sortByCountView(formatListVideo) || [];
-    const filterListActive = sortListByCountView.filter(
+    const filterListActive = formatListVideo.filter(
       (element) => element.status !== "INACTIVE"
     );
 
@@ -87,6 +74,7 @@ class MostPopular extends Component {
     return (
       <Fragment>
         <div className="container_page_popular">
+          <TitlePage title="Most Popular" />
           {listAdsMostPopular.length === 0 && !loadingAds && (
             <div className="view1MostPopular">
               <a
@@ -119,7 +107,6 @@ class MostPopular extends Component {
               </a>
             </div>
           )}
-          <TitlePage title="Top Rated" />
           <div className="titleBlock">
             <p className="titleBlock__text">Most Popular Videos</p>
           </div>
@@ -129,7 +116,7 @@ class MostPopular extends Component {
             <InfiniteScroll
               dataLength={filterListActive.length}
               next={this.fetchMoreData}
-              hasMore={hasMore}
+              hasMore={!check}
               loader={_renderLoading}
               endMessage={
                 <p style={{ textAlign: "center" }}>

@@ -18,15 +18,19 @@ class HistoryExchanges extends React.Component {
   }
 
   componentDidMount() {
-    const { getListHistory } = this.props;
-    const { data: { userId = "" } = {} } = getToken();
-    getListHistory(userId);
+    this.handlePagination(1);
   }
+
+  handlePagination = (page) => {
+    const { getListHistory } = this.props;
+    const { data: { userId: id = "" } = {} } = getToken();
+    getListHistory({ id, page, limit: 10 });
+  };
 
   render() {
     const {
       loading,
-      historyExchanges: { items = [] } = {},
+      historyExchanges: { items = [], paging: { total = 0 } = {} } = {},
       messageUpload,
       isCreateExchangeSuccessfully,
     } = this.props;
@@ -95,6 +99,8 @@ class HistoryExchanges extends React.Component {
             rowData={formatData}
             headerData={headerData}
             loading={loading}
+            total={total}
+            handlePagination={this.handlePagination}
           />
         </div>
         {messageUpload === "Upload Image Failed" && (
@@ -127,7 +133,7 @@ const mapStateToProps = ({
 
 const mapDispatchToProps = (dispatch) => ({
   getListHistory: (data) =>
-    dispatch({ type: WALLET.GET_HISTORY_EXCHANGES, data: { data } }),
+    dispatch({ type: WALLET.GET_HISTORY_EXCHANGES, data }),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(HistoryExchanges);

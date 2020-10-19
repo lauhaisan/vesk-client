@@ -14,7 +14,6 @@ class TopRated extends Component {
     super(props);
     this.state = {
       page: 2,
-      hasMore: true,
     };
   }
   componentDidMount() {
@@ -40,10 +39,7 @@ class TopRated extends Component {
   fetchMoreData = () => {
     const { page } = this.state;
     const { listTopRated = [], loadMore = () => {}, total } = this.props;
-    if (listTopRated.length >= total) {
-      this.setState({ hasMore: false });
-      return;
-    }
+    if (listTopRated.length >= total) return;
     loadMore({ page, limit: 10 });
     this.setState({ page: page + 1 });
   };
@@ -55,10 +51,10 @@ class TopRated extends Component {
       messageErrorTopRated = "",
       listAds = [],
       loadingAds,
+      total,
     } = this.props;
 
-    const { hasMore } = this.state;
-
+    const check = listTopRated.length >= total;
     const listAdsTopRate = listAds.filter(
       (item) => item.position === "TOP_RATED"
     );
@@ -130,7 +126,7 @@ class TopRated extends Component {
             <InfiniteScroll
               dataLength={filterListActive.length}
               next={this.fetchMoreData}
-              hasMore={hasMore}
+              hasMore={!check}
               loader={_renderLoading}
               endMessage={
                 <p style={{ textAlign: "center" }}>

@@ -10,6 +10,7 @@ const INITIAL_STATE = {
   itemMediaSocial: {},
   loadingAction: false,
   actionSuccessfully: "",
+  pagingListByAuthor: {},
 };
 
 const socialMediaReducer = (state = INITIAL_STATE, action) => {
@@ -159,6 +160,7 @@ const socialMediaReducer = (state = INITIAL_STATE, action) => {
         ...state,
         loading: false,
         listByAuthor: action.data.items,
+        pagingListByAuthor: action.data.paging,
         messageError: "",
       };
     case SOCIAL_MEDIA.GET_LIST_BY_AUTHOR_FAIL:
@@ -179,6 +181,7 @@ const socialMediaReducer = (state = INITIAL_STATE, action) => {
         ...state,
         loading: false,
         listByAuthor: action.data.items,
+        pagingListByAuthor: action.data.paging,
         messageError: "",
       };
     case SOCIAL_MEDIA.SEARCH_LIST_BY_AUTHOR_FAIL:

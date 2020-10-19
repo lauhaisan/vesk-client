@@ -35,8 +35,10 @@ const searchSocialMediaAPI = async (payload) => {
   return request(URL_WITH_PARAMS, true);
 };
 
-const getListByAuthorAPI = async (payload) => {
-  const URL_WITH_PARAMS = `${URL.GET_LIST_MEDIA_BY_ATHOR}/${payload.id}/search`;
+const getListByAuthorAPI = async ({ id, page, limit }) => {
+  const obj = { page, limit };
+  const param = queryString.stringify(obj);
+  const URL_WITH_PARAMS = `${URL.GET_LIST_MEDIA_BY_ATHOR}/${id}/search?${param}`;
   return request(URL_WITH_PARAMS, true);
 };
 

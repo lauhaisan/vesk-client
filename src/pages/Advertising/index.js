@@ -18,7 +18,7 @@ import {
   Select,
   SelectItem,
 } from "carbon-components-react";
-import { SOCIAL_MEDIA, UPLOAD, ADVERTISING } from "../../constant";
+import { UPLOAD, ADVERTISING } from "../../constant";
 import { connect } from "react-redux";
 import { getToken } from "../../utils/token";
 import "./index.scss";
@@ -40,6 +40,9 @@ class Advertising extends React.Component {
       fileUpload: null,
       chargePoint: 450,
       itemAds: {},
+      isModeSearch: false,
+      keywordSearch: "",
+      currentPage: 1,
     };
   }
 
@@ -50,9 +53,25 @@ class Advertising extends React.Component {
     return null;
   }
 
+  componentDidUpdate(prevProps, prevState) {
+    const { total } = this.props;
+    const { total: prevTotal } = prevProps;
+    const { currentPage, isModeSearch } = this.state;
+    const { isModeSearch: prevIsModeSearch } = prevState;
+    if (isModeSearch !== prevIsModeSearch) {
+      this.setState({ currentPage: 1 });
+    }
+    if (total !== prevTotal) {
+      const totalPage = Math.ceil(total / 10);
+      const page = totalPage < currentPage ? currentPage - 1 : currentPage;
+      this.setState({
+        currentPage: page === 0 ? 1 : page,
+      });
+    }
+  }
+
   componentDidMount() {
-    const { getListAdsByAuthor } = this.props;
-    getListAdsByAuthor({});
+    this.handleGetListAds(1);
   }
 
   componentWillUnmount() {
@@ -64,14 +83,34 @@ class Advertising extends React.Component {
     });
   }
 
-  _resetFilter = () => {
+  handleGetListAds = (page) => {
     const { getListAdsByAuthor } = this.props;
-    getListAdsByAuthor({});
+    const { isModeSearch, keywordSearch } = this.state;
+    this.setState({ currentPage: page });
+    const name = isModeSearch ? keywordSearch : "";
+    getListAdsByAuthor({ name, page, limit: 10 });
+  };
+
+  _resetFilter = () => {
+    this.setState(
+      {
+        isModeSearch: false,
+        keywordSearch: "",
+        currentPage: 1,
+      },
+      () => {
+        this.handleGetListAds(1);
+      }
+    );
   };
 
   _search = ({ name }) => {
-    const { getListAdsByAuthor } = this.props;
-    getListAdsByAuthor({ name });
+    this.setState(
+      { keywordSearch: name, isModeSearch: true, currentPage: 1 },
+      () => {
+        this.handleGetListAds(1);
+      }
+    );
   };
 
   openModalAddNewAdvertising = () => {
@@ -154,7 +193,12 @@ class Advertising extends React.Component {
       addNewAdvertising = () => {},
       editAds = () => {},
     } = this.props;
-    const { itemAds = {}, titleModal, chargePoint: point } = this.state;
+    const {
+      itemAds = {},
+      titleModal,
+      chargePoint: point,
+      currentPage,
+    } = this.state;
     const payload = {
       ...itemAds,
       point: titleModal === "Add New Advertising" ? point : itemAds.point,
@@ -163,16 +207,16 @@ class Advertising extends React.Component {
       order: 0,
     };
     if (titleModal === "Add New Advertising") {
-      addNewAdvertising(payload, this._hideModal);
+      addNewAdvertising(payload, this._hideModal, currentPage);
     } else {
-      editAds(payload, this._hideModal);
+      editAds(payload, this._hideModal, currentPage);
     }
   };
 
   _handleDelete = () => {
-    const { itemAds } = this.state;
+    const { itemAds, currentPage } = this.state;
     const { deleteAds = () => {} } = this.props;
-    deleteAds(itemAds, this._hideModal);
+    deleteAds(itemAds, this._hideModal, currentPage);
   };
 
   _actionDelete = (item) => {
@@ -217,6 +261,7 @@ class Advertising extends React.Component {
       isReview,
       itemAds = {},
       chargePoint,
+      isModeSearch,
     } = this.state;
     const {
       loadingGetAdsById: loadingGetById,
@@ -228,6 +273,7 @@ class Advertising extends React.Component {
       actionAdsSuccessfully,
       loadingActionAds,
       messageError,
+      total,
     } = this.props;
     const { token } = getToken();
     if (!token) {
@@ -274,7 +320,7 @@ class Advertising extends React.Component {
                 >
                   {listPosition.map((item) => {
                     const { name = "", value = "" } = item;
-                    return <SelectItem text={name} value={value} />;
+                    return <SelectItem key={value} text={name} value={value} />;
                   })}
                 </Select>
               </FormGroup>
@@ -391,7 +437,10 @@ class Advertising extends React.Component {
                 </div>
               }
             >
-              <Filter resetFilter={this._resetFilter} search={this._search} />
+              <Filter
+                resetFilter={isModeSearch ? this._resetFilter : () => {}}
+                search={this._search}
+              />
             </AccordionItem>
           </Accordion>
           <TableCommon
@@ -402,6 +451,9 @@ class Advertising extends React.Component {
             actionReview={this._actionReview}
             actionEdit={this._actionEdit}
             actionDelete={this._actionDelete}
+            handlePagination={this.handleGetListAds}
+            resetFirstPage={isModeSearch}
+            total={total}
           />
         </div>
         <CustomModal
@@ -447,6 +499,7 @@ const mapStateToProps = ({
     messageError,
     itemAds = {},
     loadingGetAdsById,
+    pagingListAdsByAuthor: { total } = {},
   } = {},
 }) => ({
   loadingUpload,
@@ -460,42 +513,33 @@ const mapStateToProps = ({
   messageError,
   itemAds,
   loadingGetAdsById,
+  total,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   uploadImage: (data) =>
     dispatch({ type: UPLOAD.UPLOAD_IMAGE, data: { data } }),
-  deleteSocialMedia: (data, functionHideModal) =>
-    dispatch({
-      type: SOCIAL_MEDIA.DELETE_SOCIAL_MEDIA,
-      data: { data, functionHideModal },
-    }),
-  searchSocialMedia: (data) =>
-    dispatch({
-      type: SOCIAL_MEDIA.SEARCH_LIST_BY_AUTHOR,
-      data: { data },
-    }),
   updateUploadReducer: (data) =>
     dispatch({ type: UPLOAD.UPDATE_STATE_UPLOAD_REDUCER, data }),
   getListAdsByAuthor: (data) =>
     dispatch({ type: ADVERTISING.GET_ADS_BY_AUTHOR, data }),
-  addNewAdvertising: (data, functionHideModal) =>
+  addNewAdvertising: (data, functionHideModal, currentPage) =>
     dispatch({
       type: ADVERTISING.ADD_NEW_ADS,
-      data: { data, functionHideModal },
+      data: { data, functionHideModal, currentPage },
     }),
   getById: (id) => dispatch({ type: ADVERTISING.GET_ADS_BY_ID, data: { id } }),
   updateAdsReducer: (data) =>
     dispatch({ type: ADVERTISING.SET_STATE_ADS_REDUCER, data }),
-  editAds: (data, functionHideModal) =>
+  editAds: (data, functionHideModal, currentPage) =>
     dispatch({
       type: ADVERTISING.EDIT_ADS,
-      data: { data, functionHideModal },
+      data: { data, functionHideModal, currentPage },
     }),
-  deleteAds: (data, functionHideModal) =>
+  deleteAds: (data, functionHideModal, currentPage) =>
     dispatch({
       type: ADVERTISING.DELETE_ADS,
-      data: { data, functionHideModal },
+      data: { data, functionHideModal, currentPage },
     }),
 });
 

@@ -16,21 +16,20 @@ class HistoryPoint extends React.Component {
   }
 
   componentDidMount() {
-    const { getListHistory } = this.props;
-    const { data: { userId = "" } = {} } = getToken();
-    getListHistory(userId);
+    this.handlePagination(1);
   }
 
-  // _resetFilter = () => {
-  //   console.log("reset filter");
-  // };
-
-  // _search = (value) => {
-  //   console.log("value search", value);
-  // };
+  handlePagination = (page) => {
+    const { getListHistory } = this.props;
+    const { data: { userId: id = "" } = {} } = getToken();
+    getListHistory({ id, page, limit: 10 });
+  };
 
   render() {
-    const { loading, historyPoint: { items = [] } = {} } = this.props;
+    const {
+      loading,
+      historyPoint: { items = [], paging: { total = 0 } = {} } = {},
+    } = this.props;
 
     const headerData = [
       {
@@ -56,24 +55,13 @@ class HistoryPoint extends React.Component {
       <Fragment>
         <TitlePage title="Users" />
         <div className="containerHistoryPoint">
-          {/* <Accordion className="viewFilter">
-            <AccordionItem
-              open
-              title={
-                <div className="viewFilter__title">
-                  Filter
-                  <i className="fas fa-filter viewFilter__title--icon"></i>
-                </div>
-              }
-            >
-              <Filter resetFilter={this._resetFilter} search={this._search} />
-            </AccordionItem>
-          </Accordion> */}
           <TableCommon
             title="History Point"
             rowData={items}
             headerData={headerData}
             loading={loading}
+            total={total}
+            handlePagination={this.handlePagination}
           />
         </div>
       </Fragment>
